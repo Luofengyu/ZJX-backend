@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170227091333) do
+ActiveRecord::Schema.define(version: 20170421134812) do
 
   create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "address"
@@ -52,6 +52,21 @@ ActiveRecord::Schema.define(version: 20170227091333) do
     t.integer "worker_id"
     t.index ["city_id"], name: "index_cities_workers_on_city_id", using: :btree
     t.index ["worker_id"], name: "index_cities_workers_on_worker_id", using: :btree
+  end
+
+  create_table "courier_addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string   "name"
+    t.string   "tel"
+    t.string   "sex"
+    t.string   "city"
+    t.string   "region"
+    t.string   "community"
+    t.string   "house_number"
+    t.integer  "courier_id"
+    t.float    "lat",          limit: 24
+    t.float    "lng",          limit: 24
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "couriers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -108,6 +123,21 @@ ActiveRecord::Schema.define(version: 20170227091333) do
     t.integer "station_id"
     t.index ["factory_id"], name: "index_factories_stations_on_factory_id", using: :btree
     t.index ["station_id"], name: "index_factories_stations_on_station_id", using: :btree
+  end
+
+  create_table "factory_addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string   "name"
+    t.string   "tel"
+    t.string   "sex"
+    t.string   "city"
+    t.string   "region"
+    t.string   "community"
+    t.string   "house_number"
+    t.integer  "factory_id"
+    t.float    "lat",          limit: 24
+    t.float    "lng",          limit: 24
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -207,12 +237,49 @@ ActiveRecord::Schema.define(version: 20170227091333) do
     t.index ["name"], name: "index_roles_on_name", using: :btree
   end
 
+  create_table "station_addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string   "name"
+    t.string   "tel"
+    t.string   "sex"
+    t.string   "city"
+    t.string   "region"
+    t.string   "community"
+    t.string   "house_number"
+    t.integer  "station_id"
+    t.float    "lat",          limit: 24
+    t.float    "lng",          limit: 24
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "stations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "region_id"
     t.index ["region_id"], name: "index_stations_on_region_id", using: :btree
+  end
+
+  create_table "tests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.integer  "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string   "name"
+    t.string   "tel"
+    t.string   "sex"
+    t.string   "city"
+    t.string   "region"
+    t.string   "community"
+    t.string   "house_number"
+    t.integer  "user_id"
+    t.float    "lat",          limit: 24
+    t.float    "lng",          limit: 24
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

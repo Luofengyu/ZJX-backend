@@ -114,4 +114,18 @@ class FactoriesController < ApplicationController
     end
   end
 
+  #POST allocate_stations.json
+  def allocate_stations
+    response.set_header("Access-Control-Allow-Origin", "*")
+    # factory_id = request.parameters[:factory_id]
+    del_sql = "delete from factories_stations where factory_id = 1"
+    # sql.concat(factory_id)
+    Base.connection.exec(del_sql)
+    respond_to do |format|
+      format.json{ render json: {status:200,message:"aaa"} }
+    end
+
+  end
+
+
 end
