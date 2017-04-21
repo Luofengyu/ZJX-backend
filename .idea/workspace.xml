@@ -2,219 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d068aafc-4dd1-43ee-af12-072e5f1a54ab" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/config/manifest.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/images/.keep" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/application.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/cable.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/categories.coffee" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/channels/.keep" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/cities.coffee" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/common.js.coffee" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/items.coffee" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/orders.coffee" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/price_rules.coffee" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/prices.coffee" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/product_items.coffee" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/products.coffee" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/regions.coffee" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/stations.coffee" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/javascripts/waybills.coffee" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/stylesheets/application.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/stylesheets/categories.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/stylesheets/cities.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/stylesheets/items.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/stylesheets/orders.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/stylesheets/price_rules.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/stylesheets/prices.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/stylesheets/product_items.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/stylesheets/products.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/stylesheets/regions.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/stylesheets/scaffolds.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/stylesheets/stations.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/assets/stylesheets/waybills.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/channels/application_cable/channel.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/channels/application_cable/connection.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/categories_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/cities_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/concerns/.keep" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/concerns/image.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/couriers_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/factories_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/items_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/orders_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/price_rules_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/prices_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/product_items_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/products_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/roles_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/users_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/waybills_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/controllers/workers_controller.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/application_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/categories_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/cities_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/couriers_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/factories_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/items_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/orders_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/price_rules_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/prices_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/product_items_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/products_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/regions_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/stations_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/users_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/helpers/waybills_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/jobs/application_job.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/jobs/order_paidan_job.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/mailers/application_mailer.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/ability.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/address.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/application_record.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/category.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/city.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/concerns/.keep" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/courier.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/factory.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/item.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/order.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/price.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/price_rule.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/product.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/product_item.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/region.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/role.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/station.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/user.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/waybill.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/models/worker.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/categories/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/categories/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/categories/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/categories/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/categories/prices.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/categories/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/cities/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/cities/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/cities/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/cities/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/cities/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/couriers/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/couriers/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/couriers/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/couriers/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/couriers/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/devise/confirmations/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/devise/mailer/confirmation_instructions.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/devise/mailer/password_change.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/devise/mailer/reset_password_instructions.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/devise/mailer/unlock_instructions.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/devise/passwords/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/devise/passwords/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/devise/registrations/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/devise/registrations/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/devise/sessions/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/devise/shared/_links.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/devise/unlocks/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/factories/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/factories/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/factories/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/factories/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/factories/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/items/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/items/_item.json.jbuilder" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/items/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/items/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/items/index.json.jbuilder" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/items/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/items/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/items/show.json.jbuilder" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/layouts/_menu.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/layouts/application.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/layouts/mailer.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/layouts/mailer.text.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/orders/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/orders/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/orders/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/orders/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/orders/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/price_rules/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/price_rules/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/price_rules/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/price_rules/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/price_rules/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/prices/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/prices/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/prices/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/prices/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/prices/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/product_items/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/product_items/_product_item.json.jbuilder" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/product_items/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/product_items/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/product_items/index.json.jbuilder" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/product_items/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/product_items/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/product_items/show.json.jbuilder" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/products/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/products/_product.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/products/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/products/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/products/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/products/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/regions/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/regions/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/regions/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/regions/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/regions/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/roles/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/roles/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/roles/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/roles/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/roles/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/stations/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/stations/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/stations/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/stations/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/stations/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/users/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/users/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/users/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/users/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/users/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/waybills/_form.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/waybills/_waybill.json.jbuilder" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/waybills/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/waybills/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/waybills/index.json.jbuilder" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/waybills/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/waybills/show.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/waybills/show.json.jbuilder" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/workers/edit.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/workers/index.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/workers/new.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/workers/reset_password.html.slim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app/views/workers/show.html.slim" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/app/controllers/addresses_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/addresses_controller.rb" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/app/controllers/application_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/app/controllers/regions_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/regions_controller.rb" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/app/controllers/stations_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/stations_controller.rb" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/app/models/courier_address.rb" afterPath="$PROJECT_DIR$/app/models/courier_address.rb" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/app/models/factory_address.rb" afterPath="$PROJECT_DIR$/app/models/factory_address.rb" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/app/models/station_address.rb" afterPath="$PROJECT_DIR$/app/models/station_address.rb" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/app/models/test.rb" afterPath="$PROJECT_DIR$/app/models/test.rb" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/app/models/user_address.rb" afterPath="$PROJECT_DIR$/app/models/user_address.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/application.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/application.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/cable.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/cable.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/categories_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/categories_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/couriers_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/couriers_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/factories_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/factories_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/product_items_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/product_items_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/products_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/products_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/roles_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/roles_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/users_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/users_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/workers_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/workers_controller.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doc/washing.sql" />
     </list>
     <ignored path="$PROJECT_DIR$/.bundle/" />
     <ignored path="$PROJECT_DIR$/components/" />
@@ -263,11 +51,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stations_controller.rb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="stations_controller.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/stations_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="113" column="20" lean-forward="true" selection-start-line="113" selection-start-column="20" selection-end-line="113" selection-end-column="20" />
+            <state relative-caret-position="486">
+              <caret line="111" column="28" lean-forward="true" selection-start-line="111" selection-start-column="28" selection-end-line="111" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="washing.sql" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/doc/washing.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -329,6 +127,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZJX-backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZJX-backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="doc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -345,6 +157,7 @@
       <recent name="$PROJECT_DIR$/app/controllers" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/doc" />
       <recent name="$PROJECT_DIR$/app/controllers/concerns" />
       <recent name="$PROJECT_DIR$/app/controllers" />
     </key>
@@ -643,12 +456,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1492777931263</updated>
-      <workItem from="1492777933411" duration="992000" />
+      <workItem from="1492777933411" duration="1329000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="992000" />
+    <option name="totallyTimeSpent" value="1329000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1601" height="865" extended-state="6" />
@@ -768,8 +581,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/stations_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="113" column="20" lean-forward="true" selection-start-line="113" selection-start-column="20" selection-end-line="113" selection-end-column="20" />
+        <state relative-caret-position="486">
+          <caret line="111" column="28" lean-forward="true" selection-start-line="111" selection-start-column="28" selection-end-line="111" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doc/washing.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
