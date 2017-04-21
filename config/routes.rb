@@ -1,0 +1,113 @@
+Rails.application.routes.draw do
+  resources :product_items do
+    collection do
+      get "get_product_items"
+      post "create_product_items"
+      post "update_product_items"
+      post "delete_product_items"
+    end
+
+  end
+  resources :items
+  # devise_for :workers
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  resources :workers do
+    collection do
+      post "register"
+      post "login"
+      post "update_worker"
+      post "delete_worker"
+    end
+    member do 
+      get :reset_password
+      put :change_current_city
+    end
+  end
+  resources :users do
+    collection do
+      post "register"
+      post "login"
+      post "update_user"
+      post "delete_user"
+    end
+  end
+
+  resources :couriers do
+    collection do
+      post "register"
+      post "login"
+    end
+  end
+  resources :factories do
+    collection do
+      post "register"
+      post "login"
+      post "update_factory"
+      post "delete_factory"
+    end
+  end
+
+  resources :roles do
+    collection do
+      get "get_roles"
+      get "get_roles_items"
+      post "create_roles"
+      post "update_roles"
+      post "delete_roles"
+    end
+  end
+
+  resources :categories do
+    collection do
+      get "get_categories"
+      get "get_categories_items"
+      post "create_categories"
+      post "update_categories"
+      post "delete_categories"
+    end
+    member do 
+      get :prices
+      post :init_prices
+    end
+  end
+  resources :products do
+    collection do
+      get "get_products"
+      post "create_products"
+      post "update_products"
+      post "delete_products"
+    end
+  end
+
+  resources :prices
+
+  resources :price_rules
+
+  resources :stations do 
+    collection do 
+      get :suggestion
+    end
+  end
+
+  resources :regions do 
+    collection do 
+      get :search
+    end
+  end
+
+  resources :addresses do 
+    collection do 
+      get :suggestion
+    end
+  end
+  resources :cities
+
+  resources :orders do 
+    member do 
+      post :paidan
+    end
+  end
+
+  resources :waybills
+end
