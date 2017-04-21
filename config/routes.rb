@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   end
   resources :items
-  # devise_for :workers
+  devise_for :workers
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   resources :workers do
@@ -74,6 +74,7 @@ Rails.application.routes.draw do
   resources :products do
     collection do
       get "get_products"
+      get "get_qiye_products"
       post "create_products"
       post "update_products"
       post "delete_products"
@@ -85,18 +86,37 @@ Rails.application.routes.draw do
   resources :price_rules
 
   resources :stations do 
-    collection do 
-      get :suggestion
+    collection do
+      get "get_station"
+      get "get_station_address"
+      post "create_station_address"
+      post "update_station_address"
+      post "delete_station_address"
     end
   end
 
   resources :regions do 
     collection do 
-      get :search
+      get "get_cities"
+      get "get_regions"
     end
   end
 
-  resources :addresses do 
+  resources :addresses do
+    collection do
+      get "get_user_address"
+      post "create_user_address"
+      post "update_user_address"
+      post "delete_user_address"
+      get "get_factory_address"
+      post "create_factory_address"
+      post "update_factory_address"
+      post "delete_factory_address"
+      get "get_courier_address"
+      post "create_courier_address"
+      post "update_courier_address"
+      post "delete_courier_address"
+    end
     collection do 
       get :suggestion
     end
