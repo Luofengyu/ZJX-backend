@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-04-21 17:27:16
+Date: 2017-04-21 22:30:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -160,7 +160,7 @@ DROP TABLE IF EXISTS `courier_addresses`;
 CREATE TABLE `courier_addresses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `tel` int(11) DEFAULT NULL,
+  `tel` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `sex` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `city` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `region` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
@@ -172,12 +172,11 @@ CREATE TABLE `courier_addresses` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of courier_addresses
 -- ----------------------------
-INSERT INTO `courier_addresses` VALUES ('1', '渣渣5号改成7号了', '211555', '不男不女', '南京', '不知道的地方', '大桥', '桥洞4号', '1', null, null, '2017-04-20 14:31:52', '2017-04-20 14:33:41');
 
 -- ----------------------------
 -- Table structure for couriers
@@ -272,12 +271,12 @@ CREATE TABLE `factories_stations` (
   PRIMARY KEY (`id`),
   KEY `index_factories_stations_on_factory_id` (`factory_id`),
   KEY `index_factories_stations_on_station_id` (`station_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of factories_stations
 -- ----------------------------
-INSERT INTO `factories_stations` VALUES ('1', '1', '2');
+INSERT INTO `factories_stations` VALUES ('2', '1', '1');
 
 -- ----------------------------
 -- Table structure for factory_addresses
@@ -286,7 +285,7 @@ DROP TABLE IF EXISTS `factory_addresses`;
 CREATE TABLE `factory_addresses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `tel` int(11) DEFAULT NULL,
+  `tel` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `sex` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `city` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `region` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
@@ -298,13 +297,11 @@ CREATE TABLE `factory_addresses` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of factory_addresses
 -- ----------------------------
-INSERT INTO `factory_addresses` VALUES ('1', '渣渣5号改成7号了', '211555', '不男不女', '南京', '不知道的地方', '大桥', '桥洞4号', '1', null, null, '2017-04-20 14:26:59', '2017-04-20 14:29:20');
-INSERT INTO `factory_addresses` VALUES ('2', '渣渣5号', '211555', '', '南京', '不知道的地方', '大桥', '桥洞4号', '1', null, null, '2017-04-20 14:27:09', '2017-04-20 14:27:09');
 
 -- ----------------------------
 -- Table structure for items
@@ -409,7 +406,7 @@ CREATE TABLE `prices` (
   PRIMARY KEY (`id`),
   KEY `index_prices_on_product_id` (`product_id`),
   CONSTRAINT `fk_rails_b8ee0bfea1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of prices
@@ -430,6 +427,13 @@ INSERT INTO `prices` VALUES ('13', '301', '302', '303', '304', '305', '306', '13
 INSERT INTO `prices` VALUES ('14', '311', '312', '313', '314', '315', '316', '14', '2017-02-24 15:47:26', '2017-02-24 15:47:26');
 INSERT INTO `prices` VALUES ('15', '321', '322', '323', '324', '325', '326', '15', '2017-02-24 15:47:26', '2017-02-24 15:47:26');
 INSERT INTO `prices` VALUES ('16', '331', '332', '333', '334', '335', '336', '16', '2017-02-24 15:47:26', '2017-02-24 15:47:26');
+INSERT INTO `prices` VALUES ('17', '1', '0', '0', '0', '0', '0', null, '2017-04-21 14:09:19', '2017-04-21 14:09:19');
+INSERT INTO `prices` VALUES ('18', '1', '0', '0', '0', '0', '0', null, '2017-04-21 14:10:27', '2017-04-21 14:10:27');
+INSERT INTO `prices` VALUES ('19', '1', '0', '0', '0', '0', '0', null, '2017-04-21 14:11:41', '2017-04-21 14:11:41');
+INSERT INTO `prices` VALUES ('20', '1', '0', '0', '0', '0', '0', null, '2017-04-21 14:12:09', '2017-04-21 14:12:09');
+INSERT INTO `prices` VALUES ('21', '1', '0', '0', '0', '0', '0', null, '2017-04-21 14:14:40', '2017-04-21 14:14:40');
+INSERT INTO `prices` VALUES ('22', '1', '0', '0', '0', '0', '0', null, '2017-04-21 14:15:46', '2017-04-21 14:15:46');
+INSERT INTO `prices` VALUES ('23', '1', '0', '0', '0', '0', '0', null, '2017-04-21 14:15:46', '2017-04-21 14:15:46');
 
 -- ----------------------------
 -- Table structure for product_items
@@ -487,7 +491,7 @@ CREATE TABLE `products` (
   PRIMARY KEY (`id`),
   KEY `index_products_on_category_id` (`category_id`),
   CONSTRAINT `fk_rails_fb915499a4` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of products
@@ -509,6 +513,13 @@ INSERT INTO `products` VALUES ('14', 'product 2', 'category-1487430865976', '0',
 INSERT INTO `products` VALUES ('15', 'product 3', 'category-1487430865976', '0', '4', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
 INSERT INTO `products` VALUES ('16', 'product 4', 'category-1487430865976', '0', '4', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
 INSERT INTO `products` VALUES ('17', 'test1', 'test1', '0', '1', '2017-04-14 15:49:32', '2017-04-14 15:49:32');
+INSERT INTO `products` VALUES ('18', '大保健', '黄图', '1', '1', '2017-04-21 14:09:19', '2017-04-21 14:09:19');
+INSERT INTO `products` VALUES ('19', '大保健', '黄图', '1', '1', '2017-04-21 14:10:27', '2017-04-21 14:10:27');
+INSERT INTO `products` VALUES ('20', '大保健', '黄图', '1', '1', '2017-04-21 14:11:41', '2017-04-21 14:11:41');
+INSERT INTO `products` VALUES ('21', '大保健', '黄图', '1', '1', '2017-04-21 14:12:09', '2017-04-21 14:12:09');
+INSERT INTO `products` VALUES ('22', '大保健', '黄图', '1', '1', '2017-04-21 14:14:40', '2017-04-21 14:14:40');
+INSERT INTO `products` VALUES ('23', '大保健', '黄图', '1', '1', '2017-04-21 14:15:46', '2017-04-21 14:15:46');
+INSERT INTO `products` VALUES ('24', '大保健', '黄图', '1', '1', '2017-04-21 14:15:46', '2017-04-21 14:15:46');
 
 -- ----------------------------
 -- Table structure for regions
@@ -3829,6 +3840,10 @@ INSERT INTO `schema_migrations` VALUES ('20170420081148');
 INSERT INTO `schema_migrations` VALUES ('20170420083220');
 INSERT INTO `schema_migrations` VALUES ('20170420083234');
 INSERT INTO `schema_migrations` VALUES ('20170420144908');
+INSERT INTO `schema_migrations` VALUES ('20170421134735');
+INSERT INTO `schema_migrations` VALUES ('20170421134755');
+INSERT INTO `schema_migrations` VALUES ('20170421134804');
+INSERT INTO `schema_migrations` VALUES ('20170421134812');
 
 -- ----------------------------
 -- Table structure for station_addresses
@@ -3837,24 +3852,24 @@ DROP TABLE IF EXISTS `station_addresses`;
 CREATE TABLE `station_addresses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `tel` int(11) DEFAULT NULL,
+  `tel` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `sex` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `city` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `region` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `community` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `house_number` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `station_id` int(11) DEFAULT NULL,
-  `lat` float DEFAULT NULL COMMENT '纬度',
-  `lng` float DEFAULT NULL COMMENT '经度',
+  `lat` float DEFAULT NULL,
+  `lng` float DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of station_addresses
 -- ----------------------------
-INSERT INTO `station_addresses` VALUES ('1', '渣渣5号改成7号了', '211555', '不男不女', '南京', '不知道的地方', '大桥', '桥洞4号', null, null, null, '2017-04-20 17:03:58', '2017-04-20 17:04:29');
+INSERT INTO `station_addresses` VALUES ('1', '中关村', '18811442447', '男', '北京', '北京', '不知道', '888', null, '52.3333', '65.3655', '2017-04-13 22:27:22', '2017-04-29 22:27:26');
 
 -- ----------------------------
 -- Table structure for stations
@@ -3899,7 +3914,7 @@ DROP TABLE IF EXISTS `user_addresses`;
 CREATE TABLE `user_addresses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `tel` int(11) DEFAULT NULL,
+  `tel` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `sex` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `city` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `region` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
@@ -3911,13 +3926,12 @@ CREATE TABLE `user_addresses` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of user_addresses
 -- ----------------------------
-INSERT INTO `user_addresses` VALUES ('1', '渣渣1号', '888888888', '男', '北京', '密云', '小王村', '666', '1', '3.22256', '5.6666', '2017-03-29 16:14:38', '2017-04-06 16:14:41');
-INSERT INTO `user_addresses` VALUES ('2', '渣渣2号', '689', '女', '山东', '邢台', '小渔村', '1', '1', '63.2225', '65.3599', '2017-04-08 16:18:07', '2017-05-20 16:18:11');
+INSERT INTO `user_addresses` VALUES ('1', '渣渣5号', '18811442447', '', '南京', '不知道的地方', '大桥', '桥洞4号', '10', '54.6566', '445.768', '2017-04-21 13:58:36', '2017-04-21 13:58:36');
 
 -- ----------------------------
 -- Table structure for users
