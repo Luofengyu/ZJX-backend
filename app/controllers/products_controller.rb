@@ -33,13 +33,9 @@ class ProductsController < ApplicationController
     @product.logo=request.parameters[:logo]
     @product.is_del=request.parameters[:is_del]
     @product.category_id=request.parameters[:category_id]
-    @price = Price.new()
-    @price.price1 = request.parameters[:price1]
     respond_to do |format|
       if  @product.save
         format.json { render json: {status: 200, product: @product }}
-        @price.product_id = @product.id
-        @price.save
       else
         format.json { render json: {status: 400, message: "products created unsuccessfully" }}
       end
