@@ -114,18 +114,17 @@ class FactoriesController < ApplicationController
     end
   end
 
-  #POST allocate_stations.json
-  def allocate_stations
+  # GET get_factory_stations.json
+  def get_factory_stations
     response.set_header("Access-Control-Allow-Origin", "*")
-    # factory_id = request.parameters[:factory_id]
-    del_sql = "delete from factories_stations where factory_id = 1"
-    # sql.concat(factory_id)
-    Base.connection.exec(del_sql)
+    factory_id = request.parameters[:factory_id]
+    sql = "select station_addresses.* from station_addresses inner join factories_stations
+             on station_addresses.id = factories_stations.station_id and factories_stations.factory_id = "
+    sql.concat(factory_id)
+    station_address=StationAddress.connection.select_all(sql)
     respond_to do |format|
-      format.json{ render json: {status:200,message:"aaa"} }
+      format.json{ render json: {status:200,station_address:station_address} }
     end
-
   end
-
 
 end

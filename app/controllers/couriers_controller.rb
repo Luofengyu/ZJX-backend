@@ -117,6 +117,19 @@ class CouriersController < ApplicationController
     end
   end
 
+  # GET get_courier_stations.json
+  def get_courier_stations
+    response.set_header("Access-Control-Allow-Origin", "*")
+    courier_id = request.parameters[:courier_id]
+    sql = "select station_addresses.* from station_addresses inner join couriers_stations
+             on station_addresses.id = couriers_stations.station_id and couriers_stations.courier_id = "
+    sql.concat(courier_id)
+    station_address=StationAddress.connection.select_all(sql)
+    respond_to do |format|
+      format.json{ render json: {status:200,station_address:station_address} }
+    end
+  end
+
 
   # private
   # # Use callbacks to share common setup or constraints between actions.

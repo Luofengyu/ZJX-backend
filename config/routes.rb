@@ -37,6 +37,10 @@ Rails.application.routes.draw do
     collection do
       post "register"
       post "login"
+      post "createCouries"
+      post "update_courier"
+      post "delete_courier"
+      get "get_courier_stations"
     end
   end
   resources :factories do
@@ -45,7 +49,7 @@ Rails.application.routes.draw do
       post "login"
       post "update_factory"
       post "delete_factory"
-      post "allocate_stations"
+      get "get_factory_stations"
     end
   end
 
