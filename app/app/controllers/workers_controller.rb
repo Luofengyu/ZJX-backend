@@ -30,7 +30,7 @@ class WorkersController < ApplicationController
     begin
       @data = request.parameters
       @email = @data[:email]
-      @password = @data[:password]
+      @password = @data[:encrypted_password]
       @worker = Worker.find_by_email(@email)
       if @worker
         if @worker[:encrypted_password] == @password
