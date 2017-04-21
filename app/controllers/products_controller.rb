@@ -16,7 +16,9 @@ class ProductsController < ApplicationController
   # GET get_qiye_products.json
   def get_qiye_products
     response.set_header("Access-Control-Allow-Origin", "*")
-    products=Product.all
+    sql = "select products.*,prices.price1 from products inner join prices
+             on products.id = prices.product_id"
+    products=Product.connection.select_all(sql)
     respond_to do |format|
       format.json{ render json: {status:200,product:products} }
     end
