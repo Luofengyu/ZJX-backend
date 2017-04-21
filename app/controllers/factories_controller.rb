@@ -28,7 +28,7 @@ class FactoriesController < ApplicationController
     begin
       @data = request.parameters
       @mobile = @data[:mobile]
-      @password = @data[:password]
+      @password = @data[:encrypted_password]
       @factory = Factory.find_by_mobile(@mobile)
       if @factory
         if @factory[:encrypted_password] == @password
