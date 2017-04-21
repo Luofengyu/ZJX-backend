@@ -2,6 +2,7 @@ class CouriersController < ApplicationController
 
   #POST /couriers/register.json
   def register
+    response.set_header("Access-Control-Allow-Origin", "*")
     @data = request.parameters
     @mobile = @data[:mobile]
     begin
@@ -24,6 +25,7 @@ class CouriersController < ApplicationController
 
   #POST /couriers/login.json
   def login
+    response.set_header("Access-Control-Allow-Origin", "*")
     begin
       @data = request.parameters
       @mobile = @data[:mobile]
@@ -56,6 +58,7 @@ class CouriersController < ApplicationController
   end
 
   def createCouries(params)
+    response.set_header("Access-Control-Allow-Origin", "*")
     @courier = Courier.new
     @courier.mobile = params[:mobile]
     @courier.name = params[:name]
@@ -104,7 +107,7 @@ class CouriersController < ApplicationController
     end
   end
 
-  #get index
+  # GET index
   def index
     response.set_header("Access-Control-Allow-Origin", "*")
     @courier_list = Courier.all
@@ -113,6 +116,7 @@ class CouriersController < ApplicationController
       format.json { render json: {status: 200, data:@courier_list } }
     end
   end
+
 
   # private
   # # Use callbacks to share common setup or constraints between actions.

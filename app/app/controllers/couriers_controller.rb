@@ -29,7 +29,7 @@ class CouriersController < ApplicationController
     begin
       @data = request.parameters
       @mobile = @data[:mobile]
-      @password = @data[:encrypted_password]
+      @password = @data[:password]
       @courier = Courier.find_by_mobile(@mobile)
       if @courier
         if @courier[:encrypted_password] == @password

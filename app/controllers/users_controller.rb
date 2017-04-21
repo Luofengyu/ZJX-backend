@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-
   #POST /users/register.json
   def register
+    response.set_header("Access-Control-Allow-Origin", "*")
     @data = request.parameters
     @email = @data[:email]
     begin
@@ -24,11 +24,11 @@ class UsersController < ApplicationController
 
   #POST /users/login.json
   def login
-
+    response.set_header("Access-Control-Allow-Origin", "*")
     begin
       @data = request.parameters
       @email = @data[:email]
-      @password = @data[:password]
+      @password = @data[:encrypted_password]
       @user = User.find_by_email(@email)
       if @user
         if @user[:encrypted_password] == @password
@@ -57,6 +57,7 @@ class UsersController < ApplicationController
   end
 
   def createUser(params)
+    response.set_header("Access-Control-Allow-Origin", "*")
     @user = User.new
     @user.mobile = params[:mobile]
     @user.name = params[:name]
@@ -94,7 +95,7 @@ class UsersController < ApplicationController
 
   # POST delete_user.json
   def delete_user
-  	response.set_header("Access-Control-Allow-Origin", "*")
+    response.set_header("Access-Control-Allow-Origin", "*")
     @user = User.find(request.parameters[:id])
     if @user.delete
       respond_to do |format|
@@ -103,9 +104,9 @@ class UsersController < ApplicationController
     end
   end
 
-  #get index
+  # GET index
   def index
-  	response.set_header("Access-Control-Allow-Origin", "*")
+    response.set_header("Access-Control-Allow-Origin", "*")
     @user_list = User.all
     respond_to do |format|
       format.html { render json: {status: 200, data:@user_list } }

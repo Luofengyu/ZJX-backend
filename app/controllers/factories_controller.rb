@@ -1,6 +1,7 @@
 class FactoriesController < ApplicationController
   #POST /factories/register
   def register
+    response.set_header("Access-Control-Allow-Origin", "*")
     @data = request.parameters
     @email = @data[:email]
     begin
@@ -23,6 +24,7 @@ class FactoriesController < ApplicationController
 
   #POST /factories/login
   def login
+    response.set_header("Access-Control-Allow-Origin", "*")
     begin
       @data = request.parameters
       @mobile = @data[:mobile]
@@ -55,6 +57,7 @@ class FactoriesController < ApplicationController
   end
 
   def createFactory(params)
+    response.set_header("Access-Control-Allow-Origin", "*")
     @factory = Factory.new
     @factory.mobile = params[:mobile]
     @factory.name = params[:name]
@@ -101,7 +104,7 @@ class FactoriesController < ApplicationController
     end
   end
 
-  #get index
+  # GET index
   def index
     response.set_header("Access-Control-Allow-Origin", "*")
     @factory_list = Factory.all
@@ -110,5 +113,19 @@ class FactoriesController < ApplicationController
       format.json { render json: {status: 200, data:@factory_list } }
     end
   end
+
+  #POST allocate_stations.json
+  def allocate_stations
+    response.set_header("Access-Control-Allow-Origin", "*")
+    # factory_id = request.parameters[:factory_id]
+    del_sql = "delete from factories_stations where factory_id = 1"
+    # sql.concat(factory_id)
+    Base.connection.exec(del_sql)
+    respond_to do |format|
+      format.json{ render json: {status:200,message:"aaa"} }
+    end
+
+  end
+
 
 end

@@ -3,7 +3,6 @@ class WorkersController < ApplicationController
 
   #POST /workers/register.json
   def register
-    print(response.get_header("Access-Control-Allow-Origin"))
     response.set_header("Access-Control-Allow-Origin", "*")
     @data = request.parameters
     @email = @data[:email]
@@ -61,18 +60,16 @@ class WorkersController < ApplicationController
 
   def createWorker(params)
     print(params)
-
+    response.set_header("Access-Control-Allow-Origin", "*")
     @worker = Worker.new
     @worker.email = params[:email]
-    @worker.encrypted_password = params[:encrypted_password]
+    @worker.password = params[:encrypted_password]
     if @worker.save!
-      # response.set_header("Access-Control-Allow-Origin", "*")
       respond_to do |format|
         format.json{render json:{status:200,data:@worker}}
         format.html{render json:{status:200,data:@worker}}
       end
     else
-      # response.set_header("Access-Control-Allow-Origin", "*")
       respond_to do |format|
         format.json{render json:{status:555, message:"fail", data:@worker}}
         format.html{render json:{status:555, message:"fail", data:@worker}}
@@ -82,7 +79,7 @@ class WorkersController < ApplicationController
 
   # POST update_worker.json
   def update_worker
-  	response.set_header("Access-Control-Allow-Origin", "*")
+    response.set_header("Access-Control-Allow-Origin", "*")
     respond_to do |format|
       if Worker.update(request.parameters[:id],
                      :email=>request.parameters[:email],
@@ -106,9 +103,9 @@ class WorkersController < ApplicationController
     end
   end
 
-  #get index
+  # GET index
   def index
-	response.set_header("Access-Control-Allow-Origin", "*")
+    response.set_header("Access-Control-Allow-Origin", "*")
     @worker_list = Worker.all
     respond_to do |format|
       format.html { render json: {status: 200, data:@worker_list } }

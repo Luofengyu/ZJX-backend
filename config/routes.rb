@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       post "login"
       post "update_factory"
       post "delete_factory"
+      post "allocate_stations"
     end
   end
 
