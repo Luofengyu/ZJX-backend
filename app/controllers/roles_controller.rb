@@ -4,22 +4,25 @@ class RolesController < ApplicationController
 
   # GET get_roles.json
   def get_roles
+    response.set_header("Access-Control-Allow-Origin", "*")
     @roles = Role.all
     respond_to do |format|
-      format.json{ render json: @roles }
+      format.json{ render json: {status:200 ,roles:@roles} }
     end
   end
 
   # GET get_roles_items.json
   def get_roles_items
+    response.set_header("Access-Control-Allow-Origin", "*")
     @roles = Role.find(request.parameters[:id])
     respond_to do |format|
-      format.json{render json: @roles}
+      format.json{render json: {status:200 ,roles:@roles}}
     end
   end
 
   # POST create_roles.json
   def create_roles
+    response.set_header("Access-Control-Allow-Origin", "*")
     @roles = Role.new()
     @roles.name=request.parameters[:name]
     @roles.resource_id=request.parameters[:resource_id]
@@ -37,6 +40,7 @@ class RolesController < ApplicationController
 
   # POST update_roles.json
   def update_roles
+    response.set_header("Access-Control-Allow-Origin", "*")
     respond_to do |format|
       if Role.update(request.parameters[:id],
                             :name=>request.parameters[:name],
@@ -47,13 +51,14 @@ class RolesController < ApplicationController
         @roles = Role.find(request.parameters[:id]);
         format.json { render json: {status: 200, roles: @roles }}
       else
-        format.json { render json: {status: 200, message: "roles update successfully" }}
+        format.json { render json: {status: 400, message: "roles update unsuccessfully" }}
       end
     end
   end
 
   # POST delete_roles.json
   def delete_roles
+    response.set_header("Access-Control-Allow-Origin", "*")
     @roles = Role.find(request.parameters[:id])
     @roles.delete()
     respond_to do |format|
