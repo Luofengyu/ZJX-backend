@@ -130,18 +130,18 @@ class CouriersController < ApplicationController
     end
   end
 
+  #  POST allocate_couriers_stations.json
+  def allocate_couriers_stations
+    response.set_header("Access-Control-Allow-Origin", "*")
+    courier_id = request.parameters[:courier_id]
+    courier_stations = request.parameters[:courier_stations]
 
-  # private
-  # # Use callbacks to share common setup or constraints between actions.
-  # def set_courier
-  #   @courier = Courier.find(params[:id])
-  # end
-  #
-  # # Never trust parameters from the scary internet, only allow the white list through.
-  # def courier_params
-  #   params.require(:courier).permit(:id , :mobile, :email, :encrypted_password, :reset_password_token,
-  #                                   :reset_password_sent_at, :remember_created_at,
-  #   :sign_in_count,:current_sign_in_at,:last_sign_in_at,:current_sign_in_ip,:last_sign_in_ip,
-  #   :locked_at,:name,:status,:created_at,:updated_at)
-  # end
+
+    respond_to do |format|
+      format.json{ render json: {status:200, courier_id:courier_id,station_address:courier_stations[0]} }
+    end
+
+  end
+
+
 end
