@@ -63,6 +63,7 @@ class FactoriesController < ApplicationController
     @factory.name = params[:name]
     @factory.encrypted_password = params[:encrypted_password]
     @factory.email = params[:email]
+    @factory.tel = params[:tel]
     if @factory.save
       respond_to do |format|
         format.json{render json:{status:200,data:@factory}}
@@ -84,7 +85,8 @@ class FactoriesController < ApplicationController
                             :mobile=>request.parameters[:mobile],
                             :email=>request.parameters[:email],
                             :encrypted_password=>request.parameters[:encrypted_password],
-                            :name=>request.parameters[:name])
+                            :name=>request.parameters[:name],
+                            :tel=>request.parameters[:tel])
         @factory = Factory.find(request.parameters[:id]);
         format.json { render json: {status: 200, data:@factory }}
       else
