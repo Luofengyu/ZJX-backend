@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421134812) do
+ActiveRecord::Schema.define(version: 20170422013302) do
 
   create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "address"
@@ -55,13 +55,13 @@ ActiveRecord::Schema.define(version: 20170421134812) do
   end
 
   create_table "courier_addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
-    t.string   "name"
-    t.string   "tel"
-    t.string   "sex"
-    t.string   "city"
-    t.string   "region"
-    t.string   "community"
-    t.string   "house_number"
+    t.string   "name",                                 collation: "utf8_general_ci"
+    t.string   "tel",                                  collation: "utf8_general_ci"
+    t.string   "sex",                                  collation: "utf8_general_ci"
+    t.string   "city",                                 collation: "utf8_general_ci"
+    t.string   "region",                               collation: "utf8_general_ci"
+    t.string   "community",                            collation: "utf8_general_ci"
+    t.string   "house_number",                         collation: "utf8_general_ci"
     t.integer  "courier_id"
     t.float    "lat",          limit: 24
     t.float    "lng",          limit: 24
@@ -90,11 +90,11 @@ ActiveRecord::Schema.define(version: 20170421134812) do
     t.index ["reset_password_token"], name: "index_couriers_on_reset_password_token", unique: true, using: :btree
   end
 
-  create_table "couriers_stations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "courier_id"
-    t.integer "station_id"
-    t.index ["courier_id"], name: "index_couriers_stations_on_courier_id", using: :btree
-    t.index ["station_id"], name: "index_couriers_stations_on_station_id", using: :btree
+  create_table "couriers_stations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.integer  "courier_id"
+    t.integer  "station_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "factories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -118,21 +118,21 @@ ActiveRecord::Schema.define(version: 20170421134812) do
     t.index ["reset_password_token"], name: "index_factories_on_reset_password_token", unique: true, using: :btree
   end
 
-  create_table "factories_stations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "factory_id"
-    t.integer "station_id"
-    t.index ["factory_id"], name: "index_factories_stations_on_factory_id", using: :btree
-    t.index ["station_id"], name: "index_factories_stations_on_station_id", using: :btree
+  create_table "factories_stations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.integer  "factory_id"
+    t.integer  "station_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "factory_addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
-    t.string   "name"
-    t.string   "tel"
-    t.string   "sex"
-    t.string   "city"
-    t.string   "region"
-    t.string   "community"
-    t.string   "house_number"
+    t.string   "name",                                 collation: "utf8_general_ci"
+    t.string   "tel",                                  collation: "utf8_general_ci"
+    t.string   "sex",                                  collation: "utf8_general_ci"
+    t.string   "city",                                 collation: "utf8_general_ci"
+    t.string   "region",                               collation: "utf8_general_ci"
+    t.string   "community",                            collation: "utf8_general_ci"
+    t.string   "house_number",                         collation: "utf8_general_ci"
     t.integer  "factory_id"
     t.float    "lat",          limit: 24
     t.float    "lng",          limit: 24
@@ -238,13 +238,13 @@ ActiveRecord::Schema.define(version: 20170421134812) do
   end
 
   create_table "station_addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
-    t.string   "name"
-    t.string   "tel"
-    t.string   "sex"
-    t.string   "city"
-    t.string   "region"
-    t.string   "community"
-    t.string   "house_number"
+    t.string   "name",                                 collation: "utf8_general_ci"
+    t.string   "tel",                                  collation: "utf8_general_ci"
+    t.string   "sex",                                  collation: "utf8_general_ci"
+    t.string   "city",                                 collation: "utf8_general_ci"
+    t.string   "region",                               collation: "utf8_general_ci"
+    t.string   "community",                            collation: "utf8_general_ci"
+    t.string   "house_number",                         collation: "utf8_general_ci"
     t.integer  "station_id"
     t.float    "lat",          limit: 24
     t.float    "lng",          limit: 24
@@ -268,13 +268,13 @@ ActiveRecord::Schema.define(version: 20170421134812) do
   end
 
   create_table "user_addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
-    t.string   "name"
-    t.string   "tel"
-    t.string   "sex"
-    t.string   "city"
-    t.string   "region"
-    t.string   "community"
-    t.string   "house_number"
+    t.string   "name",                                 collation: "utf8_general_ci"
+    t.string   "tel",                                  collation: "utf8_general_ci"
+    t.string   "sex",                                  collation: "utf8_general_ci"
+    t.string   "city",                                 collation: "utf8_general_ci"
+    t.string   "region",                               collation: "utf8_general_ci"
+    t.string   "community",                            collation: "utf8_general_ci"
+    t.string   "house_number",                         collation: "utf8_general_ci"
     t.integer  "user_id"
     t.float    "lat",          limit: 24
     t.float    "lng",          limit: 24

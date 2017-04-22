@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-04-21 22:30:45
+Date: 2017-04-22 09:35:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -218,15 +218,14 @@ CREATE TABLE `couriers_stations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `courier_id` int(11) DEFAULT NULL,
   `station_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_couriers_stations_on_courier_id` (`courier_id`),
-  KEY `index_couriers_stations_on_station_id` (`station_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of couriers_stations
 -- ----------------------------
-INSERT INTO `couriers_stations` VALUES ('1', '1', '2');
 
 -- ----------------------------
 -- Table structure for factories
@@ -268,15 +267,14 @@ CREATE TABLE `factories_stations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `factory_id` int(11) DEFAULT NULL,
   `station_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_factories_stations_on_factory_id` (`factory_id`),
-  KEY `index_factories_stations_on_station_id` (`station_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of factories_stations
 -- ----------------------------
-INSERT INTO `factories_stations` VALUES ('2', '1', '1');
 
 -- ----------------------------
 -- Table structure for factory_addresses
@@ -3844,6 +3842,8 @@ INSERT INTO `schema_migrations` VALUES ('20170421134735');
 INSERT INTO `schema_migrations` VALUES ('20170421134755');
 INSERT INTO `schema_migrations` VALUES ('20170421134804');
 INSERT INTO `schema_migrations` VALUES ('20170421134812');
+INSERT INTO `schema_migrations` VALUES ('20170422013246');
+INSERT INTO `schema_migrations` VALUES ('20170422013302');
 
 -- ----------------------------
 -- Table structure for station_addresses
@@ -3864,12 +3864,13 @@ CREATE TABLE `station_addresses` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of station_addresses
 -- ----------------------------
 INSERT INTO `station_addresses` VALUES ('1', '中关村', '18811442447', '男', '北京', '北京', '不知道', '888', null, '52.3333', '65.3655', '2017-04-13 22:27:22', '2017-04-29 22:27:26');
+INSERT INTO `station_addresses` VALUES ('2', '渣渣5号', '18811442447', '', '南京', '不知道的地方', '大桥', '桥洞4号', null, '54.6566', '445.768', '2017-04-21 15:13:48', '2017-04-21 15:13:48');
 
 -- ----------------------------
 -- Table structure for stations
@@ -3931,7 +3932,7 @@ CREATE TABLE `user_addresses` (
 -- ----------------------------
 -- Records of user_addresses
 -- ----------------------------
-INSERT INTO `user_addresses` VALUES ('1', '渣渣5号', '18811442447', '', '南京', '不知道的地方', '大桥', '桥洞4号', '10', '54.6566', '445.768', '2017-04-21 13:58:36', '2017-04-21 13:58:36');
+INSERT INTO `user_addresses` VALUES ('1', '渣渣5号', '18811442447', '', '南京', '不知道的地方', '大桥', '桥洞4号', '1', '54.6566', '445.768', '2017-04-21 13:58:36', '2017-04-21 13:58:36');
 
 -- ----------------------------
 -- Table structure for users
