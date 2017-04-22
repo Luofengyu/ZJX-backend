@@ -44,7 +44,7 @@ class ProductsController < ApplicationController
 
         sql.concat(String(@price.product_id))
         products=Product.connection.select_all(sql)
-        format.json { render json: {status: 200, products: products }}
+        format.json { render json: {status: 200, product: products }}
       else
         format.json { render json: {status: 400, message: "products created unsuccessfully" }}
       end
@@ -66,7 +66,7 @@ class ProductsController < ApplicationController
              on products.id = prices.product_id and products.id = "
         sql.concat(request.parameters[:id])
         products=Product.connection.select_all(sql)
-        format.json { render json: {status: 200, products: products }}
+        format.json { render json: {status: 200, product: products }}
       else
         format.json { render json: {status: 200, message: "products update successfully" }}
       end
