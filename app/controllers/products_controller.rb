@@ -41,7 +41,8 @@ class ProductsController < ApplicationController
         @price.save
         sql = "select products.*,prices.price1 from products inner join prices
              on products.id = prices.product_id and products.id = "
-        sql.concat(@price.product_id)
+
+        sql.concat(String(@price.product_id))
         products=Product.connection.select_all(sql)
         format.json { render json: {status: 200, products: products }}
       else
