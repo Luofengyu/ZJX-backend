@@ -35,7 +35,15 @@ class ProductsController < ApplicationController
     @product.category_id=request.parameters[:category_id]
     respond_to do |format|
       if  @product.save
-        format.json { render json: {status: 200, product: @product }}
+        @price = Price.new()
+        @price.product_id = @product.id
+        @price.price1 = request.parameters[:price1]
+        @price.save
+        sql = "select products.*,prices.price1 from products inner join prices
+             on products.id = prices.product_id and products.id = "
+        sql.concat(@price.product_id)
+        products=Product.connection.select_all(sql)
+        format.json { render json: {status: 200, products: products }}
       else
         format.json { render json: {status: 400, message: "products created unsuccessfully" }}
       end
@@ -51,8 +59,13 @@ class ProductsController < ApplicationController
                             :logo=>request.parameters[:logo],
                             :is_del=>request.parameters[:is_del],
                             :category_id=>request.parameters[:category_id])
-        product = Product.find(request.parameters[:id]);
-        format.json { render json: {status: 200, product: product }}
+        price = Price.find_by_product_id(request.parameters[:id]);
+        price.update_attributes(:price1=>request.parameters[:price1])
+        sql = "select products.*,prices.price1 from products inner join prices
+             on products.id = prices.product_id and products.id = "
+        sql.concat(request.parameters[:id])
+        products=Product.connection.select_all(sql)
+        format.json { render json: {status: 200, products: products }}
       else
         format.json { render json: {status: 200, message: "products update successfully" }}
       end
