@@ -151,10 +151,48 @@ class FactoriesController < ApplicationController
       end
     end
 
-
     respond_to do |format|
       format.json{ render json: {status:200, factory_id:@factory_id} }
     end
-
   end
+
+
+  #  POST factory_washing.json
+  def factory_washing
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @order_id = request.parameters[:order_id]
+    @time = request.parameters[:time]
+
+    @waybill = Waybill.new
+    @waybill["exp_time"] = @time
+    @waybill["sender_type"] = "你的脏衣服正在被洗衣机蹂躏"
+    @waybill["order_id"] = @order_id
+    @waybill.save
+
+    Order.update(@order_id,
+                  :status=>4)
+
+    respond_to do |format|
+      format.json{ render json: {status:200} }
+    end
+  end
+  # post factory_finish_washing.json
+  def factory_finish_washing
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @order_id = request.parameters[:order_id]
+    @time = request.parameters[:time]
+
+    @waybill = Waybill.new
+    @waybill["exp_time"] = @time
+    @waybill["sender_type"] = "你的白云骑士正带着你的干净衣服奔向你身边"
+    @waybill["order_id"] = @order_id
+    @waybill.save
+
+    Order.update(@order_id,
+                 :status=>5)
+    respond_to do |format|
+      format.json{ render json: {status:200} }
+    end
+  end
+
 end
