@@ -135,15 +135,15 @@ class CouriersController < ApplicationController
     response.set_header("Access-Control-Allow-Origin", "*")
     @courier_id = request.parameters[:courier_id]
     @bind_stations = request.parameters[:courier_stations]
-    @stations = ActiveSupport::JSON.decode(@bind_stations)
+    # @stations = ActiveSupport::JSON.decode(@bind_stations)
     begin
       @delete = CouriersStation.where(courier_id:@courier_id).delete_all
     rescue
       puts "none"
     end
 
-    if @stations
-      for station_id in @stations
+    if @bind_stations
+      for station_id in @bind_stations
         @temp_bind = CouriersStation.new
         @temp_bind.courier_id = @courier_id
         @temp_bind.station_id = station_id

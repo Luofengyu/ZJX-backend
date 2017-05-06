@@ -134,15 +134,15 @@ class FactoriesController < ApplicationController
     response.set_header("Access-Control-Allow-Origin", "*")
     @factory_id = request.parameters[:factory_id]
     @bind_stations = request.parameters[:factory_stations]
-    @stations = ActiveSupport::JSON.decode(@bind_stations)
+    # @stations = ActiveSupport::JSON.decode(@bind_stations)
     begin
       @delete = FactoriesStation.where(factory_id:@factory_id).delete_all
     rescue
       puts "none"
     end
 
-    if @stations
-      for station_id in @stations
+    if @bind_stations
+      for station_id in @bind_stations
         @temp_bind = FactoriesStation.new
         @temp_bind.factory_id = @factory_id
         @temp_bind.station_id = station_id
