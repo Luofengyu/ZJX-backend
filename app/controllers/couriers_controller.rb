@@ -137,7 +137,7 @@ class CouriersController < ApplicationController
     @bind_stations = request.parameters[:courier_stations]
     @stations = ActiveSupport::JSON.decode(@bind_stations)
     begin
-      @delete = CouriersStation.where(factory_id:@factory_id).delete_all
+      @delete = CouriersStation.where(courier_id:@courier_id).delete_all
     rescue
       puts "none"
     end
