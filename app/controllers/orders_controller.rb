@@ -42,23 +42,41 @@ class OrdersController < ApplicationController
     @user_id= request.parameters[:user_id]
     @time = request.parameters[:time]
     @category_id = request.parameters[:category_id]
-    @order_products =  ActiveSupport::JSON.decode(@data)
+    @order_products =  ActiveSupport::JSON.decode(@products)
+
+    @waybill = Waybill.new
+    @waybill["exp_time"] = @time
+    @waybill["sender_type"] = "骑手即将取件"
+    @waybill.save
+    puts String(@waybill.id)
 
     @order_item = Order.new
     @order_item["address_id"] = @address_id
     @order_item["category_id"] = @category_id
     @order_item["user_id"] = @user_id
     @order_item["address_id"] = @address_id
+    @order_item["waybill_id"] = String(@waybill.id)
+    @order_item["factory_id"] = 1
     @order_item.save
-    puts @order_item.id
+    puts String(@order_item.id)
+    @total_price = 0
+
+    # items table
     for @item in @order_products
       @product_id, @number, @price = @item.split('#')
       @item = Item.new()
-      item["product_id"] = @product_id
-      item["amount"] = @number
-      item["price"] = @price
-      # item.save
+      @item["product_id"] = @product_id
+      @item["order_id"] = String(@order_item.id)
+      @item["amount"] = @number
+      @item["price"] = @price
+      @item.save
+      @total_price += Integer(@number)*Integer(@price)
     end
+    puts @total_price
+    Order.update(String(@order_item.id),
+                :total_price=>@total_price,
+                :stutas=>1)
+
 
     respond_to do |format|
       format.json { render json:{status: 200}}
