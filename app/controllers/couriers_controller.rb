@@ -87,8 +87,9 @@ class CouriersController < ApplicationController
                      :mobile=>request.parameters[:mobile],
                      :email=>request.parameters[:email],
                      :encrypted_password=>request.parameters[:encrypted_password],
-                     :name=>request.parameters[:name])
-        @courier = Courier.find(request.parameters[:id]);
+                     :name=>request.parameters[:name],
+                      :status=>request.parameters[:status])
+        @courier = Courier.find(request.parameters[:id])
         format.json { render json: {status: 200, data:@courier }}
       else
         format.json { render json: {status: 200, message: "update successfully" }}
