@@ -37,6 +37,7 @@ class OrdersController < ApplicationController
 
   # post /create_order.json
   def create_order
+    response.set_header("Access-Control-Allow-Origin", "*")
     @products = request.parameters[:product]
     @address_id= request.parameters[:address_id]
     @user_id= request.parameters[:user_id]
