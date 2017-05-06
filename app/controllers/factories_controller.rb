@@ -134,14 +134,14 @@ class FactoriesController < ApplicationController
     response.set_header("Access-Control-Allow-Origin", "*")
     @factory_id = request.parameters[:factory_id]
     @bind_stations = request.parameters[:factory_stations]
-    @stations = ActiveSupport::JSON.decode(@bind_stations)
+    # @stations = ActiveSupport::JSON.decode(@bind_stations)
     sql = "select * from factories_stations where factory_id="+@factory_id
     @get_my_stations = FactoriesStation.connection.select_all(sql)
     if @get_my_stations
       FactoriesStation.where(factory_id:@factory_id).delete_all
     end
 
-    for station_id in @stations
+    for station_id in @bind_stations
       @temp_bind = FactoriesStation.new
       @temp_bind.factory_id = @factory_id
       @temp_bind.station_id = station_id
