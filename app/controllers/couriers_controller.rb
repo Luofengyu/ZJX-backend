@@ -133,12 +133,24 @@ class CouriersController < ApplicationController
   #  POST allocate_couriers_stations.json
   def allocate_couriers_stations
     response.set_header("Access-Control-Allow-Origin", "*")
-    courier_id = request.parameters[:courier_id]
-    courier_stations = request.parameters[:courier_stations]
+    @courier_id = request.parameters[:courier_id]
+    @bind_stations = request.parameters[:courier_stations]
+    @stations = ActiveSupport::JSON.decode(@bind_stations)
+    sql = "select * from couriers_stations where courier_id="+@courier_id
+    @get_my_stations = CouriersStation.connection.select_all(sql)
+    if @get_my_stations
+      CouriersStation.where(courier_id:@courier_id).delete_all
+    end
 
+    for station_id in @stations
+      @temp_bind = CouriersStation.new
+      @temp_bind.courier_id = @courier_id
+      @temp_bind.station_id = station_id
+      @temp_bind.save
+    end
 
     respond_to do |format|
-      format.json{ render json: {status:200, courier_id:courier_id,station_address:courier_stations[0]} }
+      format.json{ render json: {status:200, courier_id:@courier_id} }
     end
 
   end
