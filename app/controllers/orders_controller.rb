@@ -24,7 +24,6 @@ class OrdersController < ApplicationController
   # GET /get_all_orders.json
   def get_all_orders
     response.set_header("Access-Control-Allow-Origin", "*")
-    @courier_id = request.parameters[:courier_id];
     sql="select orders.*,orders_status.status_desc,categories.name as category_name,user_addresses.*
     from orders
     inner join orders_status on orders.status = orders_status.id
