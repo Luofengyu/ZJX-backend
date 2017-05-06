@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       post "update_factory"
       post "delete_factory"
       get "get_factory_stations"
+      post "allocate_factories_stations"
     end
   end
 

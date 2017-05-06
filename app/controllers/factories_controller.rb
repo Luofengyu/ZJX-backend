@@ -129,4 +129,28 @@ class FactoriesController < ApplicationController
     end
   end
 
+  #  POST allocate_factories_stations.json
+  def allocate_factories_stations
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @factory_id = request.parameters[:factory_id]
+    @bind_stations = request.parameters[:factory_stations]
+    @stations = ActiveSupport::JSON.decode(@bind_stations)
+    sql = "select * from factories_stations where factory_id="+@factory_id
+    @get_my_stations = FactoriesStation.connection.select_all(sql)
+    if @get_my_stations
+      FactoriesStation.where(factory_id:@factory_id).delete_all
+    end
+
+    for station_id in @stations
+      @temp_bind = FactoriesStation.new
+      @temp_bind.factory_id = @factory_id
+      @temp_bind.station_id = station_id
+      @temp_bind.save
+    end
+
+    respond_to do |format|
+      format.json{ render json: {status:200, factory_id:@factory_id} }
+    end
+
+  end
 end
