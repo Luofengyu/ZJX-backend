@@ -135,19 +135,22 @@ class CouriersController < ApplicationController
     response.set_header("Access-Control-Allow-Origin", "*")
     @courier_id = request.parameters[:courier_id]
     @bind_stations = request.parameters[:courier_stations]
-    # @stations = ActiveSupport::JSON.decode(@bind_stations)
-    sql = "select * from couriers_stations where courier_id="+@courier_id
-    @get_my_stations = CouriersStation.connection.select_all(sql)
-    if @get_my_stations
-      CouriersStation.where(courier_id:@courier_id).delete_all
+    @stations = ActiveSupport::JSON.decode(@bind_stations)
+    begin
+      @delete = CouriersStation.where(factory_id:@factory_id).delete_all
+    rescue
+      puts "none"
     end
 
-    for station_id in @bind_stations
-      @temp_bind = CouriersStation.new
-      @temp_bind.courier_id = @courier_id
-      @temp_bind.station_id = station_id
-      @temp_bind.save
+    if @stations
+      for station_id in @stations
+        @temp_bind = CouriersStation.new
+        @temp_bind.courier_id = @courier_id
+        @temp_bind.station_id = station_id
+        @temp_bind.save
+      end
     end
+
 
     respond_to do |format|
       format.json{ render json: {status:200, courier_id:@courier_id} }
