@@ -8,7 +8,11 @@ Rails.application.routes.draw do
     end
 
   end
-  resources :items
+  resources :items do
+    collection do
+      get "get_items"
+    end
+  end
   devise_for :workers
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
@@ -130,11 +134,17 @@ Rails.application.routes.draw do
   end
   resources :cities
 
-  resources :orders do 
-    member do 
-      post :paidan
+  resources :orders do
+    collection do
+      get "get_all_orders"
+      post "create_order"
+      get "get_user_orders"
     end
   end
 
-  resources :waybills
+  resources :waybills do
+    collection do
+      get "get_waybills"
+    end
+  end
 end

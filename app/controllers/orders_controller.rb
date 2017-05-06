@@ -1,81 +1,69 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy, :paidan]
 
-  # GET /orders
-  # GET /orders.json
-  def index
-    @orders = Order.paginate(page: params[:page], per_page: 10).order(updated_at: :desc)
-  end
-
-  # GET /orders/1
-  # GET /orders/1.json
-  def show
-  end
-
-  # GET /orders/new
-  def new
-    @order = Order.new
-  end
-
-  # GET /orders/1/edit
-  def edit
-  end
-
-  # POST /orders
-  # POST /orders.json
-  def create
-    @order = Order.new(order_params)
+  # GET /get_user_orders.json
+  def get_user_orders
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @user_id = request.parameters[:user_id];
+    sql1="select orders.*,orders_status.status_desc,categories.name as category_name,user_addresses.*,
+           max(waybills.created_at) as date,max(waybills.status) as waybills_status,
+              max(waybills.sender_type) as waybills_desc from orders
+    inner join orders_status on orders.status = orders_status.id and orders.user_id="
+    sql1.concat(@user_id)
+    sql2=" inner join categories on categories.id = orders.category_id
+    inner join user_addresses on user_addresses.id = orders.address_id
+    inner join waybills on orders.id = waybills.order_id
+    group by waybills.order_id;"
+    sql1.concat(sql2)
+    orders=Order.connection.select_all(sql1)
 
     respond_to do |format|
-      if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json { render :show, status: :created, location: @order }
-      else
-        format.html { render :new }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
+      format.json{render json: {status: 200,orders: orders}}
     end
   end
 
-  # PATCH/PUT /orders/1
-  # PATCH/PUT /orders/1.json
-  def update
+  # GET /get_all_orders.json
+  def get_all_orders
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @courier_id = request.parameters[:courier_id];
+    sql="select orders.*,orders_status.status_desc,categories.name as category_name,user_addresses.*
+    from orders
+    inner join orders_status on orders.status = orders_status.id
+    inner join categories on categories.id = orders.category_id
+    inner join user_addresses on user_addresses.id = orders.address_id"
+    orders=Order.connection.select_all(sql)
     respond_to do |format|
-      if @order.update(order_params)
-        format.html { redirect_to @order, notice: 'Order was successfully updated.' }
-        format.json { render :show, status: :ok, location: @order }
-      else
-        format.html { render :edit }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
+      format.json{render json: {status: 200,orders: orders}}
     end
   end
 
-  # DELETE /orders/1
-  # DELETE /orders/1.json
-  def destroy
-    @order.destroy
+  # post /create_order.json
+  def create_order
+    @products = request.parameters[:product]
+    @address_id= request.parameters[:address_id]
+    @user_id= request.parameters[:user_id]
+    @time = request.parameters[:time]
+    @category_id = request.parameters[:category_id]
+    @order_products =  ActiveSupport::JSON.decode(@data)
+
+    @order_item = Order.new
+    @order_item["address_id"] = @address_id
+    @order_item["category_id"] = @category_id
+    @order_item["user_id"] = @user_id
+    @order_item["address_id"] = @address_id
+    @order_item.save
+    puts @order_item.id
+    for @item in @order_products
+      @product_id, @number, @price = @item.split('#')
+      @item = Item.new()
+      item["product_id"] = @product_id
+      item["amount"] = @number
+      item["price"] = @price
+      # item.save
+    end
+
     respond_to do |format|
-      format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
-      format.json { head :no_content }
+      format.json { render json:{status: 200}}
     end
   end
 
-  def paidan
-    @order.paidan
-    respond_to do |format|
-      format.html { redirect_to @order, notice: 'Order was successfully destroyed.' }
-    end
-  end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def order_params
-      params.require(:order).permit(:category_id, :user_id, :address_id, :total_price, :status, :courier_status, :voucher_status, :cleaning_status)
-    end
 end
