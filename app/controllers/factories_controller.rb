@@ -86,7 +86,8 @@ class FactoriesController < ApplicationController
                             :email=>request.parameters[:email],
                             :encrypted_password=>request.parameters[:encrypted_password],
                             :name=>request.parameters[:name],
-                            :tel=>request.parameters[:tel])
+                            :tel=>request.parameters[:tel],
+                            :status=>request.parameters[:status])
         @factory = Factory.find(request.parameters[:id]);
         format.json { render json: {status: 200, data:@factory }}
       else
