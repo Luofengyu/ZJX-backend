@@ -6,6 +6,7 @@ class WaybillsController < ApplicationController
     @order_id = request.parameters[:order_id]
     sql = "select waybills.* from waybills where order_id="
     sql.concat(@order_id)
+    sql.concat(" order by waybills.id desc")
     @waybills = Waybill.connection.select_all(sql)
     respond_to do |format|
       format.json{render json: {status: 200,waybills: @waybills}}

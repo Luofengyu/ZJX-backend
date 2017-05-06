@@ -46,6 +46,8 @@ Rails.application.routes.draw do
       post "delete_courier"
       get "get_courier_stations"
       post "allocate_couriers_stations"
+      post "courier_shipping"
+      post "courier_arrived"
     end
   end
   resources :factories do
