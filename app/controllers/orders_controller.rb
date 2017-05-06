@@ -48,6 +48,7 @@ class OrdersController < ApplicationController
     @waybill["exp_time"] = @time
     @waybill["sender_type"] = "骑手即将取件"
     @waybill.save
+    puts "waybill-id"
     puts String(@waybill.id)
 
     @order_item = Order.new
@@ -58,7 +59,11 @@ class OrdersController < ApplicationController
     @order_item["waybill_id"] = String(@waybill.id)
     @order_item["factory_id"] = 1
     @order_item.save
+    puts "order-id"
     puts String(@order_item.id)
+
+    Waybill.update(String(@waybill.id),
+                    :order_id=>String(@order_item.id))
     @total_price = 0
 
     # items table
@@ -72,10 +77,12 @@ class OrdersController < ApplicationController
       @item.save
       @total_price += Integer(@number)*Integer(@price)
     end
+    puts "total_price"
     puts @total_price
     Order.update(String(@order_item.id),
                 :total_price=>@total_price,
-                :stutas=>1)
+                :status=>1)
+
 
 
     respond_to do |format|
