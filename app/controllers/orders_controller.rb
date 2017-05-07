@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
     @user_id = request.parameters[:user_id];
     sql1="select orders.*,orders_status.status_desc,categories.name as category_name,user_addresses.*,
           orders.id as id, max(waybills.created_at) as date,max(waybills.status) as waybills_status,
-           max(waybills.sender_type) as waybills_desc from orders
+          max(waybills.exp_time) as qtime,max(waybills.sender_type) as waybills_desc from orders
     inner join orders_status on orders.status = orders_status.id and orders.user_id="
     sql1.concat(@user_id)
     sql2=" inner join categories on categories.id = orders.category_id
@@ -30,6 +30,7 @@ class OrdersController < ApplicationController
     inner join categories on categories.id = orders.category_id
     inner join user_addresses on user_addresses.id = orders.address_id"
     orders=Order.connection.select_all(sql)
+    puts orders.created_at
     respond_to do |format|
       format.json{render json: {status: 200,orders: orders}}
     end
