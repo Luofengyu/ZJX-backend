@@ -45,6 +45,7 @@ class OrdersController < ApplicationController
     @time = request.parameters[:time]
     @category_id = request.parameters[:category_id]
     @order_products =  ActiveSupport::JSON.decode(@products)
+    puts @order_products
 
     @waybill = Waybill.new
     @waybill["exp_time"] = @time
