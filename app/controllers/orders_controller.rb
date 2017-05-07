@@ -5,8 +5,8 @@ class OrdersController < ApplicationController
     response.set_header("Access-Control-Allow-Origin", "*")
     @user_id = request.parameters[:user_id];
     sql1="select orders.*,orders_status.status_desc,categories.name as category_name,user_addresses.*,
-           max(waybills.created_at) as date,max(waybills.status) as waybills_status,
-              max(waybills.sender_type) as waybills_desc from orders
+          orders.id as id, max(waybills.created_at) as date,max(waybills.status) as waybills_status,
+           max(waybills.sender_type) as waybills_desc from orders
     inner join orders_status on orders.status = orders_status.id and orders.user_id="
     sql1.concat(@user_id)
     sql2=" inner join categories on categories.id = orders.category_id
