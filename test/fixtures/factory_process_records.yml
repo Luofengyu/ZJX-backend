@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  factory: one
+  category: one
+  product: one
+  process_on: 2017-05-12
+  amount: 1
+
+two:
+  factory: two
+  category: two
+  product: two
+  process_on: 2017-05-12
+  amount: 1

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  validity_type: 1
+  valid_from: 2017-05-12
+  valid_to: 2017-05-12
+  fixed_begin_term: 1
+  fixed_term: 1
+
+two:
+  name: MyString
+  validity_type: 1
+  valid_from: 2017-05-12
+  valid_to: 2017-05-12
+  fixed_begin_term: 1
+  fixed_term: 1

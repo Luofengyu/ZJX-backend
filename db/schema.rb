@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170422013302) do
+ActiveRecord::Schema.define(version: 20170512063312) do
 
   create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "address"
@@ -171,6 +171,10 @@ ActiveRecord::Schema.define(version: 20170422013302) do
     t.index ["waybill_id"], name: "index_orders_on_waybill_id", using: :btree
   end
 
+  create_table "orders_status", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string "status_desc", collation: "utf8_general_ci"
+  end
+
   create_table "price_rules", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "grade"
     t.integer  "city_id"
@@ -282,6 +286,25 @@ ActiveRecord::Schema.define(version: 20170422013302) do
     t.datetime "updated_at",              null: false
   end
 
+  create_table "user_card_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "kind"
+    t.float    "real_money",    limit: 24
+    t.float    "fake_money",    limit: 24
+    t.integer  "user_id"
+    t.string   "loggable_type"
+    t.integer  "loggable_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  create_table "user_cards", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.float    "real_money", limit: 24
+    t.float    "fake_money", limit: 24
+    t.integer  "user_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "mobile",                              null: false
     t.string   "email",                  default: ""
@@ -319,6 +342,10 @@ ActiveRecord::Schema.define(version: 20170422013302) do
     t.index ["waybill_id"], name: "index_waybills_on_waybill_id", using: :btree
   end
 
+  create_table "waybills_status", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string "status_desc", collation: "utf8_general_ci"
+  end
+
   create_table "workers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -343,19 +370,9 @@ ActiveRecord::Schema.define(version: 20170422013302) do
     t.index ["worker_id", "role_id"], name: "index_workers_roles_on_worker_id_and_role_id", using: :btree
   end
 
-  add_foreign_key "categories_cities", "categories"
-  add_foreign_key "categories_cities", "cities"
   add_foreign_key "cities", "regions"
-  add_foreign_key "items", "orders"
-  add_foreign_key "items", "products"
-  add_foreign_key "orders", "addresses"
-  add_foreign_key "orders", "categories"
-  add_foreign_key "orders", "users"
-  add_foreign_key "price_rules", "categories"
-  add_foreign_key "price_rules", "cities"
   add_foreign_key "prices", "products"
   add_foreign_key "product_items", "orders"
   add_foreign_key "product_items", "products"
   add_foreign_key "products", "categories"
-  add_foreign_key "waybills", "orders"
 end

@@ -4,14 +4,14 @@ one:
   kind: 1
   real_money: 1.5
   fake_money: 1.5
-  user_id: 1
   loggable_type: MyString
   loggable_id: 1
+  user_card: one
 
 two:
   kind: 1
   real_money: 1.5
   fake_money: 1.5
-  user_id: 1
   loggable_type: MyString
   loggable_id: 1
+  user_card: two

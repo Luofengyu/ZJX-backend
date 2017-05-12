@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       post "login"
       post "update_user"
       post "delete_user"
+      get "get_item"
     end
   end
 
