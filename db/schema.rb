@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170512063312) do
+ActiveRecord::Schema.define(version: 20170512145450) do
 
   create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "address"
@@ -47,11 +47,42 @@ ActiveRecord::Schema.define(version: 20170512063312) do
     t.index ["region_id"], name: "index_cities_on_region_id", using: :btree
   end
 
+  create_table "cities_promotion_rules", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "city_id"
+    t.integer  "promotion_rule_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["city_id"], name: "index_cities_promotion_rules_on_city_id", using: :btree
+    t.index ["promotion_rule_id"], name: "index_cities_promotion_rules_on_promotion_rule_id", using: :btree
+  end
+
   create_table "cities_workers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "city_id"
     t.integer "worker_id"
     t.index ["city_id"], name: "index_cities_workers_on_city_id", using: :btree
     t.index ["worker_id"], name: "index_cities_workers_on_worker_id", using: :btree
+  end
+
+  create_table "coupon_lists", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.integer  "validity_type"
+    t.date     "valid_from"
+    t.date     "valid_to"
+    t.integer  "fixed_begin_term"
+    t.integer  "fixed_term"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  create_table "coupons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "coupon_list_id"
+    t.integer  "user_id"
+    t.date     "vaild_from"
+    t.date     "valid_to"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["coupon_list_id"], name: "index_coupons_on_coupon_list_id", using: :btree
+    t.index ["user_id"], name: "index_coupons_on_user_id", using: :btree
   end
 
   create_table "courier_addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -140,6 +171,45 @@ ActiveRecord::Schema.define(version: 20170512063312) do
     t.datetime "updated_at",              null: false
   end
 
+  create_table "factory_process_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "factory_id"
+    t.integer  "category_id"
+    t.integer  "product_id"
+    t.date     "process_on"
+    t.integer  "amount"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["category_id"], name: "index_factory_process_records_on_category_id", using: :btree
+    t.index ["factory_id"], name: "index_factory_process_records_on_factory_id", using: :btree
+    t.index ["product_id"], name: "index_factory_process_records_on_product_id", using: :btree
+  end
+
+  create_table "factory_settlement_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "factory_id"
+    t.integer  "category_id"
+    t.integer  "product_id"
+    t.date     "settlement_on"
+    t.integer  "amount"
+    t.float    "price",         limit: 24
+    t.float    "money",         limit: 24
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["category_id"], name: "index_factory_settlement_records_on_category_id", using: :btree
+    t.index ["factory_id"], name: "index_factory_settlement_records_on_factory_id", using: :btree
+    t.index ["product_id"], name: "index_factory_settlement_records_on_product_id", using: :btree
+  end
+
+  create_table "factory_settlement_rules", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.date     "from_date"
+    t.integer  "priority"
+    t.integer  "factory_id"
+    t.integer  "settlement_rule_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["factory_id"], name: "index_factory_settlement_rules_on_factory_id", using: :btree
+    t.index ["settlement_rule_id"], name: "index_factory_settlement_rules_on_settlement_rule_id", using: :btree
+  end
+
   create_table "items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "amount"
     t.float    "price",      limit: 24
@@ -149,6 +219,16 @@ ActiveRecord::Schema.define(version: 20170512063312) do
     t.datetime "updated_at",            null: false
     t.index ["order_id"], name: "index_items_on_order_id", using: :btree
     t.index ["product_id"], name: "index_items_on_product_id", using: :btree
+  end
+
+  create_table "order_promotions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "kind"
+    t.float    "discount",       limit: 24
+    t.float    "premise",        limit: 24
+    t.integer  "coupon_list_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["coupon_list_id"], name: "index_order_promotions_on_coupon_list_id", using: :btree
   end
 
   create_table "orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -220,6 +300,15 @@ ActiveRecord::Schema.define(version: 20170512063312) do
     t.index ["category_id"], name: "index_products_on_category_id", using: :btree
   end
 
+  create_table "promotion_rules", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.date     "start_on"
+    t.date     "end_on"
+    t.integer  "coupon_list_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["coupon_list_id"], name: "index_promotion_rules_on_coupon_list_id", using: :btree
+  end
+
   create_table "regions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.integer  "parent_id"
@@ -239,6 +328,27 @@ ActiveRecord::Schema.define(version: 20170512063312) do
     t.string   "comment"
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
     t.index ["name"], name: "index_roles_on_name", using: :btree
+  end
+
+  create_table "settlement_prices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "settlement_rule_id"
+    t.integer  "product_id"
+    t.float    "price",              limit: 24
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.index ["product_id"], name: "index_settlement_prices_on_product_id", using: :btree
+    t.index ["settlement_rule_id"], name: "index_settlement_prices_on_settlement_rule_id", using: :btree
+  end
+
+  create_table "settlement_rules", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "category_id"
+    t.integer  "city_id"
+    t.string   "name"
+    t.string   "comment"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["category_id"], name: "index_settlement_rules_on_category_id", using: :btree
+    t.index ["city_id"], name: "index_settlement_rules_on_city_id", using: :btree
   end
 
   create_table "station_addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -284,6 +394,15 @@ ActiveRecord::Schema.define(version: 20170512063312) do
     t.float    "lng",          limit: 24
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+  end
+
+  create_table "user_card_charge_settings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.float    "min",        limit: 24
+    t.float    "money_give", limit: 24
+    t.integer  "city_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.index ["city_id"], name: "index_user_card_charge_settings_on_city_id", using: :btree
   end
 
   create_table "user_card_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -371,8 +490,27 @@ ActiveRecord::Schema.define(version: 20170512063312) do
   end
 
   add_foreign_key "cities", "regions"
+  add_foreign_key "cities_promotion_rules", "cities"
+  add_foreign_key "cities_promotion_rules", "promotion_rules"
+  add_foreign_key "coupons", "coupon_lists"
+  add_foreign_key "coupons", "users"
+  add_foreign_key "factory_process_records", "categories"
+  add_foreign_key "factory_process_records", "factories"
+  add_foreign_key "factory_process_records", "products"
+  add_foreign_key "factory_settlement_records", "categories"
+  add_foreign_key "factory_settlement_records", "factories"
+  add_foreign_key "factory_settlement_records", "products"
+  add_foreign_key "factory_settlement_rules", "factories"
+  add_foreign_key "factory_settlement_rules", "settlement_rules"
+  add_foreign_key "order_promotions", "coupon_lists"
   add_foreign_key "prices", "products"
   add_foreign_key "product_items", "orders"
   add_foreign_key "product_items", "products"
   add_foreign_key "products", "categories"
+  add_foreign_key "promotion_rules", "coupon_lists"
+  add_foreign_key "settlement_prices", "products"
+  add_foreign_key "settlement_prices", "settlement_rules"
+  add_foreign_key "settlement_rules", "categories"
+  add_foreign_key "settlement_rules", "cities"
+  add_foreign_key "user_card_charge_settings", "cities"
 end

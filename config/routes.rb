@@ -35,6 +35,8 @@ Rails.application.routes.draw do
       post "update_user"
       post "delete_user"
       get "get_item"
+      post "direct_charge"
+      get "wallet"
     end
   end
 

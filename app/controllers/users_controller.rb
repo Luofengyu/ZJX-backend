@@ -134,20 +134,43 @@ class UsersController < ApplicationController
   def direct_charge
     response.set_header("Access-Control-Allow-Origin", "*")
     @user_id = request.parameters[:user_id]
-    @real_money = request.parameters[:user_id]
-    sql1 = "select users.*,user_cards.* from users inner join user_cards
-           on user_cards.user_id = users.id and user_id= "
+    @real_money = request.parameters[:real_money]
+    @fake_money = request.parameters[:fake_money]
+    @user_card = UserCard.find_by_user_id(@user_id)
+    real_money = @real_money.to_f + @user_card[:real_money].to_f
+    puts (real_money)
+    fake_money = @fake_money.to_f + @user_card[:fake_money].to_f
+    UserCard.update(@user_card[:id],
+                    :real_money=>real_money,
+                    :fake_money=>fake_money)
+    @user_card_log = UserCardLog.new
+    @user_card_log.real_money = @real_money
+    @user_card_log.fake_money = @fake_money
+    @user_card_log.user_id = @user_id
+    @user_card_log.kind = 0
+    @user_card_log.loggable_type = "用户充值"
+    @user_card_log.loggable_id = 0
+    if @user_card_log.save
+      respond_to do |format|
+        format.json{render json: {status: 200,log: @user_card_log}}
+      end
+    end
+  end
+
+  # GET wallet.json
+  def wallet
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @user_id = request.parameters[:user_id]
+    sql1 = "select (user_cards.real_money+user_cards.fake_money) as money
+             from user_cards where user_id= "
     sql1.concat(@user_id)
-    @items = Item.connection.select_all(sql1)
+    @wallet = Item.connection.select_all(sql1)
     sql2 = "select * from user_card_logs where user_id = "
     sql2.concat(@user_id)
     @logs = Item.connection.select_all(sql2)
     respond_to do |format|
-      format.json{render json: {status: 200,items: @items,logs:@logs}}
+      format.json{render json: {status: 200,wallet: @wallet,logs:@logs}}
     end
-
   end
-
-
 
 end
