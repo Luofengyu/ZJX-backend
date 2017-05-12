@@ -114,4 +114,40 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET get_item.json
+  def get_item
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @user_id = request.parameters[:user_id]
+    sql1 = "select users.*,user_cards.* from users inner join user_cards
+           on user_cards.user_id = users.id and user_id= "
+    sql1.concat(@user_id)
+    @items = Item.connection.select_all(sql1)
+    sql2 = "select * from user_card_logs where user_id = "
+    sql2.concat(@user_id)
+    @logs = Item.connection.select_all(sql2)
+    respond_to do |format|
+      format.json{render json: {status: 200,items: @items,logs:@logs}}
+    end
+  end
+
+  #POST direct_charge.json
+  def direct_charge
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @user_id = request.parameters[:user_id]
+    @real_money = request.parameters[:user_id]
+    sql1 = "select users.*,user_cards.* from users inner join user_cards
+           on user_cards.user_id = users.id and user_id= "
+    sql1.concat(@user_id)
+    @items = Item.connection.select_all(sql1)
+    sql2 = "select * from user_card_logs where user_id = "
+    sql2.concat(@user_id)
+    @logs = Item.connection.select_all(sql2)
+    respond_to do |format|
+      format.json{render json: {status: 200,items: @items,logs:@logs}}
+    end
+
+  end
+
+
+
 end
