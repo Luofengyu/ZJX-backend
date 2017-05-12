@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from_date: 2017-05-12
+  priority: 1
+  factory: one
+  settlement_rule: one
+
+two:
+  from_date: 2017-05-12
+  priority: 1
+  factory: two
+  settlement_rule: two

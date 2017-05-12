@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  city: one
+  promotion_rule: one
+
+two:
+  city: two
+  promotion_rule: two

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  min: 1.5
+  money_give: 1.5
+  city: one
+
+two:
+  min: 1.5
+  money_give: 1.5
+  city: two
