@@ -1,6 +1,5 @@
 class CategoriesController < ApplicationController
-  
-  before_action :set_category, only: [:show, :edit, :update, :destroy, :prices, :init_prices]
+
 
   # GET get_categories.json
   def get_categories
