@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       get "get_item"
       post "direct_charge"
       get "wallet"
+      post "pay"
     end
   end
 

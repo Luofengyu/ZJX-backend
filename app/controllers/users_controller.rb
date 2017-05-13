@@ -198,11 +198,31 @@ class UsersController < ApplicationController
         remain_money = real_money - total_price
         UserCard.update(@wallet[:id],
                         :real_money=>remain_money)
+
+        # 添加流水记录
+        @user_card_log = UserCardLog.new()
+        @user_card_log.real_money = total_price
+        @user_card_log.fake_money = 0
+        @user_card_log.user_id = @user_id
+        @user_card_log.kind = 1
+        @user_card_log.loggable_type = "用户支付"
+        @user_card_log.loggable_id = 1
+        @user_card_log.save()
       else
         remain_money = balance - total_price
         UserCard.update(@wallet[:id],
                         :real_money=>0,
                         :fake_money=>remain_money)
+        # 添加流水记录
+        @user_card_log = UserCardLog.new()
+        @user_card_log.real_money = real_money
+        @user_card_log.fake_money = total_price - real_money
+        @user_card_log.user_id = @user_id
+        @user_card_log.kind = 1
+        @user_card_log.loggable_type = "用户支付"
+        @user_card_log.loggable_id = 1
+        @user_card_log.save()
+
       end
 
       # 更新订单状态变成已支付
