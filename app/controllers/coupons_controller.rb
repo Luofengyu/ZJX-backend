@@ -42,6 +42,7 @@ class CouponsController < ApplicationController
   # 建立优惠规则 1-满减  2-打折 3-红包
   #post create_order_promotions
   def create_order_promotions
+    response.set_header("Access-Control-Allow-Origin", "*")
     @coupon_id = request.parameters[:coupon_id]
     # 折扣类型
     @kind = request.parameters[:type]
