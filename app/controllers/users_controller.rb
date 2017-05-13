@@ -173,4 +173,46 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST pay.json
+  def pay
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @user_id = request.parameters[:user_id]
+    @order_id = request.parameters[:order_id]
+
+    # 查询用户余额balance
+    @wallet = UserCard.find_by_user_id(@user_id)
+    real_money = @wallet[:real_money]
+    fake_money = @wallet[:fake_money]
+    balance = @wallet[:real_money] + @wallet[:fake_money]
+
+    # 查找订单总价total_price
+    @order = Order.find(@order_id)
+    total_price = @order[:total_price]
+
+    if(total_price > balance)
+      respond_to do |format|
+        format.json{render json: {status: 400,message: "您的账户余额不足"}}
+      end
+    else
+      if (real_money >= total_price)
+        remain_money = real_money - total_price
+        UserCard.update(@wallet[:id],
+                        :real_money=>remain_money)
+      else
+        remain_money = balance - total_price
+        UserCard.update(@wallet[:id],
+                        :real_money=>0,
+                        :fake_money=>remain_money)
+      end
+
+      # 更新订单状态变成已支付
+      Order.update(@order_id,
+                   :status=>3)
+      respond_to do |format|
+        format.json{render json: {status: 200,message: "支付成功"}}
+      end
+    end
+
+  end
+
 end
