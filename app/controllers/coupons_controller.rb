@@ -2,6 +2,7 @@ class CouponsController < ApplicationController
   # post create_coupons.json
   # validity_type 1- 永久  2-临时
   def create_coupons
+    response.set_header("Access-Control-Allow-Origin", "*")
     @name = request.parameters[:name]
     @validity_type = request.parameters[:validity_type]
     @start = request.parameters[:start]
