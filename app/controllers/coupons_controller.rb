@@ -1,4 +1,59 @@
 class CouponsController < ApplicationController
+  # post create_coupons.json
+  # validity_type 1- 永久  2-临时
+  def create_coupons
+    @name = request.parameters[:name]
+    @validity_type = request.parameters[:validity_type]
+    @start = request.parameters[:start]
+    @end = request.parameters[:end]
+    @use_delay = request.parameters[:use_delay]
+    @fixed_day= request.parameters[:fixed_day]
+    # 折扣类型
+    @kind = request.parameters[:type]
+    # 前提约束
+    @premise = request.parameters[:premise]
+    @discount = request.parameters[:discount]
+
+    @coupon = CouponList.new
+    @coupon["name"] = @name
+    @coupon["validity_type"] = @validity_type
+    @coupon["valid_from"] = @start
+    @coupon["valid_to"] = @end
+    @coupon["fixed_begin_term"] = @use_delay
+    @coupon["fixed_term"] = @fixed_day
+    @coupon.save
+
+    @order_promotion = OrderPromotion.new
+    @order_promotion["kind"] = @kind
+    @order_promotion["premise"] = @premise
+    @order_promotion["discount"] = @discount
+    @order_promotion["coupon_id"] = String(@coupon.id)
+    @order_promotion.save
+  end
+
+
+
+  # 建立优惠规则 1-满减  2-打折 3-红包
+  #post create_order_promotions
+  def create_order_promotions
+    @coupon_id = request.parameters[:coupon_id]
+    # 折扣类型
+    @kind = request.parameters[:type]
+    # 前提约束
+    @premise = request.parameters[:premise]
+    @discount = request.parameters[:discount]
+    @order_promotion = OrderPromotion.new
+    @order_promotion["kind"] = @kind
+    @order_promotion["premise"] = @premise
+    @order_promotion["discount"] = @discount
+    @order_promotion["coupon_id"] = @coupon_id
+    @order_promotion.save
+    respond_to do |format|
+      format.json{ render json: {status:200} }
+    end
+  end
+
+
   #get get_coupon_list.json
   def get_coupon_list
     response.set_header("Access-Control-Allow-Origin", "*")
