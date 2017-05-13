@@ -75,6 +75,7 @@ class CouponsController < ApplicationController
     response.set_header("Access-Control-Allow-Origin", "*")
     @coupon_id = request.parameters[:coupon_id]
     OrderPromotion.where(coupon_list_id:@coupon_id).delete_all
+    Coupon.where(coupon_list_id:@coupon_id).delete_all
     CouponList.where(id:@coupon_id).delete_all
     respond_to do |format|
       format.json{ render json: {status:200} }
@@ -101,7 +102,7 @@ class CouponsController < ApplicationController
     @new_coupon = Coupon.new
     @new_coupon["coupon_list_id"] = @choosen_coupon
     @new_coupon["user_id"] = @user_id
-    @new_coupon["valid_from"] = @today + @coupon_type.fixed_begin_term.day
+    @new_coupon["vaild_from"] = @today + @coupon_type.fixed_begin_term.day
     @new_coupon["valid_to"] = @today + @coupon_type.fixed_begin_term.day + @coupon_type.fixed_term.day
     @new_coupon.save
 
