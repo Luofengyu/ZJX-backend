@@ -161,6 +161,7 @@ Rails.application.routes.draw do
       post "send_coupons"
       get "get_coupon_list"
       post "create_coupons"
+      post "delete_coupon"
     end
   end
 end
