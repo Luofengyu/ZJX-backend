@@ -154,4 +154,12 @@ Rails.application.routes.draw do
       get "get_waybills"
     end
   end
+
+  resources :coupons do
+    collection do
+      get "get_user_coupons"
+      post "send_coupons"
+      get "get_coupon_list"
+    end
+  end
 end
