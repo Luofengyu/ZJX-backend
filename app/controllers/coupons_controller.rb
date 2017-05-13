@@ -6,11 +6,7 @@ class CouponsController < ApplicationController
     @name = request.parameters[:name]
     @validity_type = request.parameters[:validity_type]
     @start = request.parameters[:start]
-    @temp_arr = @start.split('/')
-    @valid_from = @temp_arr[2]+"-"+@temp_arr[0]+"-"+@temp_arr[1]
     @end = request.parameters[:end]
-    @temp_arr = @end.split('/')
-    @valid_to = @temp_arr[2]+"-"+@temp_arr[0]+"-"+@temp_arr[1]
     @use_delay = request.parameters[:use_delay]
     @fixed_day= request.parameters[:fixed_day]
     # 折扣类型
@@ -22,8 +18,8 @@ class CouponsController < ApplicationController
     @coupon = CouponList.new
     @coupon["name"] = @name
     @coupon["validity_type"] = @validity_type
-    @coupon["valid_from"] = @valid_from
-    @coupon["valid_to"] = @valid_to
+    @coupon["valid_from"] = @start
+    @coupon["valid_to"] = @end
     @coupon["fixed_begin_term"] = @use_delay
     @coupon["fixed_term"] = @fixed_day
     @coupon.save
