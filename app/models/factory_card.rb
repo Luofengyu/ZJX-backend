@@ -1,0 +1,2 @@
+class FactoryCard < ApplicationRecord
+end

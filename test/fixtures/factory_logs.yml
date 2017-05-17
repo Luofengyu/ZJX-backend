@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  kind: 1
+  money: 1.5
+  factory_id: 1
+  desc: MyString
+
+two:
+  kind: 1
+  money: 1.5
+  factory_id: 1
+  desc: MyString

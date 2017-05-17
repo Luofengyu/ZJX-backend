@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517144635) do
+ActiveRecord::Schema.define(version: 20170517155327) do
 
   create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "address"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20170517144635) do
   create_table "cal_rules", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.float    "base",        limit: 24
     t.float    "extra",       limit: 24
-    t.integer  "person_type"
+    t.integer  "person_type",                         comment: "0:取送 1:工厂"
     t.string   "desc"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
@@ -195,6 +195,23 @@ ActiveRecord::Schema.define(version: 20170517144635) do
     t.float    "lng",          limit: 24
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+  end
+
+  create_table "factory_cards", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.float    "money",      limit: 24
+    t.integer  "factory_id"
+    t.string   "desc"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  create_table "factory_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "kind"
+    t.float    "money",      limit: 24
+    t.integer  "factory_id"
+    t.string   "desc"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "factory_process_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

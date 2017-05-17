@@ -1,0 +1,2 @@
+class FactoryLog < ApplicationRecord
+end

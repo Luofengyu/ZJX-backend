@@ -235,6 +235,7 @@ class CouriersController < ApplicationController
   # GET wallet.json
   def wallet
 
+
   end
 
 
