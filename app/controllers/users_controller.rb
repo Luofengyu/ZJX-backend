@@ -157,6 +157,58 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET charge_list.json
+  def charge_list
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @list = UserCardChargeSetting.all
+    respond_to do |format|
+      format.json{render json: {status: 200,list: @list}}
+    end
+  end
+
+  # POST youhui_charge.json
+  def youhui_charge
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @user_id = request.parameters[:user_id]
+    @setting_id = request.parameters[:setting_id]
+    @setting = UserCardChargeSetting.find(@setting_id)
+
+    @user_card = UserCard.find_by_user_id(@user_id)
+    real_money = @setting[:min].to_f + @user_card[:real_money].to_f
+    puts (real_money)
+    fake_money = @setting[:money_give].to_f + @user_card[:fake_money].to_f
+
+    UserCard.update(@user_card[:id],
+                    :real_money=>real_money,
+                    :fake_money=>fake_money)
+
+    @user_card_log = UserCardLog.new
+    @user_card_log.real_money = @setting[:min]
+    @user_card_log.fake_money = @setting[:money_give]
+    @user_card_log.user_id = @user_id
+    @user_card_log.kind = 0
+    @user_card_log.loggable_type = "操作员充值"
+    @user_card_log.loggable_id = 1
+    @user_card_log.save
+    respond_to do |format|
+      format.json{render json: {status: 200,log: @user_card_log}}
+    end
+  end
+
+  # POST create_yonghui_charge_setting.json
+  def create_yonghui_charge_setting
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @min = request.parameters[:min]
+    @give = request.parameters[:give]
+    @setting = UserCardChargeSetting.new()
+    @setting.min = @min
+    @setting.money_give = @give
+    @setting.save()
+    respond_to do |format|
+      format.json{render json: {status: 200}}
+    end
+  end
+
   # GET wallet.json
   def wallet
     response.set_header("Access-Control-Allow-Origin", "*")

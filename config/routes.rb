@@ -38,6 +38,9 @@ Rails.application.routes.draw do
       post "direct_charge"
       get "wallet"
       post "pay"
+      post "youhui_charge"
+      post "create_yonghui_charge_setting"
+      get "charge_list"
       post "cancel_order"
       post "refunds"
     end

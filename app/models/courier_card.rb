@@ -1,0 +1,2 @@
+class CourierCard < ApplicationRecord
+end

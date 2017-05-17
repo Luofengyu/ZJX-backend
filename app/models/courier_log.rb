@@ -1,0 +1,2 @@
+class CourierLog < ApplicationRecord
+end

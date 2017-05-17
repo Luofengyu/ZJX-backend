@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517094940) do
+ActiveRecord::Schema.define(version: 20170517144635) do
 
   create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "address"
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20170517094940) do
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
     t.index ["addressable_id"], name: "index_addresses_on_addressable_id", using: :btree
+  end
+
+  create_table "cal_rules", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.float    "base",        limit: 24
+    t.float    "extra",       limit: 24
+    t.integer  "person_type"
+    t.string   "desc"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -98,6 +107,23 @@ ActiveRecord::Schema.define(version: 20170517094940) do
     t.float    "lng",          limit: 24
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+  end
+
+  create_table "courier_cards", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.float    "money",      limit: 24
+    t.integer  "courier_id"
+    t.string   "desc"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  create_table "courier_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "kind"
+    t.float    "money",      limit: 24
+    t.integer  "courier_id"
+    t.string   "desc"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "couriers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -463,6 +489,23 @@ ActiveRecord::Schema.define(version: 20170517094940) do
 
   create_table "waybills_status", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "status_desc", collation: "utf8_general_ci"
+  end
+
+  create_table "worker_cards", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.float    "money",      limit: 24
+    t.integer  "worker_id"
+    t.string   "desc"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  create_table "worker_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "kind"
+    t.float    "money",      limit: 24
+    t.integer  "worker_id"
+    t.string   "desc"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "worker_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

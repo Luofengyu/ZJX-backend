@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  money: 1.5
+  courier_id: 1
+  desc: MyString
+
+two:
+  money: 1.5
+  courier_id: 1
+  desc: MyString
