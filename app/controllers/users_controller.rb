@@ -244,7 +244,14 @@ class UsersController < ApplicationController
 
       # 更新订单状态变成已支付
       Order.update(@order_id,
-                   :status=>3)
+                   :status=>4)
+
+      @waybill = Waybill.new
+      @waybill["exp_time"] = Time.new
+      @waybill["sender_type"] = "你的黑土骑士正载着你的衣服奔向洗衣房"
+      @waybill["order_id"] = @order_id
+      @waybill.save
+
       respond_to do |format|
         format.json{render json: {status: 200,message: "支付成功"}}
       end
