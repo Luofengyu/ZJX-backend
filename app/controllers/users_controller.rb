@@ -244,7 +244,8 @@ class UsersController < ApplicationController
 
       # 更新订单状态变成已支付
       Order.update(@order_id,
-                   :status=>4)
+                   :status=>4,
+                    :total_price => total_price)
 
       @waybill = Waybill.new
       @waybill["exp_time"] = Time.new
@@ -259,4 +260,33 @@ class UsersController < ApplicationController
 
   end
 
+  # 退款 refunds.json
+  def refunds
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @user_id = request.parameters[:user_id]
+    @order_id = request.parameters[:order_id]
+
+    @wallet = UserCard.find_by_user_id(@user_id)
+    # 查找订单总价total_price
+    @order = Order.find(@order_id)
+    @refund_money = @order[:total_price]
+
+    @update_fake_money += @wallet[:fake_money] + @refund_money
+    UserCard.update(@wallet[:id],
+                    :fake_money=>@update_fake_money)
+    @balance = @wallet[:real_money] + @update_fake_money
+
+    # 物流信息
+    @waybill = Waybill.new
+    @waybill["exp_time"] = Time.new
+    @waybill["sender_type"] = "完成退款"
+    @waybill["order_id"] = @order_id
+    @waybill["status"] = 9
+    @waybill.save
+
+
+    respond_to do |format|
+      format.json{render json: {status: 200, message:"退款成功", order:@order, balance:@balance}}
+    end
+  end
 end

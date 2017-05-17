@@ -51,8 +51,7 @@ class OrdersController < ApplicationController
     @waybill["exp_time"] = @time
     @waybill["sender_type"] = "骑手即将取件"
     @waybill.save
-    puts "waybill-id"
-    puts String(@waybill.id)
+
 
     @order_item = Order.new
     @order_item["address_id"] = @address_id
@@ -62,8 +61,7 @@ class OrdersController < ApplicationController
     @order_item["waybill_id"] = String(@waybill.id)
     @order_item["factory_id"] = 1
     @order_item.save
-    puts "order-id"
-    puts String(@order_item.id)
+
 
     Waybill.update(String(@waybill.id),
                     :order_id=>String(@order_item.id))
