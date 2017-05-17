@@ -195,4 +195,17 @@ class FactoriesController < ApplicationController
     end
   end
 
+  # POST change_factory_cal_rules.json
+  def change_factory_cal_rules
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @base = request.parameters[:base]
+    @extra = request.parameters[:extra]
+    @cal_rules = CalRule.find_by_person_type(1)
+    @cal_rules.update_attribute(:base,@base)
+    @cal_rules.update_attribute(:extra,@extra)
+    respond_to do |format|
+      format.json{ render json: {status:200,cal_rules:@cal_rules} }
+    end
+  end
+
 end

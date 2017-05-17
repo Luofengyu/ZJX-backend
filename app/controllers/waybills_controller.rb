@@ -13,4 +13,5 @@ class WaybillsController < ApplicationController
     end
   end
 
+
 end

@@ -58,6 +58,8 @@ Rails.application.routes.draw do
       post "courier_shipping"
       post "courier_confirm_shipping"
       post "courier_arrived"
+      post "change_courier_cal_rules"
+      get "wallet"
     end
   end
   resources :factories do
@@ -70,6 +72,8 @@ Rails.application.routes.draw do
       post "allocate_factories_stations"
       post "factory_washing"
       post "factory_finish_washing"
+      post "change_factory_cal_rules"
+      get "wallet"
     end
   end
 
