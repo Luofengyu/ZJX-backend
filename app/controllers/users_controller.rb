@@ -260,7 +260,7 @@ class UsersController < ApplicationController
 
   end
 
-  # 退款 refunds.json
+  # 退款 post refunds.json
   def refunds
     response.set_header("Access-Control-Allow-Origin", "*")
     @user_id = request.parameters[:user_id]
@@ -289,4 +289,26 @@ class UsersController < ApplicationController
       format.json{render json: {status: 200, message:"退款成功", order:@order, balance:@balance}}
     end
   end
+
+  # 修改订单状态(不退钱)
+  # post cancel_order.json
+  def cancel_order
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @user_id = request.parameters[:user_id]
+    @order_id = request.parameters[:order_id]
+
+    # 物流信息
+    @waybill = Waybill.new
+    @waybill["exp_time"] = Time.new
+    @waybill["sender_type"] = "取消订单"
+    @waybill["order_id"] = @order_id
+    @waybill["status"] = 8
+    @waybill.save
+
+
+    respond_to do |format|
+      format.json{render json: {status: 200, message:"取消订单成功", order:@order}}
+    end
+  end
+
 end

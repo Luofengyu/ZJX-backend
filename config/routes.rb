@@ -38,6 +38,8 @@ Rails.application.routes.draw do
       post "direct_charge"
       get "wallet"
       post "pay"
+      post "cancel_order"
+      post "refunds"
     end
   end
 
