@@ -178,6 +178,9 @@ class UsersController < ApplicationController
     response.set_header("Access-Control-Allow-Origin", "*")
     @user_id = request.parameters[:user_id]
     @order_id = request.parameters[:order_id]
+    # youhuiquan id
+    @user_coupon_id = request.parameters[:coupon_id]
+    @order_promotion_id = request.parameters[:order_promotion_id]
 
     # 查询用户余额balance
     @wallet = UserCard.find_by_user_id(@user_id)
@@ -185,9 +188,23 @@ class UsersController < ApplicationController
     fake_money = @wallet[:fake_money]
     balance = @wallet[:real_money] + @wallet[:fake_money]
 
+
     # 查找订单总价total_price
     @order = Order.find(@order_id)
     total_price = @order[:total_price]
+
+    #youhuiquan
+    if (@user_coupon_id and @order_promotion_id)
+      @user_coupon = Coupon.find(@user_coupon_id)
+      @order_promotion = OrderPromotion.find(@order_promotion_id)
+      case @order_promotion.kind
+        when 1
+          total_price -= @order_promotion.discount
+        when 2
+          total_price *= @order_promotion.discount
+        # 3
+      end
+    end
 
     if(total_price > balance)
       respond_to do |format|
