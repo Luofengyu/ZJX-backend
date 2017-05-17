@@ -74,6 +74,7 @@ Rails.application.routes.draw do
       post "create_roles"
       post "update_roles"
       post "delete_roles"
+      post "assign_worker_role"
     end
   end
 

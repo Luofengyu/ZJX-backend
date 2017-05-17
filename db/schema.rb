@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170512145450) do
+ActiveRecord::Schema.define(version: 20170517094940) do
 
   create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "address"
@@ -465,6 +465,15 @@ ActiveRecord::Schema.define(version: 20170512145450) do
     t.string "status_desc", collation: "utf8_general_ci"
   end
 
+  create_table "worker_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "worker_id"
+    t.integer  "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_worker_roles_on_role_id", using: :btree
+    t.index ["worker_id"], name: "index_worker_roles_on_worker_id", using: :btree
+  end
+
   create_table "workers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -481,12 +490,6 @@ ActiveRecord::Schema.define(version: 20170512145450) do
     t.datetime "updated_at",                          null: false
     t.index ["email"], name: "index_workers_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_workers_on_reset_password_token", unique: true, using: :btree
-  end
-
-  create_table "workers_roles", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "worker_id"
-    t.integer "role_id"
-    t.index ["worker_id", "role_id"], name: "index_workers_roles_on_worker_id_and_role_id", using: :btree
   end
 
   add_foreign_key "cities", "regions"
@@ -513,4 +516,6 @@ ActiveRecord::Schema.define(version: 20170512145450) do
   add_foreign_key "settlement_rules", "categories"
   add_foreign_key "settlement_rules", "cities"
   add_foreign_key "user_card_charge_settings", "cities"
+  add_foreign_key "worker_roles", "roles"
+  add_foreign_key "worker_roles", "workers"
 end

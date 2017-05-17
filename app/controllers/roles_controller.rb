@@ -48,7 +48,7 @@ class RolesController < ApplicationController
                             :resource_type=>request.parameters[:resource_type],
                             :display_name=>request.parameters[:display_name],
                             :comment=>request.parameters[:comment])
-        @roles = Role.find(request.parameters[:id]);
+        @roles = Role.find(request.parameters[:id])
         format.json { render json: {status: 200, roles: @roles }}
       else
         format.json { render json: {status: 400, message: "roles update unsuccessfully" }}
@@ -63,6 +63,19 @@ class RolesController < ApplicationController
     @roles.delete()
     respond_to do |format|
       format.json { render json: {status: 200, message: "roles delete successfully" } }
+    end
+  end
+
+  #post assign_worker_role.json
+  def assign_worker_role
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @role = Role.find(request.parameters[:role_id])
+    @worker = Role.find(request.parameters[:worker_id])
+    @worker_role = WorkerRole.new
+    @worker_role.role_id = request.parameters[:role_id]
+    @worker_role.worker_id = request.parameters[:worker_id]
+    respond_to do |format|
+      format.json { render json: {status: 200, role:@role, worker:@worker } }
     end
   end
 end
