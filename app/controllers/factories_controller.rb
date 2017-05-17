@@ -170,7 +170,7 @@ class FactoriesController < ApplicationController
     @waybill.save
 
     Order.update(@order_id,
-                  :status=>4)
+                  :status=>5)
 
     respond_to do |format|
       format.json{ render json: {status:200} }
@@ -189,7 +189,7 @@ class FactoriesController < ApplicationController
     @waybill.save
 
     Order.update(@order_id,
-                 :status=>5)
+                 :status=>6)
     respond_to do |format|
       format.json{ render json: {status:200} }
     end

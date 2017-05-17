@@ -178,6 +178,28 @@ class CouriersController < ApplicationController
       format.json{ render json: {status:200} }
     end
   end
+
+  #  POST courier_confirm_shipping.json
+  def courier_confirm_shipping
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @order_id = request.parameters[:order_id]
+    @time = request.parameters[:time]
+
+    @waybill = Waybill.new
+    @waybill["exp_time"] = @time
+    @waybill["sender_type"] = "你需要付钱洗衣了"
+    @waybill["order_id"] = @order_id
+    @waybill.save
+
+    Order.update(@order_id,
+                 :status=>3)
+
+    respond_to do |format|
+      format.json{ render json: {status:200} }
+    end
+  end
+
+
   # post courier_arrived.json
   def courier_arrived
     response.set_header("Access-Control-Allow-Origin", "*")
@@ -191,7 +213,7 @@ class CouriersController < ApplicationController
     @waybill.save
 
     Order.update(@order_id,
-                 :status=>6)
+                 :status=>7)
     respond_to do |format|
       format.json{ render json: {status:200} }
     end

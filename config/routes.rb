@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       get "get_courier_stations"
       post "allocate_couriers_stations"
       post "courier_shipping"
+      post "courier_confirm_shipping"
       post "courier_arrived"
     end
   end
