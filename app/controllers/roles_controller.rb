@@ -74,6 +74,7 @@ class RolesController < ApplicationController
     @worker_role = WorkerRole.new
     @worker_role.role_id = request.parameters[:role_id]
     @worker_role.worker_id = request.parameters[:worker_id]
+    @worker_role.save
     respond_to do |format|
       format.json { render json: {status: 200, role:@role, worker:@worker } }
     end
