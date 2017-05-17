@@ -12,4 +12,5 @@ class WaybillsController < ApplicationController
       format.json{render json: {status: 200,waybills: @waybills}}
     end
   end
+
 end
