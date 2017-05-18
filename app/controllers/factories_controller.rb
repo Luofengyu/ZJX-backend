@@ -232,4 +232,13 @@ class FactoriesController < ApplicationController
     @factory_cards.save()
   end
 
+  # GET factory_cal_rule.json
+  def factory_cal_rule
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @cal_rules = CalRule.find_by_person_type(1)
+    respond_to do |format|
+      format.json{render json: {status: 200,cal_rules: @cal_rules}}
+    end
+  end
+
 end

@@ -147,7 +147,7 @@ class CouponsController < ApplicationController
     end
   end
 
-  #post send_coupons.json
+  # POST send_coupons.json
   def send_coupons
     response.set_header("Access-Control-Allow-Origin", "*")
     @user_id = request.parameters[:user_id]
@@ -165,6 +165,7 @@ class CouponsController < ApplicationController
       format.json{ render json: {status:200, coupon:@new_coupon}}
     end
   end
+
 
 
 

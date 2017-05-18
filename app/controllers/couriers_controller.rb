@@ -288,7 +288,15 @@ class CouriersController < ApplicationController
     @factory_log.factory_id = factory_id
     @factory_log.desc = "收入"
     @factory_log.save()
+  end
 
+  # GET courier_cal_rule.json
+  def courier_cal_rule
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @cal_rules = CalRule.find_by_person_type(0)
+    respond_to do |format|
+      format.json{render json: {status: 200,cal_rules: @cal_rules}}
+    end
   end
 
 
