@@ -65,6 +65,7 @@ class FactoriesController < ApplicationController
     @factory.email = params[:email]
     @factory.tel = params[:tel]
     if @factory.save
+      create_factory_cards(@factory.id)
       respond_to do |format|
         format.json{render json:{status:200,data:@factory}}
         format.html{render json:{status:200,data:@factory}}
@@ -162,6 +163,7 @@ class FactoriesController < ApplicationController
     response.set_header("Access-Control-Allow-Origin", "*")
     @order_id = request.parameters[:order_id]
     @time = request.parameters[:time]
+    @factory_id = request.parameters[:factory_id]
 
     @waybill = Waybill.new
     @waybill["exp_time"] = @time
@@ -170,7 +172,8 @@ class FactoriesController < ApplicationController
     @waybill.save
 
     Order.update(@order_id,
-                  :status=>5)
+                  :status=>5,
+                  :factory_id=>@factory_id)
 
     respond_to do |format|
       format.json{ render json: {status:200} }
@@ -206,6 +209,27 @@ class FactoriesController < ApplicationController
     respond_to do |format|
       format.json{ render json: {status:200,cal_rules:@cal_rules} }
     end
+  end
+
+  # GET wallet.json
+  def wallet
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @factory_id = request.parameters[:factory_id]
+    @wallet = FactoryCard.find_by_factory_id(@factory_id)
+    sql = "select * from factory_logs where factory_id = "
+    sql.concat(@factory_id)
+    sql.concat(" order by id desc")
+    @logs = Item.connection.select_all(sql)
+    respond_to do |format|
+      format.json{render json: {status: 200,wallet: @wallet,logs:@logs}}
+    end
+  end
+
+  def create_factory_cards(factory_id)
+    @factory_cards = FactoryCard.new
+    @factory_cards.factory_id = factory_id
+    @factory_cards.money = 0
+    @factory_cards.save()
   end
 
 end
