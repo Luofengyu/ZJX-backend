@@ -81,7 +81,7 @@ class CouponsController < ApplicationController
       @temp_data = Hash.new
       @temp_data["coupon_info"] = @coupon
 
-      @sql = "select * from order_promotions where coupon_list_id=" + String(@coupon["coupon_list_id"])
+      @sql = "select * from order_promotions where coupon_list_id=" + String(@coupon["id"])
       @temp_orders = OrderPromotion.connection.select_all(@sql)
       @temp_data["coupon_orders"] = @temp_orders
 
