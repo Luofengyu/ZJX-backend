@@ -64,6 +64,7 @@ class UsersController < ApplicationController
     @user.encrypted_password = params[:encrypted_password]
     @user.email = params[:email]
     if @user.save
+      create_user_cards(@user.id)
       respond_to do |format|
         format.json{render json:{status:200,data:@user}}
         format.html{render json:{status:200,data:@user}}
@@ -74,6 +75,14 @@ class UsersController < ApplicationController
         format.html{render json:{status:555, message:"fail", data:@user}}
       end
     end
+  end
+
+  def create_user_cards(user_id)
+    @user_cards = UserCard.new
+    @user_cards.real_money = 0
+    @user_cards.fake_money = 0
+    @user_cards.user_id = user_id
+    @user_cards.save()
   end
 
   # POST update_user.json

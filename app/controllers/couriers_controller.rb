@@ -66,6 +66,7 @@ class CouriersController < ApplicationController
     @courier.status = params[:status]
     @courier.email = params[:email]
     if @courier.save
+      create_courier_cards(@courier.id)
       respond_to do |format|
         format.json{render json:{status:200,data:@courier}}
         format.html{render json:{status:200,data:@courier}}
@@ -76,6 +77,13 @@ class CouriersController < ApplicationController
         format.html{render json:{status:555, message:"fail", data:@courier}}
       end
     end
+  end
+
+  def create_courier_cards(courier_id)
+    @courier_cards = CourierCard.new
+    @courier_cards.courier_id = courier_id
+    @courier_cards.money = 0
+    @courier_cards.save()
   end
 
 
@@ -164,6 +172,7 @@ class CouriersController < ApplicationController
     response.set_header("Access-Control-Allow-Origin", "*")
     @order_id = request.parameters[:order_id]
     @time = request.parameters[:time]
+    @courier_id = request.parameters[:courier_id]
 
     @waybill = Waybill.new
     @waybill["exp_time"] = @time
@@ -172,7 +181,8 @@ class CouriersController < ApplicationController
     @waybill.save
 
     Order.update(@order_id,
-                 :status=>2)
+                 :status=>2,
+                 :courier_status=>@courier_id)
 
     respond_to do |format|
       format.json{ render json: {status:200} }
@@ -214,6 +224,7 @@ class CouriersController < ApplicationController
 
     Order.update(@order_id,
                  :status=>7)
+    update_wallet(@order_id)
     respond_to do |format|
       format.json{ render json: {status:200} }
     end
@@ -234,7 +245,49 @@ class CouriersController < ApplicationController
 
   # GET wallet.json
   def wallet
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @courier_id = request.parameters[:courier_id]
+    @wallet = CourierCard.find_by_courier_id(@courier_id)
+    sql = "select * from courier_logs where courier_id = "
+    sql.concat(@courier_id)
+    sql.concat(" order by id desc")
+    @logs = Item.connection.select_all(sql)
+    respond_to do |format|
+      format.json{render json: {status: 200,wallet: @wallet,logs:@logs}}
+    end
+  end
 
+  def update_wallet(order_id)
+    @order = Order.find(order_id)
+    price = @order.total_price.to_f
+    courier_id = @order.courier_status
+    factory_id = @order.factory_id
+
+    #取送的收入
+    @rule = CalRule.find_by_person_type(0)
+    earn = @rule.base.to_f + price * @rule.extra.to_f
+    @courier = CourierCard.find_by_courier_id(courier_id)
+    current = earn + @courier.money.to_f
+    @courier.update_attribute(:money,current)
+
+    @courier_log = CourierLog.new
+    @courier_log.money = earn
+    @courier_log.courier_id = courier_id
+    @courier_log.desc = "收入"
+    @courier_log.save()
+
+    #工厂的收入
+    @rule = CalRule.find_by_person_type(1)
+    earn = @rule.base.to_f + price * @rule.extra.to_f
+    @factory = FactoryCard.find_by_factory_id(factory_id)
+    current = earn + @factory.money.to_f
+    @factory.update_attribute(:money,current)
+
+    @factory_log = FactoryLog.new
+    @factory_log.money = earn
+    @factory_log.factory_id = factory_id
+    @factory_log.desc = "收入"
+    @factory_log.save()
 
   end
 
