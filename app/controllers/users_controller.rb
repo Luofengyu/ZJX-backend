@@ -328,12 +328,16 @@ class UsersController < ApplicationController
                     :fake_money=>@update_fake_money)
     @balance = @wallet[:real_money] + @update_fake_money
 
+    # 修改订单信息
+    Order.update(@order_id,
+                 :status=>11)
+
     # 物流信息
     @waybill = Waybill.new
     @waybill["exp_time"] = Time.new
     @waybill["sender_type"] = "完成退款"
     @waybill["order_id"] = @order_id
-    @waybill["status"] = 9
+    @waybill["status"] = 11
     @waybill.save
 
 
@@ -349,12 +353,15 @@ class UsersController < ApplicationController
     @user_id = request.parameters[:user_id]
     @order_id = request.parameters[:order_id]
 
+    # 修改订单信息
+    Order.update(@order_id,
+                 :status=>10)
     # 物流信息
     @waybill = Waybill.new
     @waybill["exp_time"] = Time.new
     @waybill["sender_type"] = "取消订单"
     @waybill["order_id"] = @order_id
-    @waybill["status"] = 8
+    @waybill["status"] = 10
     @waybill.save
 
 
