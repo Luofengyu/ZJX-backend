@@ -218,6 +218,17 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST delete_youhui_charge_setting.json
+  def delete_youhui_charge_setting
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @setting_id = request.parameters[:setting_id]
+    @setting = UserCardChargeSetting.find(@setting_id)
+    @setting.delete
+    respond_to do |format|
+      format.json{render json: {status: 200}}
+    end
+  end
+
   # GET wallet.json
   def wallet
     response.set_header("Access-Control-Allow-Origin", "*")

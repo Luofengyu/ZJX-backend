@@ -40,9 +40,11 @@ Rails.application.routes.draw do
       post "pay"
       post "youhui_charge"
       post "create_yonghui_charge_setting"
+      post "delete_youhui_charge_setting"
       get "charge_list"
       post "cancel_order"
       post "refunds"
+
     end
   end
 
