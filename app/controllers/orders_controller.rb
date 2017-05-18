@@ -30,7 +30,7 @@ class OrdersController < ApplicationController
     inner join categories on categories.id = orders.category_id
     inner join user_addresses on user_addresses.id = orders.address_id"
     orders=Order.connection.select_all(sql)
-    puts orders.created_at
+
     respond_to do |format|
       format.json{render json: {status: 200,orders: orders}}
     end
