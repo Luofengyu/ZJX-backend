@@ -174,6 +174,8 @@ Rails.application.routes.draw do
       get "get_coupon_list"
       post "create_coupons"
       post "delete_coupon"
+      post "update_coupon"
+      post "delete_order_promotions"
     end
   end
 end

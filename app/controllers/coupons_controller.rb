@@ -60,13 +60,35 @@ class CouponsController < ApplicationController
     end
   end
 
+  #post delete_order_promotions.json
+  def delete_order_promotions
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @order_promotion_id = request.parameters[:order_promotion_id]
+    OrderPromotion.where(id:@order_promotion_id).delete_all
+    respond_to do |format|
+      format.json{ render json: {status:200} }
+    end
+  end
+
 
   #get get_coupon_list.json
   def get_coupon_list
     response.set_header("Access-Control-Allow-Origin", "*")
     @coupon_list = CouponList.all
+    @data = []
+
+    for @coupon in @coupon_list
+      @temp_data = Hash.new
+      @temp_data["coupon_info"] = @coupon
+
+      @sql = "select * from order_promotions where coupon_list_id=" + String(@coupon["coupon_list_id"])
+      @temp_orders = OrderPromotion.connection.select_all(@sql)
+      @temp_data["coupon_orders"] = @temp_orders
+
+      @data.push(@temp_data)
+    end
     respond_to do |format|
-      format.json{ render json: {coupon_list:@coupon_list} }
+      format.json{ render json: {coupons:@data} }
     end
   end
 
@@ -81,6 +103,24 @@ class CouponsController < ApplicationController
       format.json{ render json: {status:200} }
     end
   end
+
+  #post update_coupon.json
+  def update_coupon
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @coupon_id = request.parameters[:coupon_id]
+    CouponList.update(@coupon_id,
+        :name=>request.parameters[:name],
+        :validity_type=>request.parameters[:validity_type],
+        :valid_from=>request.parameters[:valid_from],
+        :valid_to=>request.parameters[:valid_to],
+        :fixed_begin_term=>request.parameters[:fixed_begin_term],
+        :fixed_term=>request.parameters[:fixed_term])
+    @coupon = CouponList.find(@coupon_id)
+    respond_to do |format|
+      format.json{ render json: {status:200, coupon:@coupon} }
+    end
+  end
+
 
   #get get_user_coupons.json
   def get_user_coupons
@@ -127,23 +167,5 @@ class CouponsController < ApplicationController
   end
 
 
-  #get get_discount_info.json
-  def get_discount_info
-    response.set_header("Access-Control-Allow-Origin", "*")
-    @user_id = request.parameters[:user_id]
-    @choosen_coupon = request.parameters[:coupon_id]
-    @coupon_type = CouponList.find(@choosen_coupon)
-    @today = Time.new
-    @new_coupon = Coupon.new
-    @new_coupon["coupon_list_id"] = @choosen_coupon
-    @new_coupon["user_id"] = @user_id
-    @new_coupon["vaild_from"] = @today + @coupon_type.fixed_begin_term.day
-    @new_coupon["valid_to"] = @today + @coupon_type.fixed_begin_term.day + @coupon_type.fixed_term.day
-    @new_coupon.save
-
-    respond_to do |format|
-      format.json{ render json: {status:200, coupon:@new_coupon}}
-    end
-  end
 
 end
