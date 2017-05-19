@@ -239,6 +239,7 @@ class UsersController < ApplicationController
     @wallet = Item.connection.select_all(sql1)
     sql2 = "select * from user_card_logs where user_id = "
     sql2.concat(@user_id)
+    sql2.concat(" order by id desc")
     @logs = Item.connection.select_all(sql2)
     respond_to do |format|
       format.json{render json: {status: 200,wallet: @wallet,logs:@logs}}
