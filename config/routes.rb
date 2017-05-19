@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       get "charge_list"
       post "cancel_order"
       post "refunds"
+      post "request_cancel_order"
 
     end
   end
