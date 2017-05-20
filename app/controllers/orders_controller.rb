@@ -36,6 +36,17 @@ class OrdersController < ApplicationController
     end
   end
 
+  # GET /get_all_cancel_orders.json
+  def get_all_cancel_orders
+    response.set_header("Access-Control-Allow-Origin", "*")
+    sql="select * from orders where status=9"
+    orders=Order.connection.select_all(sql)
+
+    respond_to do |format|
+      format.json{render json: {status: 200,orders: orders}}
+    end
+  end
+
   # post /create_order.json
   def create_order
     response.set_header("Access-Control-Allow-Origin", "*")
