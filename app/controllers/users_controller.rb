@@ -326,6 +326,7 @@ class UsersController < ApplicationController
       @waybill["exp_time"] = Time.new
       @waybill["sender_type"] = "你的黑土骑士正载着你的衣服奔向洗衣房"
       @waybill["order_id"] = @order_id
+      @waybill["status"] = 4
       @waybill.save
 
       respond_to do |format|
