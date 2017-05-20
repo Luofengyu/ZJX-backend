@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       post "login"
       post "update_worker"
       post "delete_worker"
+      get "get_all_workers"
     end
     member do 
       get :reset_password
