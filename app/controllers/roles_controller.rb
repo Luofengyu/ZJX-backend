@@ -70,16 +70,13 @@ class RolesController < ApplicationController
   def assign_worker_role
     response.set_header("Access-Control-Allow-Origin", "*")
 
+    @role_id = params[:role_id]
+    @worker = params[:worker_id]
 
-    @role = Role.find(request.parameters[:role_id])
-    @worker = Worker.find(request.parameters[:worker_id])
-    WorkerRole.where(worker_id:@worker).delete_all
-    @worker_role = WorkerRole.new
-    @worker_role.role_id = request.parameters[:role_id]
-    @worker_role.worker_id = request.parameters[:worker_id]
-    @worker_role.save
+    @role = WorkerRole.find_by_worker_id(@worker)
+    @role.update_attributes(:role_id=>@role_id)
     respond_to do |format|
-      format.json { render json: {status: 200, role:@role, worker:@worker } }
+      format.json { render json: {status: 200} }
     end
   end
 end
