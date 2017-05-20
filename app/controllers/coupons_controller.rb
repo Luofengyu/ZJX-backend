@@ -113,8 +113,15 @@ class CouponsController < ApplicationController
         :validity_type=>request.parameters[:validity_type],
         :valid_from=>request.parameters[:valid_from],
         :valid_to=>request.parameters[:valid_to],
-        :fixed_begin_term=>request.parameters[:fixed_begin_term],
-        :fixed_term=>request.parameters[:fixed_term])
+        :fixed_begin_term=>request.parameters[:use_delay],
+        :fixed_term=>request.parameters[:fixed_day])
+
+    @order_promotion = OrderPromotion.find_by_coupon_list_id(@coupon_id)
+    OrderPromotion.update(@order_promotion.id,
+                          :kind=>params[:type],
+                          :discount=>params[:discount],
+                          :premise=>params[:premise])
+
     @coupon = CouponList.find(@coupon_id)
     respond_to do |format|
       format.json{ render json: {status:200, coupon:@coupon} }
