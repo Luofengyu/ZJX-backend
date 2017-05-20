@@ -114,9 +114,6 @@ class OrdersController < ApplicationController
 
     sql="select * from waybills where order_id="+String(@order_id)+" and status=4"
     @pay_already=Waybill.connection.select_all(sql)
-    puts "-------------"
-    puts @pay_already
-    puts "-------------"
 
     if @pay_already != nil
       @wallet = UserCard.find_by_user_id(@user_id)
@@ -159,6 +156,28 @@ class OrdersController < ApplicationController
         format.json{render json: {status: 200, message:"取消订单成功", order:@order}}
       end
     end
+  end
 
+  #post refuse_cancel_order.json
+  def refuse_cancel_order
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @user_id = request.parameters[:user_id]
+    @order_id = request.parameters[:order_id]
+    @order = Order.find(@order_id)
+    Waybill.where(order_id:@order_id, status:9).delete_all
+    sql="select * from waybills where order_id="+String(@order_id)+" order by status desc"
+    @waybill_list = Waybill.connection.select_all(sql)
+    @status = 0
+    for @waybill in @waybill_list
+      if @waybill["status"] > @status
+        @status = @waybill["status"]
+      end
+    end
+    puts @status
+    Order.update(@order_id,
+                 :status=>@status)
+    respond_to do |format|
+      format.json{render json: {status: 200, message:"拒绝退单", order:@order}}
+    end
   end
 end
