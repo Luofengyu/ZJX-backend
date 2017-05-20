@@ -24,7 +24,9 @@ class OrdersController < ApplicationController
   # GET /get_all_orders.json
   def get_all_orders
     response.set_header("Access-Control-Allow-Origin", "*")
-    sql="select orders.*,orders_status.status_desc,categories.name as category_name,user_addresses.*
+    sql="select orders.*,orders_status.status_desc,categories.name as category_name,user_addresses.city as city,
+    user_addresses.region as region, user_addresses.community as community,
+    user_addresses.house_number as house_number
     from orders
     inner join orders_status on orders.status = orders_status.id
     inner join categories on categories.id = orders.category_id
