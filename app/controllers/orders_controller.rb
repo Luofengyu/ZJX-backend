@@ -64,7 +64,8 @@ class OrdersController < ApplicationController
 
 
     Waybill.update(String(@waybill.id),
-                    :order_id=>String(@order_item.id))
+                    :order_id=>String(@order_item.id),
+                    :status=>1)
     @total_price = 0
 
     # items table

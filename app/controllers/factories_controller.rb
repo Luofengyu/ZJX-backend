@@ -169,6 +169,7 @@ class FactoriesController < ApplicationController
     @waybill["exp_time"] = @time
     @waybill["sender_type"] = "你的脏衣服正在被洗衣机蹂躏"
     @waybill["order_id"] = @order_id
+    @waybill["status"] = 5
     @waybill.save
 
     Order.update(@order_id,
@@ -189,6 +190,7 @@ class FactoriesController < ApplicationController
     @waybill["exp_time"] = @time
     @waybill["sender_type"] = "你的白云骑士正带着你的干净衣服奔向你身边"
     @waybill["order_id"] = @order_id
+    @waybill["status"] = 6
     @waybill.save
 
     Order.update(@order_id,

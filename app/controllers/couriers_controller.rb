@@ -178,6 +178,7 @@ class CouriersController < ApplicationController
     @waybill["exp_time"] = @time
     @waybill["sender_type"] = "你的黑土骑士正在飞奔到你身边取件"
     @waybill["order_id"] = @order_id
+    @waybill["status"] = 2
     @waybill.save
 
     Order.update(@order_id,
@@ -199,6 +200,7 @@ class CouriersController < ApplicationController
     @waybill["exp_time"] = @time
     @waybill["sender_type"] = "你需要付钱洗衣了"
     @waybill["order_id"] = @order_id
+    @waybill["status"] = 3
     @waybill.save
 
     Order.update(@order_id,
@@ -220,6 +222,7 @@ class CouriersController < ApplicationController
     @waybill["exp_time"] = @time
     @waybill["sender_type"] = "你已经签收了你的干净衣服"
     @waybill["order_id"] = @order_id
+    @waybill["status"] = 7
     @waybill.save
 
     Order.update(@order_id,
