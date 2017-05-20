@@ -103,4 +103,60 @@ class OrdersController < ApplicationController
     end
   end
 
+  # post cancel_refund_order.json
+  def cancel_refund_order
+    response.set_header("Access-Control-Allow-Origin", "*")
+    @user_id = request.parameters[:user_id]
+    @order_id = request.parameters[:order_id]
+    @order = Order.find(@order_id)
+
+    sql="select * from waybills where order_id="+String(@order_id)+" and status=4"
+    @pay_already=Waybill.connection.select_all(sql)
+    puts "-------------"
+    puts @pay_already
+    puts "-------------"
+
+    if @pay_already != nil
+      @wallet = UserCard.find_by_user_id(@user_id)
+      # 查找订单总价total_price
+      @refund_money = @order[:total_price]
+      @update_fake_money = @wallet[:fake_money] + @refund_money
+      UserCard.update(@wallet[:id],
+                      :fake_money=>@update_fake_money)
+      @balance = @wallet[:real_money] + @update_fake_money
+
+      # 修改订单信息
+      Order.update(@order_id,
+                   :status=>11)
+
+      # 物流信息
+      @waybill = Waybill.new
+      @waybill["exp_time"] = Time.new
+      @waybill["sender_type"] = "完成退款"
+      @waybill["order_id"] = @order_id
+      @waybill["status"] = 11
+      @waybill.save
+
+
+      respond_to do |format|
+        format.json{render json: {status: 200, message:"退款成功", order:@order, balance:@balance}}
+      end
+    else
+      # 修改订单信息
+      Order.update(@order_id,
+                   :status=>10)
+      # 物流信息
+      @waybill = Waybill.new
+      @waybill["exp_time"] = Time.new
+      @waybill["sender_type"] = "取消订单"
+      @waybill["order_id"] = @order_id
+      @waybill["status"] = 10
+      @waybill.save
+
+      respond_to do |format|
+        format.json{render json: {status: 200, message:"取消订单成功", order:@order}}
+      end
+    end
+
+  end
 end

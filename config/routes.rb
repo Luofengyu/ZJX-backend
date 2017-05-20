@@ -165,6 +165,7 @@ Rails.application.routes.draw do
       post "create_order"
       get "get_user_orders"
       get "get_all_cancel_orders"
+      post "cancel_refund_order"
     end
   end
 
