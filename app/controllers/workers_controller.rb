@@ -106,26 +106,30 @@ class WorkersController < ApplicationController
   # GET get_all_workers
   def get_all_workers
     response.set_header("Access-Control-Allow-Origin", "*")
-    @worker_list = Worker.all
-    @data = []
-    for @worker in @worker_list
-      @sql = "select * from worker_roles  where id=" + String(@worker["id"])
-      @role_list = WorkerRole.connection.select_all(@sql)
-      if @role_list
-        @worker_role = []
-        for @role in @role_list
-          @role_Obj = Role.find(@role["role_id"])
-          @worker_role.push(@role_Obj)
-        end
-        @data.push({"worker":@worker, "roles":@worker_role})
-      else
-        @data.push({"worker":@worker, "roles":[]})
-      end
-
-    end
+    # @worker_list = Worker.all
+    # @data = []
+    # for @worker in @worker_list
+    #   @sql = "select * from worker_roles  where id=" + String(@worker["id"])
+    #   @role_list = WorkerRole.connection.select_all(@sql)
+    #   if @role_list
+    #     @worker_role = []
+    #     for @role in @role_list
+    #       @role_Obj = Role.find(@role["role_id"])
+    #       @worker_role.push(@role_Obj)
+    #     end
+    #     @data.push({"worker":@worker, "roles":@worker_role})
+    #   else
+    #     @data.push({"worker":@worker, "roles":[]})
+    #   end
+    #
+    # end
+    sql = "select workers.*, roles.id as role_id,roles.display_name
+           as display_name,roles.name as role_name from workers inner join worker_roles on
+           workers.id = worker_roles.worker_id inner join roles on
+           worker_roles.role_id = roles.id"
+    workers=Product.connection.select_all(sql)
     respond_to do |format|
-      format.html { render json: {status: 200, data:@data } }
-      format.json { render json: {status: 200, data:@data } }
+      format.json { render json: {status: 200, data:workers } }
     end
   end
 
