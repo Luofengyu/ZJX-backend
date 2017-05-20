@@ -320,6 +320,8 @@ class UsersController < ApplicationController
                    :status=>4,
                     :total_price => total_price)
 
+      Coupon.where(id:@user_coupon_id).delete_all
+
       @waybill = Waybill.new
       @waybill["exp_time"] = Time.new
       @waybill["sender_type"] = "你的黑土骑士正载着你的衣服奔向洗衣房"
