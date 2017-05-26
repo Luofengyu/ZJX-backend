@@ -158,7 +158,7 @@ class UsersController < ApplicationController
     @user_card_log.fake_money = @fake_money
     @user_card_log.user_id = @user_id
     @user_card_log.kind = 0
-    if @caller == 0
+    if @caller == String(0)
       @user_card_log.loggable_type = "用户充值"
     else
       @user_card_log.loggable_type = "操作员充值"
