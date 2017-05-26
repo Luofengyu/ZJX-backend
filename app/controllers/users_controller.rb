@@ -145,6 +145,7 @@ class UsersController < ApplicationController
     @user_id = request.parameters[:user_id]
     @real_money = request.parameters[:real_money]
     @fake_money = request.parameters[:fake_money]
+    @caller = request.parameters[:caller]
     @user_card = UserCard.find_by_user_id(@user_id)
     real_money = @real_money.to_f + @user_card[:real_money].to_f
     puts (real_money)
@@ -157,7 +158,11 @@ class UsersController < ApplicationController
     @user_card_log.fake_money = @fake_money
     @user_card_log.user_id = @user_id
     @user_card_log.kind = 0
-    @user_card_log.loggable_type = "用户充值"
+    if @caller == 0
+      @user_card_log.loggable_type = "用户充值"
+    else
+      @user_card_log.loggable_type = "操作员充值"
+    end
     @user_card_log.loggable_id = 0
     if @user_card_log.save
       respond_to do |format|
