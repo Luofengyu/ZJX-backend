@@ -63,7 +63,7 @@ class WorkersController < ApplicationController
     response.set_header("Access-Control-Allow-Origin", "*")
     @worker = Worker.new
     @worker.email = params[:email]
-    @worker.password = params[:encrypted_password]
+    @worker.encrypted_password=params[:encrypted_password]
     if @worker.save!
       respond_to do |format|
         format.json{render json:{status:200,data:@worker}}
