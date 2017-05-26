@@ -40,13 +40,12 @@ class WorkersController < ApplicationController
           end
         else
           respond_to do |format|
-            format.json{render json:{status:555, message:"wrong"}}
-            format.html{render json:{status:555, message:"wrong"}}
+            format.json{render json:{status:555, message:"密码错误"}}
           end
         end
       else
         respond_to do |format|
-          format.json{render json:{status:555, message:"null"}}
+          format.json{render json:{status:555, message:"用户名不存在"}}
           format.html{render json:{status:555, message:"null"}}
         end
       end
