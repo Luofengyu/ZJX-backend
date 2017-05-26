@@ -137,6 +137,16 @@ class OrdersController < ApplicationController
       @waybill["status"] = 11
       @waybill.save
 
+      # 交易流水
+      @user_card_log = UserCardLog.new
+      @user_card_log.real_money = 0
+      @user_card_log.fake_money = @refund_money
+      @user_card_log.user_id = @user_id
+      @user_card_log.kind = 0
+      @user_card_log.loggable_type = "订单退款"
+      @user_card_log.loggable_id = 1
+      @user_card_log.save
+
 
       respond_to do |format|
         format.json{render json: {status: 200, message:"退款成功", order:@order, balance:@balance}}
