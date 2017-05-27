@@ -7,6 +7,7 @@ class ProductsController < ApplicationController
     sql = "select products.*,prices.price1 from products inner join prices
              on products.id = prices.product_id and products.category_id = "
     sql.concat(category_id)
+    sql.concat(" and products.is_del=0")
     products=Product.connection.select_all(sql)
     respond_to do |format|
       format.json{ render json: {status:200,product:products} }
