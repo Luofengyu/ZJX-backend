@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 1111
-Source Server Version : 50717
-Source Host           : 192.168.134.132:3306
-Source Database       : washing
+Source Server         : lalala
+Source Server Version : 50554
+Source Host           : 180.76.174.6:3306
+Source Database       : ruby
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50554
 File Encoding         : 65001
 
-Date: 2017-05-06 21:49:33
+Date: 2017-05-28 17:20:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -60,6 +60,27 @@ CREATE TABLE `ar_internal_metadata` (
 INSERT INTO `ar_internal_metadata` VALUES ('environment', 'development', '2017-02-24 15:24:20', '2017-02-24 15:24:20');
 
 -- ----------------------------
+-- Table structure for cal_rules
+-- ----------------------------
+DROP TABLE IF EXISTS `cal_rules`;
+CREATE TABLE `cal_rules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `base` float DEFAULT NULL,
+  `extra` float DEFAULT NULL,
+  `person_type` int(11) DEFAULT NULL COMMENT '0:取送 1:工厂',
+  `desc` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cal_rules
+-- ----------------------------
+INSERT INTO `cal_rules` VALUES ('1', '1', '0.5', '0', null, '2017-05-17 22:48:08', '2017-05-20 08:28:36');
+INSERT INTO `cal_rules` VALUES ('2', '1', '0.99', '1', null, '2017-05-17 22:48:20', '2017-05-18 16:32:00');
+
+-- ----------------------------
 -- Table structure for categories
 -- ----------------------------
 DROP TABLE IF EXISTS `categories`;
@@ -71,18 +92,16 @@ CREATE TABLE `categories` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of categories
 -- ----------------------------
-INSERT INTO `categories` VALUES ('1', 'test111111', 'test1', '1', '2017-02-24 15:41:59', '2017-04-14 16:56:33');
-INSERT INTO `categories` VALUES ('2', 'category 2', 'category-1487430865976', '0', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `categories` VALUES ('3', 'category 3', 'category-1487430865976', '0', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `categories` VALUES ('4', 'category 4', 'category-1487430865976', '0', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `categories` VALUES ('5', 'test111', 'test1', '0', '2017-04-14 16:54:30', '2017-04-14 16:54:30');
-INSERT INTO `categories` VALUES ('6', 'test111', 'test1', '0', '2017-04-14 16:54:40', '2017-04-14 16:54:40');
-INSERT INTO `categories` VALUES ('7', 'test111', 'test1', '0', '2017-04-14 16:54:42', '2017-04-14 16:54:42');
+INSERT INTO `categories` VALUES ('1', '洗衣', 'test1', '0', '2017-02-24 15:41:59', '2017-04-14 16:56:33');
+INSERT INTO `categories` VALUES ('2', '洗鞋', 'category-1487430865976', '0', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `categories` VALUES ('3', '洗家纺', 'category-1487430865976', '0', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `categories` VALUES ('4', '窗帘清洗', 'category-1487430865976', '0', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `categories` VALUES ('8', '144123', '', '0', '2017-05-27 02:02:30', '2017-05-27 02:02:30');
 
 -- ----------------------------
 -- Table structure for categories_cities
@@ -94,9 +113,7 @@ CREATE TABLE `categories_cities` (
   `category_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_categories_cities_on_city_id` (`city_id`),
-  KEY `index_categories_cities_on_category_id` (`category_id`),
-  CONSTRAINT `fk_rails_5782bedd27` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`),
-  CONSTRAINT `fk_rails_bac669e2a1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
+  KEY `index_categories_cities_on_category_id` (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -134,6 +151,27 @@ INSERT INTO `cities` VALUES ('3', '北京市', '110100', '2017-04-08 08:58:50', 
 INSERT INTO `cities` VALUES ('4', '', null, '2017-04-08 09:06:11', '2017-04-08 09:06:11');
 
 -- ----------------------------
+-- Table structure for cities_promotion_rules
+-- ----------------------------
+DROP TABLE IF EXISTS `cities_promotion_rules`;
+CREATE TABLE `cities_promotion_rules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `city_id` int(11) DEFAULT NULL,
+  `promotion_rule_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_cities_promotion_rules_on_city_id` (`city_id`),
+  KEY `index_cities_promotion_rules_on_promotion_rule_id` (`promotion_rule_id`),
+  CONSTRAINT `fk_rails_5fb2354136` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`),
+  CONSTRAINT `fk_rails_e7275526d5` FOREIGN KEY (`promotion_rule_id`) REFERENCES `promotion_rules` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cities_promotion_rules
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for cities_workers
 -- ----------------------------
 DROP TABLE IF EXISTS `cities_workers`;
@@ -154,6 +192,65 @@ INSERT INTO `cities_workers` VALUES ('2', '2', '3');
 INSERT INTO `cities_workers` VALUES ('3', '2', '1');
 
 -- ----------------------------
+-- Table structure for coupon_lists
+-- ----------------------------
+DROP TABLE IF EXISTS `coupon_lists`;
+CREATE TABLE `coupon_lists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `validity_type` int(11) DEFAULT NULL,
+  `valid_from` date DEFAULT NULL,
+  `valid_to` date DEFAULT NULL,
+  `fixed_begin_term` int(11) DEFAULT NULL,
+  `fixed_term` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of coupon_lists
+-- ----------------------------
+INSERT INTO `coupon_lists` VALUES ('24', '2周年大促', '2', '2017-05-01', '2017-06-30', '1', '1', '2017-05-18 14:29:15', '2017-05-18 14:29:15');
+INSERT INTO `coupon_lists` VALUES ('34', '2.5周年', '1', '2017-05-19', '2017-05-19', '1', '1', '2017-05-19 15:51:19', '2017-05-20 06:47:59');
+INSERT INTO `coupon_lists` VALUES ('36', '演示用', '1', '2017-05-18', '2017-06-15', '1', '1', '2017-05-26 15:36:39', '2017-05-26 15:36:39');
+INSERT INTO `coupon_lists` VALUES ('37', '演示6', '1', '2017-05-10', '2017-06-23', '1', '1', '2017-05-27 02:05:45', '2017-05-27 02:05:45');
+
+-- ----------------------------
+-- Table structure for coupons
+-- ----------------------------
+DROP TABLE IF EXISTS `coupons`;
+CREATE TABLE `coupons` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `coupon_list_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `vaild_from` date DEFAULT NULL,
+  `valid_to` date DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_coupons_on_coupon_list_id` (`coupon_list_id`),
+  KEY `index_coupons_on_user_id` (`user_id`),
+  CONSTRAINT `fk_rails_ff28daec78` FOREIGN KEY (`coupon_list_id`) REFERENCES `coupon_lists` (`id`),
+  CONSTRAINT `fk_rails_69b54b3afe` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of coupons
+-- ----------------------------
+INSERT INTO `coupons` VALUES ('18', '24', '3', '2017-05-20', '2017-05-21', '2017-05-19 15:41:49', '2017-05-19 15:41:49');
+INSERT INTO `coupons` VALUES ('27', '34', '3', '2017-05-21', '2017-05-22', '2017-05-20 03:05:56', '2017-05-20 03:05:56');
+INSERT INTO `coupons` VALUES ('30', '24', '3', '2017-05-21', '2017-05-22', '2017-05-20 03:06:05', '2017-05-20 03:06:05');
+INSERT INTO `coupons` VALUES ('32', '24', '3', '2017-05-21', '2017-05-22', '2017-05-20 03:06:14', '2017-05-20 03:06:14');
+INSERT INTO `coupons` VALUES ('33', '24', '3', '2017-05-21', '2017-05-22', '2017-05-20 03:06:17', '2017-05-20 03:06:17');
+INSERT INTO `coupons` VALUES ('34', '24', '3', '2017-05-21', '2017-05-22', '2017-05-20 03:06:20', '2017-05-20 03:06:20');
+INSERT INTO `coupons` VALUES ('35', '24', '3', '2017-05-21', '2017-05-22', '2017-05-20 08:33:22', '2017-05-20 08:33:22');
+INSERT INTO `coupons` VALUES ('37', '34', '11', '2017-05-27', '2017-05-28', '2017-05-26 15:06:10', '2017-05-26 15:06:10');
+INSERT INTO `coupons` VALUES ('39', '36', '11', '2017-05-28', '2017-05-29', '2017-05-27 01:34:06', '2017-05-27 01:34:06');
+INSERT INTO `coupons` VALUES ('40', '36', '13', '2017-05-28', '2017-05-29', '2017-05-27 01:54:30', '2017-05-27 01:54:30');
+INSERT INTO `coupons` VALUES ('42', '34', '13', '2017-05-28', '2017-05-29', '2017-05-27 01:54:34', '2017-05-27 01:54:34');
+
+-- ----------------------------
 -- Table structure for courier_addresses
 -- ----------------------------
 DROP TABLE IF EXISTS `courier_addresses`;
@@ -172,11 +269,106 @@ CREATE TABLE `courier_addresses` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of courier_addresses
 -- ----------------------------
+INSERT INTO `courier_addresses` VALUES ('1', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-07 01:40:57', '2017-05-07 01:40:57');
+INSERT INTO `courier_addresses` VALUES ('2', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-07 01:49:57', '2017-05-07 01:49:57');
+INSERT INTO `courier_addresses` VALUES ('3', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-07 01:50:55', '2017-05-07 01:50:55');
+INSERT INTO `courier_addresses` VALUES ('4', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-07 01:53:21', '2017-05-07 01:53:21');
+INSERT INTO `courier_addresses` VALUES ('5', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-07 07:05:51', '2017-05-07 07:05:51');
+INSERT INTO `courier_addresses` VALUES ('6', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-19 12:51:24', '2017-05-19 12:51:24');
+INSERT INTO `courier_addresses` VALUES ('7', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-19 13:12:04', '2017-05-19 13:12:04');
+INSERT INTO `courier_addresses` VALUES ('8', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 03:05:54', '2017-05-20 03:05:54');
+INSERT INTO `courier_addresses` VALUES ('9', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 03:08:33', '2017-05-20 03:08:33');
+INSERT INTO `courier_addresses` VALUES ('10', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 03:18:17', '2017-05-20 03:18:17');
+INSERT INTO `courier_addresses` VALUES ('11', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 03:28:06', '2017-05-20 03:28:06');
+INSERT INTO `courier_addresses` VALUES ('12', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 03:28:49', '2017-05-20 03:28:49');
+INSERT INTO `courier_addresses` VALUES ('13', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 03:30:40', '2017-05-20 03:30:40');
+INSERT INTO `courier_addresses` VALUES ('14', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 03:33:09', '2017-05-20 03:33:09');
+INSERT INTO `courier_addresses` VALUES ('15', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 03:34:09', '2017-05-20 03:34:09');
+INSERT INTO `courier_addresses` VALUES ('16', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 03:35:21', '2017-05-20 03:35:21');
+INSERT INTO `courier_addresses` VALUES ('17', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 03:38:35', '2017-05-20 03:38:35');
+INSERT INTO `courier_addresses` VALUES ('18', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 03:39:24', '2017-05-20 03:39:24');
+INSERT INTO `courier_addresses` VALUES ('19', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 03:40:02', '2017-05-20 03:40:02');
+INSERT INTO `courier_addresses` VALUES ('20', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 03:41:00', '2017-05-20 03:41:00');
+INSERT INTO `courier_addresses` VALUES ('21', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 07:34:55', '2017-05-20 07:34:55');
+INSERT INTO `courier_addresses` VALUES ('22', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-21 08:08:48', '2017-05-21 08:08:48');
+INSERT INTO `courier_addresses` VALUES ('23', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-26 14:56:14', '2017-05-26 14:56:14');
+INSERT INTO `courier_addresses` VALUES ('24', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-26 14:57:18', '2017-05-26 14:57:18');
+INSERT INTO `courier_addresses` VALUES ('25', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-26 14:58:28', '2017-05-26 14:58:28');
+INSERT INTO `courier_addresses` VALUES ('26', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-26 14:59:10', '2017-05-26 14:59:10');
+INSERT INTO `courier_addresses` VALUES ('27', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-26 15:05:17', '2017-05-26 15:05:17');
+INSERT INTO `courier_addresses` VALUES ('28', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-26 15:33:55', '2017-05-26 15:33:55');
+INSERT INTO `courier_addresses` VALUES ('29', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-27 10:01:41', '2017-05-27 10:01:41');
+INSERT INTO `courier_addresses` VALUES ('30', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-27 10:02:12', '2017-05-27 10:02:12');
+
+-- ----------------------------
+-- Table structure for courier_cards
+-- ----------------------------
+DROP TABLE IF EXISTS `courier_cards`;
+CREATE TABLE `courier_cards` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `money` float DEFAULT NULL,
+  `courier_id` int(11) DEFAULT NULL,
+  `desc` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of courier_cards
+-- ----------------------------
+INSERT INTO `courier_cards` VALUES ('1', '13746.4', '1', null, '2017-05-17 23:51:26', '2017-05-27 01:58:45');
+INSERT INTO `courier_cards` VALUES ('2', '2', '2', null, '2017-05-17 23:51:34', '2017-05-18 23:51:38');
+INSERT INTO `courier_cards` VALUES ('3', '0', '3', null, '2017-05-18 13:13:46', '2017-05-18 13:13:46');
+INSERT INTO `courier_cards` VALUES ('4', '0', '4', null, '2017-05-26 15:13:04', '2017-05-26 15:13:04');
+
+-- ----------------------------
+-- Table structure for courier_logs
+-- ----------------------------
+DROP TABLE IF EXISTS `courier_logs`;
+CREATE TABLE `courier_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kind` int(11) DEFAULT NULL,
+  `money` float DEFAULT NULL,
+  `courier_id` int(11) DEFAULT NULL,
+  `desc` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of courier_logs
+-- ----------------------------
+INSERT INTO `courier_logs` VALUES ('1', null, '310', '1', '收入', '2017-05-18 14:01:17', '2017-05-18 14:01:17');
+INSERT INTO `courier_logs` VALUES ('2', null, '413', '1', '收入', '2017-05-18 14:01:19', '2017-05-18 14:01:19');
+INSERT INTO `courier_logs` VALUES ('3', null, '103', '1', '收入', '2017-05-18 14:02:50', '2017-05-18 14:02:50');
+INSERT INTO `courier_logs` VALUES ('4', null, '103', '1', '收入', '2017-05-18 14:02:52', '2017-05-18 14:02:52');
+INSERT INTO `courier_logs` VALUES ('5', null, '9.88', '1', '收入', '2017-05-20 04:01:17', '2017-05-20 04:01:17');
+INSERT INTO `courier_logs` VALUES ('6', null, '9.88', '1', '收入', '2017-05-20 04:04:35', '2017-05-20 04:04:35');
+INSERT INTO `courier_logs` VALUES ('7', null, '9.88', '1', '收入', '2017-05-20 04:04:48', '2017-05-20 04:04:48');
+INSERT INTO `courier_logs` VALUES ('8', null, '9.88', '1', '收入', '2017-05-20 04:06:01', '2017-05-20 04:06:01');
+INSERT INTO `courier_logs` VALUES ('9', null, '9.88', '1', '收入', '2017-05-20 04:06:41', '2017-05-20 04:06:41');
+INSERT INTO `courier_logs` VALUES ('10', null, '9.88', '1', '收入', '2017-05-20 04:07:33', '2017-05-20 04:07:33');
+INSERT INTO `courier_logs` VALUES ('11', null, '9.88', '1', '收入', '2017-05-20 04:25:50', '2017-05-20 04:25:50');
+INSERT INTO `courier_logs` VALUES ('12', null, '9.88', '1', '收入', '2017-05-20 06:29:59', '2017-05-20 06:29:59');
+INSERT INTO `courier_logs` VALUES ('13', null, '9.88', '1', '收入', '2017-05-20 06:30:01', '2017-05-20 06:30:01');
+INSERT INTO `courier_logs` VALUES ('14', null, '9.88', '1', '收入', '2017-05-20 06:30:01', '2017-05-20 06:30:01');
+INSERT INTO `courier_logs` VALUES ('15', null, '6001', '1', '收入', '2017-05-20 08:36:14', '2017-05-20 08:36:14');
+INSERT INTO `courier_logs` VALUES ('16', null, '6001', '1', '收入', '2017-05-20 08:36:16', '2017-05-20 08:36:16');
+INSERT INTO `courier_logs` VALUES ('17', null, '6', '1', '收入', '2017-05-21 08:23:11', '2017-05-21 08:23:11');
+INSERT INTO `courier_logs` VALUES ('18', null, '4', '1', '收入', '2017-05-21 08:23:13', '2017-05-21 08:23:13');
+INSERT INTO `courier_logs` VALUES ('19', null, '22', '1', '收入', '2017-05-21 08:23:14', '2017-05-21 08:23:14');
+INSERT INTO `courier_logs` VALUES ('20', null, '894.5', '1', '收入', '2017-05-21 08:23:15', '2017-05-21 08:23:15');
+INSERT INTO `courier_logs` VALUES ('21', null, '67', '1', '收入', '2017-05-26 15:33:21', '2017-05-26 15:33:21');
+INSERT INTO `courier_logs` VALUES ('22', null, '28', '1', '收入', '2017-05-27 01:29:32', '2017-05-27 01:29:32');
+INSERT INTO `courier_logs` VALUES ('23', null, '5', '1', '收入', '2017-05-27 01:39:14', '2017-05-27 01:39:14');
+INSERT INTO `courier_logs` VALUES ('24', null, '10', '1', '收入', '2017-05-27 01:58:45', '2017-05-27 01:58:45');
 
 -- ----------------------------
 -- Table structure for couriers
@@ -203,12 +395,14 @@ CREATE TABLE `couriers` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_couriers_on_mobile` (`mobile`),
   UNIQUE KEY `index_couriers_on_reset_password_token` (`reset_password_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of couriers
 -- ----------------------------
-INSERT INTO `couriers` VALUES ('1', '18600000001', '', '$2a$11$hDnztLfIV94yjJfxUb1ZnuKvWUM4QgQbbcYT/ucJd4NTTraeRfJdC', null, null, null, '1', '2017-02-27 02:35:00', '2017-02-27 02:35:00', '127.0.0.1', '127.0.0.1', null, 'courier 1', '0', '2017-02-27 02:35:00', '2017-02-27 02:35:00');
+INSERT INTO `couriers` VALUES ('1', '18600000002', '', '1', null, null, null, '1', '2017-02-27 02:35:00', '2017-02-27 02:35:00', '127.0.0.1', '127.0.0.1', null, '1', '1', '2017-02-27 02:35:00', '2017-05-07 01:52:23');
+INSERT INTO `couriers` VALUES ('2', '1', '1', '1', null, null, null, '0', null, null, null, null, null, '1', '1', '2017-05-07 01:38:57', '2017-05-26 16:04:51');
+INSERT INTO `couriers` VALUES ('3', '18811442000', '123@qq.com', '123456', null, null, null, '0', null, null, null, null, null, '啦啦', '1', '2017-05-18 13:13:46', '2017-05-18 13:13:46');
 
 -- ----------------------------
 -- Table structure for couriers_stations
@@ -221,13 +415,15 @@ CREATE TABLE `couriers_stations` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of couriers_stations
 -- ----------------------------
-INSERT INTO `couriers_stations` VALUES ('1', '1', '2', '2017-03-11 13:26:12', '2017-04-27 13:26:17');
-INSERT INTO `couriers_stations` VALUES ('2', '1', '1', '2017-04-21 13:26:25', '2017-04-29 13:26:28');
+INSERT INTO `couriers_stations` VALUES ('15', '3', '1', '2017-05-26 16:05:13', '2017-05-26 16:05:13');
+INSERT INTO `couriers_stations` VALUES ('16', '3', '3', '2017-05-26 16:05:13', '2017-05-26 16:05:13');
+INSERT INTO `couriers_stations` VALUES ('17', '1', '6', '2017-05-27 02:04:13', '2017-05-27 02:04:13');
+INSERT INTO `couriers_stations` VALUES ('18', '1', '1', '2017-05-27 02:04:13', '2017-05-27 02:04:13');
 
 -- ----------------------------
 -- Table structure for factories
@@ -254,12 +450,15 @@ CREATE TABLE `factories` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_factories_on_mobile` (`mobile`),
   UNIQUE KEY `index_factories_on_reset_password_token` (`reset_password_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of factories
 -- ----------------------------
-INSERT INTO `factories` VALUES ('1', '18600000002', '', '$2a$11$xRLi8dffsrc6XQMfwj5Qp.5cDJpKX1.bBImI3F9a7VZ4jxn.zdiyG', null, null, null, '1', '2017-02-27 02:34:22', '2017-02-27 02:34:22', '127.0.0.1', '127.0.0.1', 'factory 1', '18600000002', '0', '2017-02-27 02:34:22', '2017-02-27 02:34:22');
+INSERT INTO `factories` VALUES ('1', '18600000002', '', '123456', null, null, null, '1', '2017-02-27 02:34:22', '2017-02-27 02:34:22', '127.0.0.1', '127.0.0.1', '111111', '1234567890', '1', '2017-02-27 02:34:22', '2017-05-26 16:05:21');
+INSERT INTO `factories` VALUES ('2', '1', '1', '123456', null, null, null, '0', null, null, null, null, '111111', '0000000', '0', '2017-05-07 02:54:54', '2017-05-07 06:42:26');
+INSERT INTO `factories` VALUES ('3', '2', '2', '2', null, null, null, '0', null, null, null, null, '2', null, '0', '2017-05-07 07:44:02', '2017-05-07 07:44:02');
+INSERT INTO `factories` VALUES ('4', '18811442000', '123@qq.com', '123456', null, null, null, '0', null, null, null, null, '啦啦', '', '1', '2017-05-18 13:14:23', '2017-05-26 16:05:36');
 
 -- ----------------------------
 -- Table structure for factories_stations
@@ -272,12 +471,16 @@ CREATE TABLE `factories_stations` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of factories_stations
 -- ----------------------------
-INSERT INTO `factories_stations` VALUES ('2', '1', '2', '2017-04-01 10:05:37', '2017-04-06 10:05:40');
+INSERT INTO `factories_stations` VALUES ('18', '2', '3', '2017-05-07 06:42:27', '2017-05-07 06:42:27');
+INSERT INTO `factories_stations` VALUES ('19', '2', '3', '2017-05-07 06:42:27', '2017-05-07 06:42:27');
+INSERT INTO `factories_stations` VALUES ('24', '4', '1', '2017-05-26 16:05:36', '2017-05-26 16:05:36');
+INSERT INTO `factories_stations` VALUES ('25', '1', '5', '2017-05-27 01:41:35', '2017-05-27 01:41:35');
+INSERT INTO `factories_stations` VALUES ('26', '1', '1', '2017-05-27 01:41:35', '2017-05-27 01:41:35');
 
 -- ----------------------------
 -- Table structure for factory_addresses
@@ -298,10 +501,136 @@ CREATE TABLE `factory_addresses` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of factory_addresses
+-- ----------------------------
+INSERT INTO `factory_addresses` VALUES ('1', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-07 02:58:28', '2017-05-07 02:58:28');
+INSERT INTO `factory_addresses` VALUES ('2', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-07 07:46:11', '2017-05-07 07:46:11');
+INSERT INTO `factory_addresses` VALUES ('3', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-19 12:50:23', '2017-05-19 12:50:23');
+INSERT INTO `factory_addresses` VALUES ('4', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-19 13:15:25', '2017-05-19 13:15:25');
+INSERT INTO `factory_addresses` VALUES ('5', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 04:10:19', '2017-05-20 04:10:19');
+INSERT INTO `factory_addresses` VALUES ('6', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-20 04:24:33', '2017-05-20 04:24:33');
+INSERT INTO `factory_addresses` VALUES ('7', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-26 15:00:54', '2017-05-26 15:00:54');
+INSERT INTO `factory_addresses` VALUES ('8', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-26 15:01:54', '2017-05-26 15:01:54');
+INSERT INTO `factory_addresses` VALUES ('9', null, null, null, null, null, null, null, '1', '39.9604', '116.395', '2017-05-27 10:17:18', '2017-05-27 10:17:18');
+
+-- ----------------------------
+-- Table structure for factory_cards
+-- ----------------------------
+DROP TABLE IF EXISTS `factory_cards`;
+CREATE TABLE `factory_cards` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `money` float DEFAULT NULL,
+  `factory_id` int(11) DEFAULT NULL,
+  `desc` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of factory_cards
+-- ----------------------------
+INSERT INTO `factory_cards` VALUES ('1', '0', '4', null, '2017-05-18 13:14:23', '2017-05-18 13:14:23');
+INSERT INTO `factory_cards` VALUES ('2', '26458.1', '1', null, '2017-05-18 21:14:46', '2017-05-27 01:58:45');
+INSERT INTO `factory_cards` VALUES ('3', '1', '2', null, '2017-05-18 21:14:55', '2017-05-18 21:14:57');
+INSERT INTO `factory_cards` VALUES ('4', '1', '3', null, '2017-05-18 21:15:04', '2017-05-18 21:15:07');
+
+-- ----------------------------
+-- Table structure for factory_logs
+-- ----------------------------
+DROP TABLE IF EXISTS `factory_logs`;
+CREATE TABLE `factory_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kind` int(11) DEFAULT NULL,
+  `money` float DEFAULT NULL,
+  `factory_id` int(11) DEFAULT NULL,
+  `desc` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of factory_logs
+-- ----------------------------
+INSERT INTO `factory_logs` VALUES ('1', null, '131.68', '1', '收入', '2017-05-26 15:33:21', '2017-05-26 15:33:21');
+INSERT INTO `factory_logs` VALUES ('2', null, '54.46', '1', '收入', '2017-05-27 01:29:32', '2017-05-27 01:29:32');
+INSERT INTO `factory_logs` VALUES ('3', null, '8.92', '1', '收入', '2017-05-27 01:39:14', '2017-05-27 01:39:14');
+INSERT INTO `factory_logs` VALUES ('4', null, '18.82', '1', '收入', '2017-05-27 01:58:45', '2017-05-27 01:58:45');
+
+-- ----------------------------
+-- Table structure for factory_process_records
+-- ----------------------------
+DROP TABLE IF EXISTS `factory_process_records`;
+CREATE TABLE `factory_process_records` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `factory_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `process_on` date DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_factory_process_records_on_factory_id` (`factory_id`),
+  KEY `index_factory_process_records_on_category_id` (`category_id`),
+  KEY `index_factory_process_records_on_product_id` (`product_id`),
+  CONSTRAINT `fk_rails_aafa6b58d0` FOREIGN KEY (`factory_id`) REFERENCES `factories` (`id`),
+  CONSTRAINT `fk_rails_bc06e9c2be` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
+  CONSTRAINT `fk_rails_f447ff84e3` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of factory_process_records
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for factory_settlement_records
+-- ----------------------------
+DROP TABLE IF EXISTS `factory_settlement_records`;
+CREATE TABLE `factory_settlement_records` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `factory_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `settlement_on` date DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `price` float DEFAULT NULL,
+  `money` float DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_factory_settlement_records_on_factory_id` (`factory_id`),
+  KEY `index_factory_settlement_records_on_category_id` (`category_id`),
+  KEY `index_factory_settlement_records_on_product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of factory_settlement_records
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for factory_settlement_rules
+-- ----------------------------
+DROP TABLE IF EXISTS `factory_settlement_rules`;
+CREATE TABLE `factory_settlement_rules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `from_date` date DEFAULT NULL,
+  `priority` int(11) DEFAULT NULL,
+  `factory_id` int(11) DEFAULT NULL,
+  `settlement_rule_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_factory_settlement_rules_on_factory_id` (`factory_id`),
+  KEY `index_factory_settlement_rules_on_settlement_rule_id` (`settlement_rule_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of factory_settlement_rules
 -- ----------------------------
 
 -- ----------------------------
@@ -318,16 +647,51 @@ CREATE TABLE `items` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_items_on_product_id` (`product_id`),
-  KEY `index_items_on_order_id` (`order_id`),
-  CONSTRAINT `fk_rails_53153f3b4b` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
-  CONSTRAINT `fk_rails_9a56345cfd` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+  KEY `index_items_on_order_id` (`order_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of items
 -- ----------------------------
-INSERT INTO `items` VALUES ('8', '3', '11', '2', '1', '2017-02-27 08:35:35', '2017-02-27 09:39:33');
-INSERT INTO `items` VALUES ('9', '10', '1', '1', '1', '2017-05-12 17:14:18', '2017-05-27 17:14:21');
+INSERT INTO `items` VALUES ('1', '1', '11', '2', '2', '2017-05-26 16:02:49', '2017-05-26 16:02:49');
+INSERT INTO `items` VALUES ('2', '1', '11', '2', '3', '2017-05-26 16:07:11', '2017-05-26 16:07:11');
+INSERT INTO `items` VALUES ('3', '1', '21', '3', '3', '2017-05-26 16:07:11', '2017-05-26 16:07:11');
+INSERT INTO `items` VALUES ('4', '2', '31', '4', '4', '2017-05-26 16:10:54', '2017-05-26 16:10:54');
+INSERT INTO `items` VALUES ('5', '1', '101', '5', '4', '2017-05-26 16:10:54', '2017-05-26 16:10:54');
+INSERT INTO `items` VALUES ('6', '1', '131', '8', '5', '2017-05-26 16:11:04', '2017-05-26 16:11:04');
+INSERT INTO `items` VALUES ('7', '1', '131', '8', '6', '2017-05-26 16:24:42', '2017-05-26 16:24:42');
+INSERT INTO `items` VALUES ('8', '1', '131', '8', '7', '2017-05-26 16:24:53', '2017-05-26 16:24:53');
+INSERT INTO `items` VALUES ('9', '1', '43', '1', '8', '2017-05-27 01:26:13', '2017-05-27 01:26:13');
+INSERT INTO `items` VALUES ('10', '1', '11', '2', '8', '2017-05-27 01:26:13', '2017-05-27 01:26:13');
+INSERT INTO `items` VALUES ('11', '1', '131', '8', '9', '2017-05-27 01:34:42', '2017-05-27 01:34:42');
+INSERT INTO `items` VALUES ('12', '1', '11', '2', '10', '2017-05-27 01:34:53', '2017-05-27 01:34:53');
+INSERT INTO `items` VALUES ('13', '1', '21', '3', '11', '2017-05-27 01:57:01', '2017-05-27 01:57:01');
+INSERT INTO `items` VALUES ('14', '1', '311', '14', '12', '2017-05-27 01:58:38', '2017-05-27 01:58:38');
+INSERT INTO `items` VALUES ('15', '1', '11', '2', '13', '2017-05-27 01:58:59', '2017-05-27 01:58:59');
+
+-- ----------------------------
+-- Table structure for order_promotions
+-- ----------------------------
+DROP TABLE IF EXISTS `order_promotions`;
+CREATE TABLE `order_promotions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kind` int(11) DEFAULT NULL,
+  `discount` float DEFAULT NULL,
+  `premise` float DEFAULT NULL,
+  `coupon_list_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_order_promotions_on_coupon_list_id` (`coupon_list_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of order_promotions
+-- ----------------------------
+INSERT INTO `order_promotions` VALUES ('17', '3', '10', '20', '24', '2017-05-18 14:29:15', '2017-05-18 14:29:15');
+INSERT INTO `order_promotions` VALUES ('27', '1', '4', '60', '34', '2017-05-19 15:51:19', '2017-05-20 06:48:10');
+INSERT INTO `order_promotions` VALUES ('29', '1', '3', '10', '36', '2017-05-26 15:36:39', '2017-05-26 15:36:39');
+INSERT INTO `order_promotions` VALUES ('30', '1', '12', '10', '37', '2017-05-27 02:05:45', '2017-05-27 02:05:45');
 
 -- ----------------------------
 -- Table structure for orders
@@ -352,16 +716,23 @@ CREATE TABLE `orders` (
   KEY `index_orders_on_user_id` (`user_id`),
   KEY `index_orders_on_address_id` (`address_id`),
   KEY `index_orders_on_waybill_id` (`waybill_id`),
-  KEY `index_orders_on_factory_id` (`factory_id`),
-  CONSTRAINT `fk_rails_3dd05aae5e` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  CONSTRAINT `fk_rails_774ef80392` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`),
-  CONSTRAINT `fk_rails_f868b47f6a` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  KEY `index_orders_on_factory_id` (`factory_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('1', '1', '2', '1', null, '1', '0', '0', '0', '2017-02-27 02:38:56', '2017-02-27 02:38:56', '2', '1');
+INSERT INTO `orders` VALUES ('3', '1', '11', '8', '32', '4', '0', '0', '0', '2017-05-26 16:07:11', '2017-05-27 01:52:01', '6', '1');
+INSERT INTO `orders` VALUES ('4', '1', '11', '8', '163', '5', '0', '0', '0', '2017-05-26 16:10:54', '2017-05-27 10:11:41', '8', '1');
+INSERT INTO `orders` VALUES ('5', '2', '11', '8', '131', '9', '0', '0', '0', '2017-05-26 16:11:04', '2017-05-26 16:13:56', '9', '1');
+INSERT INTO `orders` VALUES ('6', '2', '11', '8', '131', '4', '0', '0', '0', '2017-05-26 16:24:42', '2017-05-26 17:04:16', '11', '1');
+INSERT INTO `orders` VALUES ('7', '2', '11', '8', '131', '1', '0', '0', '0', '2017-05-26 16:24:53', '2017-05-26 16:24:53', '12', '1');
+INSERT INTO `orders` VALUES ('8', '1', '11', '8', '54', '1', '1', '0', '0', '2017-05-27 01:26:13', '2017-05-27 01:29:32', '26', '1');
+INSERT INTO `orders` VALUES ('9', '2', '11', '8', '131', '1', '0', '0', '0', '2017-05-27 01:34:42', '2017-05-27 01:34:42', '33', '1');
+INSERT INTO `orders` VALUES ('10', '1', '11', '8', '8', '1', '1', '0', '0', '2017-05-27 01:34:53', '2017-05-27 01:39:14', '34', '1');
+INSERT INTO `orders` VALUES ('11', '1', '13', '11', '18', '1', '1', '0', '0', '2017-05-27 01:57:01', '2017-05-27 01:58:45', '44', '1');
+INSERT INTO `orders` VALUES ('12', '4', '13', '9', '311', '1', '1', '0', '0', '2017-05-27 01:58:37', '2017-05-27 01:59:29', '50', '1');
+INSERT INTO `orders` VALUES ('13', '1', '13', '9', '11', '1', '1', '0', '0', '2017-05-27 01:58:59', '2017-05-27 02:00:34', '52', '1');
 
 -- ----------------------------
 -- Table structure for orders_status
@@ -371,16 +742,22 @@ CREATE TABLE `orders_status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status_desc` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of orders_status
 -- ----------------------------
-INSERT INTO `orders_status` VALUES ('1', '取件中');
-INSERT INTO `orders_status` VALUES ('2', '送往加工店');
-INSERT INTO `orders_status` VALUES ('3', '清洗中');
-INSERT INTO `orders_status` VALUES ('4', '送回中');
-INSERT INTO `orders_status` VALUES ('5', '已签收');
+INSERT INTO `orders_status` VALUES ('1', '派单中');
+INSERT INTO `orders_status` VALUES ('2', '取件中');
+INSERT INTO `orders_status` VALUES ('3', '待支付');
+INSERT INTO `orders_status` VALUES ('4', '送往加工店');
+INSERT INTO `orders_status` VALUES ('5', '清洗中');
+INSERT INTO `orders_status` VALUES ('6', '送回中');
+INSERT INTO `orders_status` VALUES ('7', '已签收');
+INSERT INTO `orders_status` VALUES ('8', '备用');
+INSERT INTO `orders_status` VALUES ('9', '申请退单');
+INSERT INTO `orders_status` VALUES ('10', '订单取消');
+INSERT INTO `orders_status` VALUES ('11', '订单取消(退款完成)');
 
 -- ----------------------------
 -- Table structure for price_rules
@@ -396,9 +773,7 @@ CREATE TABLE `price_rules` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_price_rules_on_city_id` (`city_id`),
-  KEY `index_price_rules_on_category_id` (`category_id`),
-  CONSTRAINT `fk_rails_83ffc065e0` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`),
-  CONSTRAINT `fk_rails_eb7b443a9f` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
+  KEY `index_price_rules_on_category_id` (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -427,12 +802,12 @@ CREATE TABLE `prices` (
   PRIMARY KEY (`id`),
   KEY `index_prices_on_product_id` (`product_id`),
   CONSTRAINT `fk_rails_b8ee0bfea1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of prices
 -- ----------------------------
-INSERT INTO `prices` VALUES ('1', '888', '2', '3', '4', '5', '6', '1', '2017-02-24 15:47:26', '2017-04-22 03:34:36');
+INSERT INTO `prices` VALUES ('1', '43', '2', '3', '4', '5', '6', '1', '2017-02-24 15:47:26', '2017-05-07 08:19:52');
 INSERT INTO `prices` VALUES ('2', '11', '12', '13', '14', '15', '16', '2', '2017-02-24 15:47:26', '2017-02-24 15:47:26');
 INSERT INTO `prices` VALUES ('3', '21', '22', '23', '24', '25', '26', '3', '2017-02-24 15:47:26', '2017-02-24 15:47:26');
 INSERT INTO `prices` VALUES ('4', '31', '32', '33', '34', '35', '36', '4', '2017-02-24 15:47:26', '2017-02-24 15:47:26');
@@ -448,8 +823,8 @@ INSERT INTO `prices` VALUES ('13', '301', '302', '303', '304', '305', '306', '13
 INSERT INTO `prices` VALUES ('14', '311', '312', '313', '314', '315', '316', '14', '2017-02-24 15:47:26', '2017-02-24 15:47:26');
 INSERT INTO `prices` VALUES ('15', '321', '322', '323', '324', '325', '326', '15', '2017-02-24 15:47:26', '2017-02-24 15:47:26');
 INSERT INTO `prices` VALUES ('16', '331', '332', '333', '334', '335', '336', '16', '2017-02-24 15:47:26', '2017-02-24 15:47:26');
-INSERT INTO `prices` VALUES ('17', '1', '0', '0', '0', '0', '0', null, '2017-04-21 14:09:19', '2017-04-21 14:09:19');
-INSERT INTO `prices` VALUES ('18', '1', '0', '0', '0', '0', '0', null, '2017-04-21 14:10:27', '2017-04-21 14:10:27');
+INSERT INTO `prices` VALUES ('17', '1', '0', '0', '0', '0', '0', '17', '2017-04-21 14:09:19', '2017-04-21 14:09:19');
+INSERT INTO `prices` VALUES ('18', '1', '0', '0', '0', '0', '0', '21', '2017-04-21 14:10:27', '2017-04-21 14:10:27');
 INSERT INTO `prices` VALUES ('19', '1', '0', '0', '0', '0', '0', null, '2017-04-21 14:11:41', '2017-04-21 14:11:41');
 INSERT INTO `prices` VALUES ('20', '1', '0', '0', '0', '0', '0', null, '2017-04-21 14:12:09', '2017-04-21 14:12:09');
 INSERT INTO `prices` VALUES ('21', '1', '0', '0', '0', '0', '0', null, '2017-04-21 14:14:40', '2017-04-21 14:14:40');
@@ -468,6 +843,10 @@ INSERT INTO `prices` VALUES ('33', '888', '0', '0', '0', '0', '0', '34', '2017-0
 INSERT INTO `prices` VALUES ('34', '888', '0', '0', '0', '0', '0', '35', '2017-04-22 03:31:29', '2017-04-22 03:31:29');
 INSERT INTO `prices` VALUES ('35', '888', '0', '0', '0', '0', '0', '36', '2017-04-22 03:33:24', '2017-04-22 03:33:24');
 INSERT INTO `prices` VALUES ('36', '888', '0', '0', '0', '0', '0', '37', '2017-04-22 03:33:43', '2017-04-22 03:33:43');
+INSERT INTO `prices` VALUES ('37', null, '0', '0', '0', '0', '0', '38', '2017-05-20 04:02:34', '2017-05-20 04:02:34');
+INSERT INTO `prices` VALUES ('38', null, '0', '0', '0', '0', '0', '39', '2017-05-20 04:12:06', '2017-05-20 04:12:06');
+INSERT INTO `prices` VALUES ('39', '4', '0', '0', '0', '0', '0', '40', '2017-05-27 02:02:16', '2017-05-27 02:02:16');
+INSERT INTO `prices` VALUES ('40', '4', '0', '0', '0', '0', '0', '41', '2017-05-27 02:02:16', '2017-05-27 02:02:16');
 
 -- ----------------------------
 -- Table structure for product_items
@@ -483,32 +862,12 @@ CREATE TABLE `product_items` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_product_items_on_order_id` (`order_id`),
-  KEY `index_product_items_on_product_id` (`product_id`),
-  CONSTRAINT `fk_rails_00f7aa94fd` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  CONSTRAINT `fk_rails_02ba65545e` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+  KEY `index_product_items_on_product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_items
 -- ----------------------------
-INSERT INTO `product_items` VALUES ('3', null, '0', '1', '2', '2017-02-27 10:36:30', '2017-02-27 10:36:30');
-INSERT INTO `product_items` VALUES ('4', '', '0', null, null, '2017-04-14 06:57:14', '2017-04-14 06:57:14');
-INSERT INTO `product_items` VALUES ('5', '', '0', null, null, '2017-04-14 06:57:44', '2017-04-14 06:57:44');
-INSERT INTO `product_items` VALUES ('6', '', '0', null, null, '2017-04-14 07:49:55', '2017-04-14 07:49:55');
-INSERT INTO `product_items` VALUES ('7', 'test', '0', '1', '2', '2017-04-14 07:57:01', '2017-04-14 07:57:01');
-INSERT INTO `product_items` VALUES ('8', 'test', '0', '1', '2', '2017-04-14 07:57:04', '2017-04-14 07:57:04');
-INSERT INTO `product_items` VALUES ('9', 'test', '0', '1', '2', '2017-04-14 07:58:28', '2017-04-14 07:58:28');
-INSERT INTO `product_items` VALUES ('10', 'tstee11', '0', '1', '2', '2017-04-14 12:46:54', '2017-04-14 12:46:54');
-INSERT INTO `product_items` VALUES ('11', 'tstee11', '0', '1', null, '2017-04-14 13:12:57', '2017-04-14 13:12:57');
-INSERT INTO `product_items` VALUES ('12', 'tstee11jjjjjjjjjjjjjjjjjjjjjjjjjj', '0', '1', null, '2017-04-14 13:13:12', '2017-04-14 13:13:12');
-INSERT INTO `product_items` VALUES ('13', 'wwwwwwwwwwww', '0', '1', '2', '2017-04-14 13:45:51', '2017-04-14 13:45:51');
-INSERT INTO `product_items` VALUES ('14', 'wwwwwwwwwwww', '0', '1', '2', '2017-04-14 13:46:20', '2017-04-14 13:46:20');
-INSERT INTO `product_items` VALUES ('15', 'wwwwwwwwwwww', '0', '1', '2', '2017-04-14 13:46:23', '2017-04-14 13:46:23');
-INSERT INTO `product_items` VALUES ('16', 'wwwwwwwwwwww', '0', '1', '2', '2017-04-14 13:58:44', '2017-04-14 13:58:44');
-INSERT INTO `product_items` VALUES ('17', 'wwwwwwwwwwww', '0', '1', '2', '2017-04-14 13:58:45', '2017-04-14 13:58:45');
-INSERT INTO `product_items` VALUES ('18', 'aaaaa', '0', '1', '2', '2017-04-14 14:20:31', '2017-04-14 14:20:31');
-INSERT INTO `product_items` VALUES ('19', 'aaaaa', '0', '1', '2', '2017-04-14 14:20:38', '2017-04-14 14:20:38');
-INSERT INTO `product_items` VALUES ('20', 'aaaaa', '0', '1', '2', '2017-04-14 14:20:41', '2017-04-14 14:20:41');
 
 -- ----------------------------
 -- Table structure for products
@@ -525,32 +884,29 @@ CREATE TABLE `products` (
   PRIMARY KEY (`id`),
   KEY `index_products_on_category_id` (`category_id`),
   CONSTRAINT `fk_rails_fb915499a4` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of products
 -- ----------------------------
-INSERT INTO `products` VALUES ('1', '人也是', '12ewfsdf', '1', '1', '2017-02-24 15:41:59', '2017-04-22 03:34:36');
-INSERT INTO `products` VALUES ('2', 'product 2', 'category-1487430865976', '0', '1', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('3', 'product 3', 'category-1487430865976', '0', '1', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('4', 'product 4', 'category-1487430865976', '0', '1', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('5', 'product 1', 'category-1487430865976', '0', '2', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('6', 'product 2', 'category-1487430865976', '0', '2', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('7', 'product 3', 'category-1487430865976', '0', '2', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('8', 'product 4', 'category-1487430865976', '0', '2', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('9', 'product 1', 'category-1487430865976', '0', '3', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('10', 'product 2', 'category-1487430865976', '0', '3', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('11', 'product 3', 'category-1487430865976', '0', '3', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('12', 'product 4', 'category-1487430865976', '0', '3', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('13', 'product 1', 'category-1487430865976', '0', '4', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('14', 'product 2', 'category-1487430865976', '0', '4', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('15', 'product 3', 'category-1487430865976', '0', '4', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('16', 'product 4', 'category-1487430865976', '0', '4', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
-INSERT INTO `products` VALUES ('17', 'test1', 'test1', '0', '1', '2017-04-14 15:49:32', '2017-04-14 15:49:32');
-INSERT INTO `products` VALUES ('18', '大保健', '黄图', '1', '1', '2017-04-21 14:09:19', '2017-04-21 14:09:19');
-INSERT INTO `products` VALUES ('19', '大保健', '黄图', '1', '1', '2017-04-21 14:10:27', '2017-04-21 14:10:27');
-INSERT INTO `products` VALUES ('20', '大保健', '黄图', '1', '1', '2017-04-21 14:11:41', '2017-04-21 14:11:41');
-INSERT INTO `products` VALUES ('21', '大保健', '黄图', '1', '1', '2017-04-21 14:12:09', '2017-04-21 14:12:09');
+INSERT INTO `products` VALUES ('1', 'T恤', '12ewfsdf', '1', '1', '2017-02-24 15:41:59', '2017-04-22 03:34:36');
+INSERT INTO `products` VALUES ('2', '衬衫', 'category-1487430865976', '0', '1', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('3', '呢子大衣', 'category-1487430865976', '0', '1', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('4', '羽绒服', 'category-1487430865976', '0', '1', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('5', '西服', 'category-1487430865976', '0', '1', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('6', '羊毛衫', 'category-1487430865976', '0', '1', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('7', '卫衣', 'category-1487430865976', '0', '1', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('8', '帆布鞋', 'category-1487430865976', '0', '2', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('9', '床单', 'category-1487430865976', '0', '3', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('10', '被套', 'category-1487430865976', '0', '3', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('11', '枕巾', 'category-1487430865976', '0', '3', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('12', '绒枕芯', 'category-1487430865976', '0', '3', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('13', '被子', 'category-1487430865976', '0', '3', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('14', '大窗帘', 'category-1487430865976', '0', '4', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('15', '小窗帘', 'category-1487430865976', '0', '4', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('16', '特大窗帘', 'category-1487430865976', '0', '4', '2017-02-24 15:41:59', '2017-02-24 15:41:59');
+INSERT INTO `products` VALUES ('17', '皮鞋', 'test1', '0', '2', '2017-04-14 15:49:32', '2017-04-14 15:49:32');
+INSERT INTO `products` VALUES ('21', '翻毛绒鞋', '黄图', '0', '2', '2017-04-21 14:12:09', '2017-04-21 14:12:09');
 INSERT INTO `products` VALUES ('22', '大保健', '黄图', '1', '1', '2017-04-21 14:14:40', '2017-04-21 14:14:40');
 INSERT INTO `products` VALUES ('23', '大保健', '黄图', '1', '1', '2017-04-21 14:15:46', '2017-04-21 14:15:46');
 INSERT INTO `products` VALUES ('24', '大保健', '黄图', '1', '1', '2017-04-21 14:15:46', '2017-04-21 14:15:46');
@@ -567,6 +923,30 @@ INSERT INTO `products` VALUES ('34', '人也是', '12ewfsdf', '1', '1', '2017-04
 INSERT INTO `products` VALUES ('35', '人也是', '12ewfsdf', '1', '1', '2017-04-22 03:31:29', '2017-04-22 03:31:29');
 INSERT INTO `products` VALUES ('36', '人也是', '12ewfsdf', '1', '1', '2017-04-22 03:33:24', '2017-04-22 03:33:24');
 INSERT INTO `products` VALUES ('37', '人也是', '12ewfsdf', '1', '1', '2017-04-22 03:33:43', '2017-04-22 03:33:43');
+INSERT INTO `products` VALUES ('38', 'rewrer', 'rewrw', '1', '3', '2017-05-20 04:02:34', '2017-05-20 04:02:34');
+INSERT INTO `products` VALUES ('39', 'dsef', 'fsd', '1', '1', '2017-05-20 04:12:06', '2017-05-20 04:12:06');
+INSERT INTO `products` VALUES ('40', '1123', 'image/default.png', '0', '1', '2017-05-27 02:02:16', '2017-05-27 02:02:16');
+INSERT INTO `products` VALUES ('41', '1123', 'image/default.png', '0', '1', '2017-05-27 02:02:16', '2017-05-27 02:02:16');
+
+-- ----------------------------
+-- Table structure for promotion_rules
+-- ----------------------------
+DROP TABLE IF EXISTS `promotion_rules`;
+CREATE TABLE `promotion_rules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `start_on` date DEFAULT NULL,
+  `end_on` date DEFAULT NULL,
+  `coupon_list_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_promotion_rules_on_coupon_list_id` (`coupon_list_id`),
+  CONSTRAINT `fk_rails_4215db7442` FOREIGN KEY (`coupon_list_id`) REFERENCES `coupon_lists` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of promotion_rules
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for regions
@@ -3840,7 +4220,6 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` VALUES ('2', 'yunying', null, null, '2017-02-24 15:30:57', '2017-02-24 15:30:57', '总部运营', '');
 INSERT INTO `roles` VALUES ('3', 'fenchengshi', null, null, '2017-02-24 15:31:07', '2017-02-24 15:31:07', '分城市运营', '');
 INSERT INTO `roles` VALUES ('4', '警察', null, null, '2017-04-14 17:16:58', '2017-04-14 17:16:58', '公安局', null);
-INSERT INTO `roles` VALUES ('5', '警察baba', null, null, '2017-04-14 17:17:00', '2017-04-14 17:17:55', '公安局baba', null);
 
 -- ----------------------------
 -- Table structure for schema_migrations
@@ -3893,6 +4272,72 @@ INSERT INTO `schema_migrations` VALUES ('20170421134804');
 INSERT INTO `schema_migrations` VALUES ('20170421134812');
 INSERT INTO `schema_migrations` VALUES ('20170422013246');
 INSERT INTO `schema_migrations` VALUES ('20170422013302');
+INSERT INTO `schema_migrations` VALUES ('20170512063258');
+INSERT INTO `schema_migrations` VALUES ('20170512063312');
+INSERT INTO `schema_migrations` VALUES ('20170512143745');
+INSERT INTO `schema_migrations` VALUES ('20170512144246');
+INSERT INTO `schema_migrations` VALUES ('20170512144339');
+INSERT INTO `schema_migrations` VALUES ('20170512144448');
+INSERT INTO `schema_migrations` VALUES ('20170512144716');
+INSERT INTO `schema_migrations` VALUES ('20170512144822');
+INSERT INTO `schema_migrations` VALUES ('20170512144946');
+INSERT INTO `schema_migrations` VALUES ('20170512145030');
+INSERT INTO `schema_migrations` VALUES ('20170512145207');
+INSERT INTO `schema_migrations` VALUES ('20170512145316');
+INSERT INTO `schema_migrations` VALUES ('20170512145450');
+INSERT INTO `schema_migrations` VALUES ('20170517094940');
+INSERT INTO `schema_migrations` VALUES ('20170517144427');
+INSERT INTO `schema_migrations` VALUES ('20170517144429');
+INSERT INTO `schema_migrations` VALUES ('20170517144432');
+INSERT INTO `schema_migrations` VALUES ('20170517144613');
+INSERT INTO `schema_migrations` VALUES ('20170517144635');
+INSERT INTO `schema_migrations` VALUES ('20170517155318');
+INSERT INTO `schema_migrations` VALUES ('20170517155327');
+
+-- ----------------------------
+-- Table structure for settlement_prices
+-- ----------------------------
+DROP TABLE IF EXISTS `settlement_prices`;
+CREATE TABLE `settlement_prices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `settlement_rule_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `price` float DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_settlement_prices_on_settlement_rule_id` (`settlement_rule_id`),
+  KEY `index_settlement_prices_on_product_id` (`product_id`),
+  CONSTRAINT `fk_rails_e6259d5046` FOREIGN KEY (`settlement_rule_id`) REFERENCES `settlement_rules` (`id`),
+  CONSTRAINT `fk_rails_cbce5a341c` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of settlement_prices
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for settlement_rules
+-- ----------------------------
+DROP TABLE IF EXISTS `settlement_rules`;
+CREATE TABLE `settlement_rules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_id` int(11) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_settlement_rules_on_category_id` (`category_id`),
+  KEY `index_settlement_rules_on_city_id` (`city_id`),
+  CONSTRAINT `fk_rails_42d269dd40` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
+  CONSTRAINT `fk_rails_b8c6322fa8` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of settlement_rules
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for station_addresses
@@ -3913,13 +4358,16 @@ CREATE TABLE `station_addresses` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of station_addresses
 -- ----------------------------
-INSERT INTO `station_addresses` VALUES ('1', '中关村', '18811442447', '男', '北京', '北京', '不知道', '888', null, '52.3333', '65.3655', '2017-04-13 22:27:22', '2017-04-29 22:27:26');
-INSERT INTO `station_addresses` VALUES ('2', '渣渣5号', '18811442447', '', '南京', '不知道的地方', '大桥', '桥洞4号', null, '54.6566', '445.768', '2017-04-21 15:13:48', '2017-04-21 15:13:48');
+INSERT INTO `station_addresses` VALUES ('1', '演示2', '18810816259', '男', '北京市', '西城区', '西长安街', '', null, '39.9152', '116.394', '2017-04-13 22:27:22', '2017-05-27 01:39:55');
+INSERT INTO `station_addresses` VALUES ('3', '展示1', '111111', null, '北京市', '东城区', '河泊厂胡同', '45号', null, '39.9004', '116.421', '2017-05-07 06:02:37', '2017-05-07 06:02:37');
+INSERT INTO `station_addresses` VALUES ('4', '演示2', '18810816259', null, '北京市', '西城区', '西长安街', '', null, '39.9152', '116.394', '2017-05-27 01:39:55', '2017-05-27 01:39:55');
+INSERT INTO `station_addresses` VALUES ('5', '1111', '18810816259', null, '北京市', '东城区', '草厂头条', '7号', null, '39.9028', '116.412', '2017-05-27 01:41:22', '2017-05-27 01:41:22');
+INSERT INTO `station_addresses` VALUES ('6', '123124123', '123124124', null, '北京市', '东城区', '故宫东门外', '', null, '39.923', '116.406', '2017-05-27 02:03:52', '2017-05-27 02:03:52');
 
 -- ----------------------------
 -- Table structure for stations
@@ -3976,12 +4424,118 @@ CREATE TABLE `user_addresses` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of user_addresses
 -- ----------------------------
 INSERT INTO `user_addresses` VALUES ('1', '渣渣5号', '18811442447', '', '南京', '不知道的地方', '大桥', '桥洞4号', '1', '54.6566', '445.768', '2017-04-21 13:58:36', '2017-04-21 13:58:36');
+INSERT INTO `user_addresses` VALUES ('2', 'ts', '18500087587', '', '天津市', '和平区', 'hepinggongyuan', '1234', '9', '39.9603', '116.355', '2017-05-07 01:51:57', '2017-05-07 02:25:35');
+INSERT INTO `user_addresses` VALUES ('3', 'ts87', '18500000008', '', '北京市', '海淀区', 'bjtu', '6', '9', '39.9603', '116.355', '2017-05-07 02:25:58', '2017-05-07 02:25:58');
+INSERT INTO `user_addresses` VALUES ('4', 'test', '18600000002', '', '北京市', '东城区', 'buzhidao', '123', '3', '39.9603', '116.355', '2017-05-07 02:50:29', '2017-05-07 02:50:29');
+INSERT INTO `user_addresses` VALUES ('5', 'tsts', '18500000002', '', '北京市', '西城区', 'xicheng', '123', '5', '39.9603', '116.355', '2017-05-07 06:21:16', '2017-05-07 06:21:16');
+INSERT INTO `user_addresses` VALUES ('6', 'tt', '18600000002', '', '天津市', '和平区', 'hjk', '567', '3', '39.9603', '116.355', '2017-05-07 06:31:24', '2017-05-07 06:31:24');
+INSERT INTO `user_addresses` VALUES ('7', 'ts', '18600000001', '', '北京市', '东城区', 'haha', '1605', '2', '39.9603', '116.355', '2017-05-20 07:40:05', '2017-05-20 07:40:05');
+INSERT INTO `user_addresses` VALUES ('8', 'ts', '18500000001', '', '北京市', '海淀区', 'Beijing Jiaotong University', 'Xueyuan Apartment', '11', '39.9603', '116.355', '2017-05-26 15:26:02', '2017-05-26 15:26:02');
+INSERT INTO `user_addresses` VALUES ('9', 'ts', '18500000008', '', '北京市', '海淀区', 'bjtu', '1605', '13', '39.9603', '116.355', '2017-05-27 01:55:47', '2017-05-27 01:55:47');
+INSERT INTO `user_addresses` VALUES ('11', 'ts', '18500000008', '', '北京市', '东城区', 'bjtu', '123', '13', '39.9603', '116.355', '2017-05-27 01:56:52', '2017-05-27 01:56:52');
+
+-- ----------------------------
+-- Table structure for user_card_charge_settings
+-- ----------------------------
+DROP TABLE IF EXISTS `user_card_charge_settings`;
+CREATE TABLE `user_card_charge_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `min` float DEFAULT NULL,
+  `money_give` float DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_user_card_charge_settings_on_city_id` (`city_id`),
+  CONSTRAINT `fk_rails_3662e32833` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_card_charge_settings
+-- ----------------------------
+INSERT INTO `user_card_charge_settings` VALUES ('1', '50', '10', null, '2017-05-17 14:02:14', '2017-05-17 14:02:14');
+INSERT INTO `user_card_charge_settings` VALUES ('2', '60', '19', null, '2017-05-25 22:26:25', '2017-05-11 22:26:50');
+INSERT INTO `user_card_charge_settings` VALUES ('3', '10', '50', null, '2017-05-17 14:31:06', '2017-05-17 14:31:06');
+INSERT INTO `user_card_charge_settings` VALUES ('7', '100', '1', null, '2017-05-18 16:16:45', '2017-05-18 16:16:45');
+INSERT INTO `user_card_charge_settings` VALUES ('9', '54', '22', null, '2017-05-20 08:32:11', '2017-05-20 08:32:11');
+
+-- ----------------------------
+-- Table structure for user_card_logs
+-- ----------------------------
+DROP TABLE IF EXISTS `user_card_logs`;
+CREATE TABLE `user_card_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kind` int(11) DEFAULT NULL,
+  `real_money` float DEFAULT NULL,
+  `fake_money` float DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `loggable_type` varchar(255) DEFAULT NULL,
+  `loggable_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_card_logs
+-- ----------------------------
+INSERT INTO `user_card_logs` VALUES ('1', '0', '15', '14', '10', '操作员充值', '0', '2017-05-26 15:32:52', '2017-05-26 15:32:52');
+INSERT INTO `user_card_logs` VALUES ('2', '0', '10', '50', '10', '操作员充值', '1', '2017-05-26 15:33:04', '2017-05-26 15:33:04');
+INSERT INTO `user_card_logs` VALUES ('3', '0', '66', '6', '11', '操作员充值', '0', '2017-05-26 15:33:18', '2017-05-26 15:33:18');
+INSERT INTO `user_card_logs` VALUES ('4', '0', '60', '19', '11', '操作员充值', '1', '2017-05-26 15:33:29', '2017-05-26 15:33:29');
+INSERT INTO `user_card_logs` VALUES ('5', '0', '66', '6', '11', '操作员充值', '0', '2017-05-26 15:34:19', '2017-05-26 15:34:19');
+INSERT INTO `user_card_logs` VALUES ('6', '0', '60', '19', '11', '操作员充值', '1', '2017-05-26 15:34:23', '2017-05-26 15:34:23');
+INSERT INTO `user_card_logs` VALUES ('7', '0', '66', '6', '10', '操作员充值', '0', '2017-05-26 15:34:42', '2017-05-26 15:34:42');
+INSERT INTO `user_card_logs` VALUES ('8', '0', '50', '10', '10', '操作员充值', '1', '2017-05-26 15:34:54', '2017-05-26 15:34:54');
+INSERT INTO `user_card_logs` VALUES ('9', '0', '55', '0', '11', '用户充值', '0', '2017-05-26 15:41:17', '2017-05-26 15:41:17');
+INSERT INTO `user_card_logs` VALUES ('10', '1', '32', '0', '11', '用户支付', '1', '2017-05-26 16:08:08', '2017-05-26 16:08:08');
+INSERT INTO `user_card_logs` VALUES ('11', '1', '131', '0', '11', '用户支付', '1', '2017-05-26 16:39:11', '2017-05-26 16:39:11');
+INSERT INTO `user_card_logs` VALUES ('12', '0', '0', '131', '11', '订单退款', '1', '2017-05-26 17:04:16', '2017-05-26 17:04:16');
+INSERT INTO `user_card_logs` VALUES ('13', '1', '0', '54', '11', '用户支付', '1', '2017-05-27 01:28:07', '2017-05-27 01:28:07');
+INSERT INTO `user_card_logs` VALUES ('14', '1', '0', '8', '11', '用户支付', '1', '2017-05-27 01:36:06', '2017-05-27 01:36:06');
+INSERT INTO `user_card_logs` VALUES ('15', '0', '0', '32', '11', '订单退款', '1', '2017-05-27 01:52:02', '2017-05-27 01:52:02');
+INSERT INTO `user_card_logs` VALUES ('16', '0', '50', '10', '13', '操作员充值', '1', '2017-05-27 01:54:16', '2017-05-27 01:54:16');
+INSERT INTO `user_card_logs` VALUES ('17', '0', '2', '0', '13', '用户充值', '0', '2017-05-27 01:55:01', '2017-05-27 01:55:01');
+INSERT INTO `user_card_logs` VALUES ('18', '1', '18', '0', '13', '用户支付', '1', '2017-05-27 01:58:02', '2017-05-27 01:58:02');
+INSERT INTO `user_card_logs` VALUES ('19', '1', '11', '0', '13', '用户支付', '1', '2017-05-27 01:59:52', '2017-05-27 01:59:52');
+INSERT INTO `user_card_logs` VALUES ('20', '0', '0', '11', '13', '订单退款', '1', '2017-05-27 02:00:35', '2017-05-27 02:00:35');
+INSERT INTO `user_card_logs` VALUES ('21', '0', '60', '19', '13', '操作员充值', '1', '2017-05-27 02:05:01', '2017-05-27 02:05:01');
+
+-- ----------------------------
+-- Table structure for user_cards
+-- ----------------------------
+DROP TABLE IF EXISTS `user_cards`;
+CREATE TABLE `user_cards` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `real_money` float DEFAULT NULL,
+  `fake_money` float DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_cards
+-- ----------------------------
+INSERT INTO `user_cards` VALUES ('1', '260', '106', '2', '2017-05-04 14:45:12', '2017-05-26 15:19:30');
+INSERT INTO `user_cards` VALUES ('2', '5869', '520', '3', '2017-04-28 13:41:53', '2017-05-26 15:28:43');
+INSERT INTO `user_cards` VALUES ('3', '201', '101', '4', '2017-05-13 13:42:05', '2017-05-13 07:54:20');
+INSERT INTO `user_cards` VALUES ('4', '2', '2', '5', '2017-05-13 13:42:14', '2017-05-13 13:42:17');
+INSERT INTO `user_cards` VALUES ('5', '3', '3', '6', '2017-05-25 13:42:24', '2017-05-13 13:42:27');
+INSERT INTO `user_cards` VALUES ('6', '4', '4', '7', '2017-05-13 13:45:19', '2017-05-13 13:45:21');
+INSERT INTO `user_cards` VALUES ('7', '5', '5', '8', '2017-05-13 13:45:30', '2017-05-19 13:45:33');
+INSERT INTO `user_cards` VALUES ('8', '6', '6', '9', '2017-05-05 13:45:41', '2017-05-13 13:45:43');
+INSERT INTO `user_cards` VALUES ('9', '185', '124', '10', '2017-05-18 13:16:00', '2017-05-26 15:34:54');
+INSERT INTO `user_cards` VALUES ('10', '0', '101', '11', '2017-05-26 14:58:37', '2017-05-27 01:52:01');
+INSERT INTO `user_cards` VALUES ('11', '0', '0', '12', '2017-05-27 01:53:48', '2017-05-27 01:53:48');
+INSERT INTO `user_cards` VALUES ('12', '83', '40', '13', '2017-05-27 01:53:52', '2017-05-27 02:05:01');
 
 -- ----------------------------
 -- Table structure for users
@@ -4006,13 +4560,17 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_mobile` (`mobile`),
   UNIQUE KEY `index_users_on_reset_password_token` (`reset_password_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('2', '18600000000', '', '$2a$11$EKfmjA7hS0tCbC9swzO2qudxGm93JQfIiMD1xdx5/D2wO8GFVH5OO', null, null, null, '3', '2017-03-22 09:21:07', '2017-02-24 15:56:05', '127.0.0.1', '127.0.0.1', 'user1', '2017-02-24 15:34:00', '2017-03-22 09:21:07');
-INSERT INTO `users` VALUES ('3', '111', 'tdhyft', '12112', null, null, null, '0', null, null, null, null, 'tyuty', '2017-04-15 01:36:01', '2017-04-15 01:36:01');
+INSERT INTO `users` VALUES ('2', '18600000001', '18600000001@qq.com', '123456', null, null, null, '3', '2017-03-22 09:21:07', '2017-02-24 15:56:05', '127.0.0.1', '127.0.0.1', 'user1', '2017-02-24 15:34:00', '2017-03-22 09:21:07');
+INSERT INTO `users` VALUES ('3', '18600000002', '18600000002@qq.com', '123456', null, null, null, '0', null, null, null, null, 'tyuty', '2017-04-15 01:36:01', '2017-04-15 01:36:01');
+INSERT INTO `users` VALUES ('10', '18811442000', '123@qq.com', '123456', null, null, null, '0', null, null, null, null, '啦啦', '2017-05-18 13:16:00', '2017-05-18 13:16:00');
+INSERT INTO `users` VALUES ('11', '18500000001', '18500000001@qq.com', '123456', null, null, null, '0', null, null, null, null, 'ts', '2017-05-26 14:58:37', '2017-05-26 14:58:37');
+INSERT INTO `users` VALUES ('12', '18500000002', '18500000002@qq.com', '123456', null, null, null, '0', null, null, null, null, 'ts', '2017-05-27 01:53:45', '2017-05-27 01:53:45');
+INSERT INTO `users` VALUES ('13', '18500000008', '18500000008@qq.com', '123456', null, null, null, '0', null, null, null, null, 'ts', '2017-05-27 01:53:52', '2017-05-27 01:53:52');
 
 -- ----------------------------
 -- Table structure for waybills
@@ -4035,15 +4593,62 @@ CREATE TABLE `waybills` (
   KEY `index_waybills_on_waybill_id` (`waybill_id`),
   KEY `index_waybills_on_order_id` (`order_id`),
   KEY `index_waybills_on_sender_type_and_sender_id` (`sender_type`,`sender_id`),
-  KEY `index_waybills_on_receiver_type_and_receiver_id` (`receiver_type`,`receiver_id`),
-  CONSTRAINT `fk_rails_7ce9a1fb31` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  KEY `index_waybills_on_receiver_type_and_receiver_id` (`receiver_type`,`receiver_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of waybills
 -- ----------------------------
-INSERT INTO `waybills` VALUES ('1', '2', 'User', '2', 'Courier', '1', '2', '2017-02-27 04:40:02', '2017-02-27 06:58:00', '1', '2017-02-27 02:40:02', '2017-02-27 06:58:00');
-INSERT INTO `waybills` VALUES ('2', '0', 'Courier', '1', 'Factory', '1', '1', null, null, '1', '2017-02-27 02:40:02', '2017-02-27 02:40:02');
+INSERT INTO `waybills` VALUES ('1', '1', '骑手即将取件', null, null, null, null, '2017-04-26 17:26:00', null, '1', '2017-05-26 15:26:49', '2017-05-26 15:26:49');
+INSERT INTO `waybills` VALUES ('2', '2', '你的黑土骑士正在飞奔到你身边取件', null, null, null, null, '2017-05-20 15:59:25', null, '1', '2017-05-26 15:32:44', '2017-05-26 15:32:44');
+INSERT INTO `waybills` VALUES ('3', '3', '你需要付钱洗衣了', null, null, null, null, '2017-05-20 15:59:25', null, '1', '2017-05-26 15:32:47', '2017-05-26 15:32:47');
+INSERT INTO `waybills` VALUES ('4', '7', '你已经签收了你的干净衣服', null, null, null, null, '2017-05-20 15:59:25', null, '1', '2017-05-26 15:33:21', '2017-05-26 15:33:21');
+INSERT INTO `waybills` VALUES ('5', '1', '骑手即将取件', null, null, null, null, '2017-04-27 06:02:00', null, '2', '2017-05-26 16:02:49', '2017-05-26 16:02:49');
+INSERT INTO `waybills` VALUES ('6', '1', '骑手即将取件', null, null, null, null, '2017-04-27 06:07:00', null, '3', '2017-05-26 16:07:11', '2017-05-26 16:07:11');
+INSERT INTO `waybills` VALUES ('7', '4', '你的黑土骑士正载着你的衣服奔向洗衣房', null, null, null, null, '2017-05-26 16:08:08', null, '3', '2017-05-26 16:08:08', '2017-05-26 16:08:08');
+INSERT INTO `waybills` VALUES ('8', '1', '骑手即将取件', null, null, null, null, '2017-04-27 06:10:00', null, '4', '2017-05-26 16:10:54', '2017-05-26 16:10:54');
+INSERT INTO `waybills` VALUES ('9', '1', '骑手即将取件', null, null, null, null, '2017-04-27 00:11:00', null, '5', '2017-05-26 16:11:04', '2017-05-26 16:11:04');
+INSERT INTO `waybills` VALUES ('11', '1', '骑手即将取件', null, null, null, null, null, null, '6', '2017-05-26 16:24:42', '2017-05-26 16:24:42');
+INSERT INTO `waybills` VALUES ('12', '1', '骑手即将取件', null, null, null, null, '2017-04-27 00:24:00', null, '7', '2017-05-26 16:24:53', '2017-05-26 16:24:53');
+INSERT INTO `waybills` VALUES ('14', '9', '申请退单', null, null, null, null, '2017-05-26 16:33:53', null, '4', '2017-05-26 16:33:53', '2017-05-26 16:33:53');
+INSERT INTO `waybills` VALUES ('15', '11', '完成退款', null, null, null, null, '2017-05-26 16:34:02', null, '4', '2017-05-26 16:34:02', '2017-05-26 16:34:02');
+INSERT INTO `waybills` VALUES ('16', '4', '你的黑土骑士正载着你的衣服奔向洗衣房', null, null, null, null, '2017-05-26 16:39:11', null, '6', '2017-05-26 16:39:11', '2017-05-26 16:39:11');
+INSERT INTO `waybills` VALUES ('24', '9', '申请退单', null, null, null, null, '2017-05-26 17:03:13', null, '6', '2017-05-26 17:03:13', '2017-05-26 17:03:13');
+INSERT INTO `waybills` VALUES ('25', '11', '完成退款', null, null, null, null, '2017-05-26 17:04:16', null, '6', '2017-05-26 17:04:16', '2017-05-26 17:04:16');
+INSERT INTO `waybills` VALUES ('26', '1', '骑手即将取件', null, null, null, null, '2017-04-27 01:04:00', null, '8', '2017-05-27 01:26:13', '2017-05-27 01:26:13');
+INSERT INTO `waybills` VALUES ('27', '2', '你的黑土骑士正在飞奔到你身边取件', null, null, null, null, '2017-05-20 15:59:25', null, '8', '2017-05-27 01:27:26', '2017-05-27 01:27:26');
+INSERT INTO `waybills` VALUES ('28', '3', '你需要付钱洗衣了', null, null, null, null, '2017-05-20 15:59:25', null, '8', '2017-05-27 01:27:33', '2017-05-27 01:27:33');
+INSERT INTO `waybills` VALUES ('29', '4', '你的黑土骑士正载着你的衣服奔向洗衣房', null, null, null, null, '2017-05-27 01:28:07', null, '8', '2017-05-27 01:28:07', '2017-05-27 01:28:07');
+INSERT INTO `waybills` VALUES ('30', '5', '你的脏衣服正在被洗衣机蹂躏', null, null, null, null, '2017-05-20 15:59:25', null, '8', '2017-05-27 01:29:02', '2017-05-27 01:29:02');
+INSERT INTO `waybills` VALUES ('31', '6', '你的白云骑士正带着你的干净衣服奔向你身边', null, null, null, null, '2017-05-20 15:59:25', null, '8', '2017-05-27 01:29:09', '2017-05-27 01:29:09');
+INSERT INTO `waybills` VALUES ('32', '7', '你已经签收了你的干净衣服', null, null, null, null, '2017-05-20 15:59:25', null, '8', '2017-05-27 01:29:32', '2017-05-27 01:29:32');
+INSERT INTO `waybills` VALUES ('33', '1', '骑手即将取件', null, null, null, null, '2017-04-27 01:12:00', null, '9', '2017-05-27 01:34:42', '2017-05-27 01:34:42');
+INSERT INTO `waybills` VALUES ('34', '1', '骑手即将取件', null, null, null, null, '2017-04-27 01:13:00', null, '10', '2017-05-27 01:34:53', '2017-05-27 01:34:53');
+INSERT INTO `waybills` VALUES ('35', '2', '你的黑土骑士正在飞奔到你身边取件', null, null, null, null, '2017-05-20 15:59:25', null, '10', '2017-05-27 01:35:14', '2017-05-27 01:35:14');
+INSERT INTO `waybills` VALUES ('36', '3', '你需要付钱洗衣了', null, null, null, null, '2017-05-20 15:59:25', null, '10', '2017-05-27 01:35:22', '2017-05-27 01:35:22');
+INSERT INTO `waybills` VALUES ('37', '4', '你的黑土骑士正载着你的衣服奔向洗衣房', null, null, null, null, '2017-05-27 01:36:06', null, '10', '2017-05-27 01:36:06', '2017-05-27 01:36:06');
+INSERT INTO `waybills` VALUES ('38', '5', '你的脏衣服正在被洗衣机蹂躏', null, null, null, null, '2017-05-20 15:59:25', null, '10', '2017-05-27 01:38:23', '2017-05-27 01:38:23');
+INSERT INTO `waybills` VALUES ('39', '6', '你的白云骑士正带着你的干净衣服奔向你身边', null, null, null, null, '2017-05-20 15:59:25', null, '10', '2017-05-27 01:38:32', '2017-05-27 01:38:32');
+INSERT INTO `waybills` VALUES ('40', '7', '你已经签收了你的干净衣服', null, null, null, null, '2017-05-20 15:59:25', null, '10', '2017-05-27 01:39:14', '2017-05-27 01:39:14');
+INSERT INTO `waybills` VALUES ('42', '9', '申请退单', null, null, null, null, '2017-05-27 01:51:55', null, '3', '2017-05-27 01:51:55', '2017-05-27 01:51:55');
+INSERT INTO `waybills` VALUES ('43', '11', '完成退款', null, null, null, null, '2017-05-27 01:52:02', null, '3', '2017-05-27 01:52:02', '2017-05-27 01:52:02');
+INSERT INTO `waybills` VALUES ('44', '1', '骑手即将取件', null, null, null, null, '2017-04-27 01:34:00', null, '11', '2017-05-27 01:57:01', '2017-05-27 01:57:01');
+INSERT INTO `waybills` VALUES ('45', '2', '你的黑土骑士正在飞奔到你身边取件', null, null, null, null, '2017-05-20 15:59:25', null, '11', '2017-05-27 01:57:19', '2017-05-27 01:57:19');
+INSERT INTO `waybills` VALUES ('46', '3', '你需要付钱洗衣了', null, null, null, null, '2017-05-20 15:59:25', null, '11', '2017-05-27 01:57:26', '2017-05-27 01:57:26');
+INSERT INTO `waybills` VALUES ('47', '4', '你的黑土骑士正载着你的衣服奔向洗衣房', null, null, null, null, '2017-05-27 01:58:02', null, '11', '2017-05-27 01:58:02', '2017-05-27 01:58:02');
+INSERT INTO `waybills` VALUES ('48', '5', '你的脏衣服正在被洗衣机蹂躏', null, null, null, null, '2017-05-20 15:59:25', null, '11', '2017-05-27 01:58:28', '2017-05-27 01:58:28');
+INSERT INTO `waybills` VALUES ('49', '6', '你的白云骑士正带着你的干净衣服奔向你身边', null, null, null, null, '2017-05-20 15:59:25', null, '11', '2017-05-27 01:58:35', '2017-05-27 01:58:35');
+INSERT INTO `waybills` VALUES ('50', '1', '骑手即将取件', null, null, null, null, '2017-04-27 06:36:00', null, '12', '2017-05-27 01:58:37', '2017-05-27 01:58:38');
+INSERT INTO `waybills` VALUES ('51', '7', '你已经签收了你的干净衣服', null, null, null, null, '2017-05-20 15:59:25', null, '11', '2017-05-27 01:58:44', '2017-05-27 01:58:44');
+INSERT INTO `waybills` VALUES ('52', '1', '骑手即将取件', null, null, null, null, '2017-04-27 05:37:00', null, '13', '2017-05-27 01:58:59', '2017-05-27 01:58:59');
+INSERT INTO `waybills` VALUES ('53', '2', '你的黑土骑士正在飞奔到你身边取件', null, null, null, null, '2017-05-20 15:59:25', null, '12', '2017-05-27 01:59:24', '2017-05-27 01:59:24');
+INSERT INTO `waybills` VALUES ('54', '2', '你的黑土骑士正在飞奔到你身边取件', null, null, null, null, '2017-05-20 15:59:25', null, '13', '2017-05-27 01:59:25', '2017-05-27 01:59:25');
+INSERT INTO `waybills` VALUES ('55', '3', '你需要付钱洗衣了', null, null, null, null, '2017-05-20 15:59:25', null, '12', '2017-05-27 01:59:29', '2017-05-27 01:59:29');
+INSERT INTO `waybills` VALUES ('56', '3', '你需要付钱洗衣了', null, null, null, null, '2017-05-20 15:59:25', null, '13', '2017-05-27 01:59:31', '2017-05-27 01:59:31');
+INSERT INTO `waybills` VALUES ('57', '4', '你的黑土骑士正载着你的衣服奔向洗衣房', null, null, null, null, '2017-05-27 01:59:52', null, '13', '2017-05-27 01:59:52', '2017-05-27 01:59:52');
+INSERT INTO `waybills` VALUES ('59', '9', '申请退单', null, null, null, null, '2017-05-27 02:00:28', null, '13', '2017-05-27 02:00:28', '2017-05-27 02:00:28');
+INSERT INTO `waybills` VALUES ('60', '11', '完成退款', null, null, null, null, '2017-05-27 02:00:34', null, '13', '2017-05-27 02:00:34', '2017-05-27 02:00:34');
+INSERT INTO `waybills` VALUES ('61', '5', '你的脏衣服正在被洗衣机蹂躏', null, null, null, null, '2017-05-20 15:59:25', null, '4', '2017-05-27 10:11:41', '2017-05-27 10:11:41');
 
 -- ----------------------------
 -- Table structure for waybills_status
@@ -4053,16 +4658,81 @@ CREATE TABLE `waybills_status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status_desc` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of waybills_status
 -- ----------------------------
 INSERT INTO `waybills_status` VALUES ('1', '你的黑土骑士正在飞奔到你身边取件');
 INSERT INTO `waybills_status` VALUES ('2', '你的黑土骑士正载着你的衣服奔向洗衣房');
-INSERT INTO `waybills_status` VALUES ('3', '你的脏衣服正在被洗衣机蹂躏');
-INSERT INTO `waybills_status` VALUES ('4', '你的白云骑士正带着你的干净衣服奔向你身边');
-INSERT INTO `waybills_status` VALUES ('5', '你已经签收了你的干净衣服\r\n你已经签收了你的干净衣服\r\n你已经签收了你的干净衣服\r\n你已经签收了你的干净衣服');
+INSERT INTO `waybills_status` VALUES ('3', '你需要付钱洗衣了');
+INSERT INTO `waybills_status` VALUES ('4', '你的脏衣服正在被洗衣机蹂躏');
+INSERT INTO `waybills_status` VALUES ('5', '你的白云骑士正带着你的干净衣服奔向你身边');
+INSERT INTO `waybills_status` VALUES ('6', '你已经签收了你的干净衣服');
+
+-- ----------------------------
+-- Table structure for worker_cards
+-- ----------------------------
+DROP TABLE IF EXISTS `worker_cards`;
+CREATE TABLE `worker_cards` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `money` float DEFAULT NULL,
+  `worker_id` int(11) DEFAULT NULL,
+  `desc` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of worker_cards
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for worker_logs
+-- ----------------------------
+DROP TABLE IF EXISTS `worker_logs`;
+CREATE TABLE `worker_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kind` int(11) DEFAULT NULL,
+  `money` float DEFAULT NULL,
+  `worker_id` int(11) DEFAULT NULL,
+  `desc` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of worker_logs
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for worker_roles
+-- ----------------------------
+DROP TABLE IF EXISTS `worker_roles`;
+CREATE TABLE `worker_roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `worker_id` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_worker_roles_on_worker_id` (`worker_id`),
+  KEY `index_worker_roles_on_role_id` (`role_id`),
+  CONSTRAINT `fk_rails_51200667c2` FOREIGN KEY (`worker_id`) REFERENCES `workers` (`id`),
+  CONSTRAINT `fk_rails_c0fb2e6713` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of worker_roles
+-- ----------------------------
+INSERT INTO `worker_roles` VALUES ('2', '1', '2', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `worker_roles` VALUES ('5', '5', '4', '0000-00-00 00:00:00', '2017-05-20 07:40:25');
+INSERT INTO `worker_roles` VALUES ('6', '6', '4', '0000-00-00 00:00:00', '2017-05-20 07:38:13');
+INSERT INTO `worker_roles` VALUES ('7', '2', '4', '2017-05-20 07:23:14', '2017-05-20 07:23:14');
+INSERT INTO `worker_roles` VALUES ('9', '4', '4', '2017-05-20 07:26:45', '2017-05-20 07:26:45');
+INSERT INTO `worker_roles` VALUES ('10', '3', '3', '2017-05-20 07:27:22', '2017-05-20 07:40:33');
 
 -- ----------------------------
 -- Table structure for workers
@@ -4086,33 +4756,15 @@ CREATE TABLE `workers` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_workers_on_email` (`email`),
   UNIQUE KEY `index_workers_on_reset_password_token` (`reset_password_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of workers
 -- ----------------------------
-INSERT INTO `workers` VALUES ('1', 'admin@washing.com', '$2a$11$AXRIHRiKTiieyMaB4uh43uY7YZSaTgglqtkTKQk4VaAj4hcDiwx1q', null, null, null, '20', '2017-04-14 07:08:34', '2017-04-14 06:42:23', '192.168.134.1', '192.168.134.1', null, '2017-02-24 15:26:55', '2017-04-14 07:08:34');
-INSERT INTO `workers` VALUES ('2', 'yunying@washing.com', '$2a$11$AXTvHlBVOutK90WpPDy2MeKDMfzLXJx/RA5xooCt0jBRYbD2IlwF6', '7ecd0edc93096fe505f90c19427b657653adf6d803e34bcd7867595693fd7235', '2017-03-22 09:06:04', null, '15', '2017-04-10 14:52:17', '2017-04-10 14:51:59', '127.0.0.1', '127.0.0.1', null, '2017-02-24 15:34:39', '2017-04-10 14:52:17');
-INSERT INTO `workers` VALUES ('3', 'fenchengshi@washing.com', '$2a$11$3pIBofj/2LMFoM66truwseyK4vlavvf7/c89UZGnWZhPzR2xdAD5W', null, null, null, '11', '2017-04-10 14:52:51', '2017-04-08 08:53:31', '127.0.0.1', '127.0.0.1', null, '2017-02-24 15:34:49', '2017-04-10 14:52:51');
-INSERT INTO `workers` VALUES ('4', '123@qq.com', '$2a$11$GGJewv4zi8TCqd0kVX8fcO1B3yly4O5iWEngsAHrnRqx03h1iTQei', null, null, null, '0', null, null, null, null, null, '2017-04-15 09:04:28', '2017-04-15 09:04:28');
-INSERT INTO `workers` VALUES ('5', '111@qq.com', '$2a$11$KpH13miqEkVTN7WPg9b4buo9NEiW.LOBYqF4oi5etgJ0BqZqknahy', null, null, null, '0', null, null, null, null, null, '2017-04-15 09:05:46', '2017-04-15 09:05:46');
-INSERT INTO `workers` VALUES ('6', 'fsdfs@qq.com', '$2a$11$G/CWGJp7SINSqBTbEj8FsuWwunvWUzGtzhq7GxnatMPEfPTyCM3om', null, null, null, '0', null, null, null, null, null, '2017-04-19 06:37:29', '2017-04-19 06:37:29');
-
--- ----------------------------
--- Table structure for workers_roles
--- ----------------------------
-DROP TABLE IF EXISTS `workers_roles`;
-CREATE TABLE `workers_roles` (
-  `worker_id` int(11) DEFAULT NULL,
-  `role_id` int(11) DEFAULT NULL,
-  KEY `index_workers_roles_on_worker_id_and_role_id` (`worker_id`,`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of workers_roles
--- ----------------------------
-INSERT INTO `workers_roles` VALUES ('1', '1');
-INSERT INTO `workers_roles` VALUES ('1', '2');
-INSERT INTO `workers_roles` VALUES ('1', '3');
-INSERT INTO `workers_roles` VALUES ('2', '2');
-INSERT INTO `workers_roles` VALUES ('3', '3');
+INSERT INTO `workers` VALUES ('1', 'admin@washing.com', '123456', null, null, null, '20', '2017-04-14 07:08:34', '2017-04-14 06:42:23', '192.168.134.1', '192.168.134.1', null, '2017-02-24 15:26:55', '2017-05-18 14:21:01');
+INSERT INTO `workers` VALUES ('2', 'yunying@washing.com', '123456', '7ecd0edc93096fe505f90c19427b657653adf6d803e34bcd7867595693fd7235', '2017-03-22 09:06:04', null, '15', '2017-04-10 14:52:17', '2017-04-10 14:51:59', '127.0.0.1', '127.0.0.1', null, '2017-02-24 15:34:39', '2017-05-18 14:20:10');
+INSERT INTO `workers` VALUES ('3', 'fenchengshi@washing.com', '123456', null, null, null, '11', '2017-04-10 14:52:51', '2017-04-08 08:53:31', '127.0.0.1', '127.0.0.1', null, '2017-02-24 15:34:49', '2017-05-18 14:18:55');
+INSERT INTO `workers` VALUES ('4', '123@qq.com', '123456', null, null, null, '0', null, null, null, null, null, '2017-04-15 09:04:28', '2017-04-15 09:04:28');
+INSERT INTO `workers` VALUES ('5', '111@qq.com', '123456', null, null, null, '0', null, null, null, null, null, '2017-04-15 09:05:46', '2017-04-15 09:05:46');
+INSERT INTO `workers` VALUES ('6', 'fsdfs@qq.com', '123456', null, null, null, '0', null, null, null, null, null, '2017-04-19 06:37:29', '2017-04-19 06:37:29');
+INSERT INTO `workers` VALUES ('7', 'test@qq.com', '111', null, null, null, '0', null, null, null, null, null, '2017-05-26 14:50:18', '2017-05-26 14:50:18');
