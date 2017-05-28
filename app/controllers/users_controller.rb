@@ -282,6 +282,7 @@ class UsersController < ApplicationController
           total_price *= @order_promotion.discount
         # 3
       end
+      Coupon.where(id:@user_coupon_id).delete_all
     end
 
     if(total_price > balance)
@@ -325,7 +326,7 @@ class UsersController < ApplicationController
                    :status=>4,
                     :total_price => total_price)
 
-      Coupon.where(id:@user_coupon_id).delete_all
+
 
       @waybill = Waybill.new
       @waybill["exp_time"] = Time.new
